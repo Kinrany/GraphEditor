@@ -39,6 +39,24 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
+		/// Index of the last node in this graph.
+		/// </summary>
+		public int LastNode {
+			get {
+				return _nodeIndices.Last;
+			}
+		}
+
+		/// <summary>
+		/// Index of the last edge in this graph.
+		/// </summary>
+		public int LastEdge {
+			get {
+				return _edgeIndices.Last;
+			}
+		}
+
+		/// <summary>
 		/// Create a new node.
 		/// </summary>
 		/// <returns>Index of the created node.</returns>

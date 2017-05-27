@@ -6,6 +6,7 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	interface INodeIndexList {
 		int Count { get; }
+		int Last { get; }
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
@@ -14,6 +15,7 @@ namespace GraphModelLibrary.Rewrite {
 
 	interface IEdgeIndexList {
 		int Count { get; }
+		int Last { get; }
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
@@ -21,6 +23,9 @@ namespace GraphModelLibrary.Rewrite {
 	}
 
 	class IndexList : INodeIndexList, IEdgeIndexList {
+		public IndexList() {
+			_list = new List<int>();
+		}
 
 		public int Count {
 			get {
@@ -28,8 +33,14 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public int Last {
+			get {
+				return _list.Last();
+			}
+		}
+
 		public int NewIndex() {
-			int newIndex = _list.Last() + 1;
+			int newIndex = this.Last + 1;
 			_list.Add(newIndex);
 			return newIndex;
 		}

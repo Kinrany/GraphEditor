@@ -25,6 +25,24 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		/// <summary>
+		/// Index of the last node in this graph.
+		/// </summary>
+		public int LastNode {
+			get {
+				return _graph.LastNode;
+			}
+		}
+
+		/// <summary>
+		/// Index of the last edge in this graph.
+		/// </summary>
+		public int LastEdge {
+			get {
+				return _graph.LastEdge;
+			}
+		}
+
 		public int CreateNode(TNode weight) {
 			int index = _graph.CreateNode();
 			_nodeWeights[index] = weight;
