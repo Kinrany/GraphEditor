@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Color = System.Drawing.Color;
 
 namespace GraphModelLibrary.Rewrite {
 	public class WeightedGraph<TNode, TEdge> {
