@@ -130,18 +130,30 @@ namespace GraphModelLibrary.Rewrite {
 			return _edgeIndices.Contains(edgeIndex);
 		}
 
-		public IEnumerator<int> GetNodeEnumerator() {
-			return _nodeIndices.GetEnumerator();
+		public IEnumerable<int> NodeEnumerator {
+			get {
+				return (IEnumerable<int>)_nodeIndices;
+			}
 		}
 
-		public IEnumerator<int> GetEdgeEnumerator() {
-			return _edgeIndices.GetEnumerator();
+		public IEnumerable<int> EdgeEnumerator {
+			get {
+				return (IEnumerable<int>)_edgeIndices;
+			}
 		}
 
 		public void Reindex() {
-			throw new NotImplementedException();
+			foreach (var reindexed in _nodeIndices.Reindex) {
+				NodeReindexEvent(reindexed.Item1, reindexed.Item2);
+			}
+
+			foreach (var reindexed in _edgeIndices.Reindex) {
+				EdgeReindexEvent(reindexed.Item1, reindexed.Item2);
+			}
 		}
 
+		public event Action<int, int> NodeReindexEvent;
+		public event Action<int, int> EdgeReindexEvent;
 
 		private INodeIndexList _nodeIndices;
 		private IEdgeIndexList _edgeIndices;

@@ -99,17 +99,40 @@ namespace GraphModelLibrary.Rewrite {
 			return _graph.ContainsEdge(edgeIndex);
 		}
 
-		public IEnumerator<int> GetNodeEnumerator() {
-			return _graph.GetNodeEnumerator();
+		public IEnumerable<int> NodeEnumerator {
+			get {
+				return _graph.NodeEnumerator;
+			}
 		}
 
-		public IEnumerator<int> GetEdgeEnumerator() {
-			return _graph.GetEdgeEnumerator();
+		public IEnumerable<int> EdgeEnumerator {
+			get {
+				return _graph.EdgeEnumerator;
+			}
 		}
+
+		public void Reindex() {
+			_graph.NodeReindexEvent += CallNodeReindexEvent;
+			_graph.EdgeReindexEvent += CallEdgeReindexEvent;
+			_graph.Reindex();
+			_graph.NodeReindexEvent -= CallNodeReindexEvent;
+			_graph.EdgeReindexEvent -= CallEdgeReindexEvent;
+		}
+
+		public event Action<int, int> NodeReindexEvent;
+		public event Action<int, int> EdgeReindexEvent;
 
 
 		private Graph _graph;
 		private Dictionary<int, TNode> _nodeWeights;
 		private Dictionary<int, TEdge> _edgeWeights;
+
+		private void CallNodeReindexEvent(int arg1, int arg2) {
+			NodeReindexEvent(arg1, arg2);
+		}
+
+		private void CallEdgeReindexEvent(int arg1, int arg2) {
+			EdgeReindexEvent(arg1, arg2);
+		}
 	}
 }

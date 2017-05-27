@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
 	interface INodeIndexList {
@@ -11,6 +12,7 @@ namespace GraphModelLibrary.Rewrite {
 		bool Contains(int index);
 		void Remove(int index);
 		IEnumerator<int> GetEnumerator();
+		IEnumerable<Tuple<int, int>> Reindex { get; }
 	}
 
 	interface IEdgeIndexList {
@@ -20,6 +22,7 @@ namespace GraphModelLibrary.Rewrite {
 		bool Contains(int index);
 		void Remove(int index);
 		IEnumerator<int> GetEnumerator();
+		IEnumerable<Tuple<int, int>> Reindex { get; }
 	}
 
 	class IndexList : INodeIndexList, IEdgeIndexList {
@@ -56,6 +59,41 @@ namespace GraphModelLibrary.Rewrite {
 		public IEnumerator<int> GetEnumerator() {
 			return _list.GetEnumerator();
 		}
+
+		public IEnumerable<Tuple<int, int>> Reindex {
+			get {
+				if (this.Count == this.Last + 1) {
+					yield break;
+				}
+
+				int n = _list.Count;
+
+				// only values >= n should be moved
+				int moveFrom = 0;
+				while (_list[moveFrom] < n) {
+					moveFrom++;
+				}
+				
+				int moveTo = 0;
+				while (moveFrom < _list.Count) {
+					while (_list[moveTo] == moveTo) {
+						moveTo++;
+					}
+
+					int old_index = _list[moveFrom];
+					int new_index = moveTo;
+					_list.RemoveAt(moveFrom);
+					_list.Insert(moveTo, moveTo);
+					yield return new Tuple<int, int>(old_index, new_index);
+
+					// editing _list on the fly doesn't break indices here
+					// because one element is removed and one added
+
+					moveFrom++;
+				}
+			}
+		}
+
 
 		private List<int> _list;
 	}
