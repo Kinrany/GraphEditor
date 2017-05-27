@@ -38,11 +38,11 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public WeightedEdgeProxy<TNode, TEdge> AddOutgoingEdge(WeightedNodeProxy<TNode, TEdge> otherNode, TEdge weight) {
-			return _graph.CreateEdgeProxy(_index, otherNode._index, weight);
+			return WeightedEdgeProxy<TNode, TEdge>.Create(_graph, _index, otherNode._index, weight);
 		}
 		
 		public WeightedEdgeProxy<TNode, TEdge> AddIncomingEdge(WeightedNodeProxy<TNode, TEdge> otherNode, TEdge weight) {
-			return _graph.CreateEdgeProxy(otherNode._index, _index, weight);
+			return WeightedEdgeProxy<TNode, TEdge>.Create(_graph, otherNode._index, _index, weight);
 		}
 
 		public void Delete() {
