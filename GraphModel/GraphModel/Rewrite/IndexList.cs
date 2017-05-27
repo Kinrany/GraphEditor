@@ -5,18 +5,26 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	interface INodeIndexList {
+		int Count { get; }
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
 	}
 
 	interface IEdgeIndexList {
+		int Count { get; }
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
 	}
 
 	class IndexList : INodeIndexList, IEdgeIndexList {
+
+		public int Count {
+			get {
+				return _list.Count;
+			}
+		}
 
 		public int NewIndex() {
 			int newIndex = _list.Last() + 1;
