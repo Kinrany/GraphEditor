@@ -66,6 +66,10 @@
     <Compile Include="Node.cs" />
     <Compile Include="NodeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rewrite\EdgeProxy.cs" />
+    <Compile Include="Rewrite\Graph.cs" />
+    <Compile Include="Rewrite\IndexList.cs" />
+    <Compile Include="Rewrite\NodeProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
