@@ -97,17 +97,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_nodeIndices.Remove(nodeIndex);
 		}
-
-		public EdgeProxy CreateEdgeProxy(int nodeFromIndex, int nodeToIndex) {
-			int edgeIndex = this.CreateEdge(nodeFromIndex, nodeToIndex);
-			return new EdgeProxy(this, edgeIndex);
-		}
-
-		public NodeProxy CreateNodeProxy() {
-			int nodeIndex = this.CreateNode();
-			return new NodeProxy(this, nodeIndex);
-		}
-
+		
 		public int[] GetEdges(int nodeFromIndex, int nodeToIndex) {
 			return _outgoingEdges[nodeFromIndex]
 				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)
@@ -122,9 +112,18 @@ namespace GraphModelLibrary.Rewrite {
 			return _edgeIndices.Contains(edgeIndex);
 		}
 
+		public IEnumerator<int> GetNodeEnumerator() {
+			return _nodeIndices.GetEnumerator();
+		}
+
+		public IEnumerator<int> GetEdgeEnumerator() {
+			return _edgeIndices.GetEnumerator();
+		}
+
 		public void Reindex() {
 			throw new NotImplementedException();
 		}
+
 
 		private INodeIndexList _nodeIndices;
 		private IEdgeIndexList _edgeIndices;

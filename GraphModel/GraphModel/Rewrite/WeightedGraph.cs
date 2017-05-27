@@ -46,16 +46,6 @@ namespace GraphModelLibrary.Rewrite {
 			_edgeWeights.Remove(edgeIndex);
 			_graph.DeleteEdge(edgeIndex);
 		}
-		
-		public WeightedNodeProxy<TNode, TEdge> CreateNodeProxy(TNode weight) {
-			int index = CreateNode(weight);
-			return new WeightedNodeProxy<TNode, TEdge>(this, index);
-		}
-		
-		public WeightedEdgeProxy<TNode, TEdge> CreateEdgeProxy(int nodeFromIndex, int nodeToIndex, TEdge weight) {
-			int edgeIndex = this.CreateEdge(nodeFromIndex, nodeToIndex, weight);
-			return new WeightedEdgeProxy<TNode, TEdge>(this, edgeIndex);
-		}
 
 		public TNode GetNodeWeight(int nodeIndex) {
 			return _nodeWeights[nodeIndex];
@@ -90,6 +80,15 @@ namespace GraphModelLibrary.Rewrite {
 		public bool ContainsEdge(int edgeIndex) {
 			return _graph.ContainsEdge(edgeIndex);
 		}
+
+		public IEnumerator<int> GetNodeEnumerator() {
+			return _graph.GetNodeEnumerator();
+		}
+
+		public IEnumerator<int> GetEdgeEnumerator() {
+			return _graph.GetEdgeEnumerator();
+		}
+
 
 		private Graph _graph;
 		private Dictionary<int, TNode> _nodeWeights;

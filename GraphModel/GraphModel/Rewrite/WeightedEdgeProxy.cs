@@ -11,6 +11,17 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public int Index {
+			get {
+				if (IsValid) {
+					return _index;
+				}
+				else {
+					throw new InvalidOperationException("This is not a valid node object.");
+				}
+			}
+		}
+
 		public bool IsValid {
 			get {
 				return _graph != null && _graph.ContainsEdge(_index);
@@ -24,6 +35,14 @@ namespace GraphModelLibrary.Rewrite {
 			set {
 				_graph.SetEdgeWeight(_index, value);
 			}
+		}
+
+		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, int nodeFromIndex, int nodeToIndex, TEdge weight) {
+			int edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+			return new WeightedEdgeProxy<TNode, TEdge>(graph, edgeIndex);
+		}
+		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, WeightedEdgeProxy<TNode, TEdge> nodeFrom, WeightedEdgeProxy<TNode, TEdge> nodeTo, TEdge weight) {
+			return Create(graph, nodeFrom.Index, nodeTo.Index, weight);
 		}
 
 		public void Delete() {

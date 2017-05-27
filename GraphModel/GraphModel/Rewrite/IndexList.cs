@@ -9,6 +9,7 @@ namespace GraphModelLibrary.Rewrite {
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
+		IEnumerator<int> GetEnumerator();
 	}
 
 	interface IEdgeIndexList {
@@ -16,6 +17,7 @@ namespace GraphModelLibrary.Rewrite {
 		int NewIndex();
 		bool Contains(int index);
 		void Remove(int index);
+		IEnumerator<int> GetEnumerator();
 	}
 
 	class IndexList : INodeIndexList, IEdgeIndexList {
@@ -40,6 +42,9 @@ namespace GraphModelLibrary.Rewrite {
 			_list.Remove(index);
 		}
 
+		public IEnumerator<int> GetEnumerator() {
+			return _list.GetEnumerator();
+		}
 
 		private List<int> _list;
 	}

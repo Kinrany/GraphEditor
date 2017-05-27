@@ -10,6 +10,17 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public int Index {
+			get {
+				if (IsValid) {
+					return _index;
+				}
+				else {
+					throw new InvalidOperationException("This is not a valid node object.");
+				}
+			}
+		}
+
 		public bool IsValid {
 			get {
 				return _graph != null && _graph.ContainsNode(_index);
