@@ -115,7 +115,15 @@ namespace GraphModelLibrary.Rewrite {
 
 			_nodeIndices.Remove(nodeIndex);
 		}
-		
+
+		public int GetNodeFrom(int edgeIndex) {
+			return _edges[edgeIndex].Item1;
+		}
+
+		public int GetNodeTo(int edgeIndex) {
+			return _edges[edgeIndex].Item2;
+		}
+
 		public int[] GetEdges(int nodeFromIndex, int nodeToIndex) {
 			return _outgoingEdges[nodeFromIndex]
 				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)

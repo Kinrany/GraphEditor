@@ -65,6 +65,14 @@ namespace GraphModelLibrary.Rewrite {
 			_graph.DeleteEdge(edgeIndex);
 		}
 
+		public int GetNodeFrom(int edgeIndex) {
+			return _graph.GetNodeFrom(edgeIndex);
+		}
+
+		public int GetNodeTo(int edgeIndex) {
+			return _graph.GetNodeTo(edgeIndex);
+		}
+
 		public TNode GetNodeWeight(int nodeIndex) {
 			return _nodeWeights[nodeIndex];
 		}
