@@ -21,6 +21,24 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
+		/// Number of nodes in this graph.
+		/// </summary>
+		public int NodeCount {
+			get {
+				return _nodeIndices.Count;
+			}
+		}
+
+		/// <summary>
+		/// Number of edges in this graph.
+		/// </summary>
+		public int EdgeCount {
+			get {
+				return _edgeIndices.Count;
+			}
+		}
+
+		/// <summary>
 		/// Create a new node.
 		/// </summary>
 		/// <returns>Index of the created node.</returns>
@@ -88,6 +106,12 @@ namespace GraphModelLibrary.Rewrite {
 		public NodeProxy CreateNodeProxy() {
 			int nodeIndex = this.CreateNode();
 			return new NodeProxy(this, nodeIndex);
+		}
+
+		public int[] GetEdges(int nodeFromIndex, int nodeToIndex) {
+			return _outgoingEdges[nodeFromIndex]
+				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)
+				.ToArray();
 		}
 
 		public void Reindex() {
