@@ -114,6 +114,14 @@ namespace GraphModelLibrary.Rewrite {
 				.ToArray();
 		}
 
+		public bool ContainsNode(int nodeIndex) {
+			return _nodeIndices.Contains(nodeIndex);
+		}
+
+		public bool ContainsEdge(int edgeIndex) {
+			return _edgeIndices.Contains(edgeIndex);
+		}
+
 		public void Reindex() {
 			throw new NotImplementedException();
 		}

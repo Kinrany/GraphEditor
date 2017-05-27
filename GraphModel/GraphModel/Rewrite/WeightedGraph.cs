@@ -73,8 +73,22 @@ namespace GraphModelLibrary.Rewrite {
 			_edgeWeights[edgeIndex] = weight;
 		}
 
-		public int FindEdge(int nodeFromIndex, int nodeToIndex) {
-			return _graph.GetEdges(nodeFromIndex, nodeToIndex).First();
+		public int? GetEdge(int nodeFromIndex, int nodeToIndex) {
+			int[] indices = _graph.GetEdges(nodeFromIndex, nodeToIndex);
+			if (indices.Length > 0) {
+				return indices.First();
+			}
+			else {
+				return null;
+			}
+		}
+
+		public bool ContainsNode(int nodeIndex) {
+			return _graph.ContainsNode(nodeIndex);
+		}
+
+		public bool ContainsEdge(int edgeIndex) {
+			return _graph.ContainsEdge(edgeIndex);
 		}
 
 		private Graph _graph;

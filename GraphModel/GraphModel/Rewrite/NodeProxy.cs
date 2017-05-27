@@ -10,6 +10,12 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public bool IsValid {
+			get {
+				return _graph != null && _graph.ContainsNode(_index);
+			}
+		}
+
 		public EdgeProxy AddOutgoingEdge(NodeProxy otherNode) {
 			return _graph.CreateEdgeProxy(_index, otherNode._index);
 		}

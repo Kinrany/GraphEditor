@@ -10,6 +10,12 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public bool IsValid {
+			get {
+				return _graph != null && _graph.ContainsEdge(_index);
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteEdge(_index);
 			_index = -1;

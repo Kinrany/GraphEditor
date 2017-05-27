@@ -11,6 +11,21 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public bool IsValid {
+			get {
+				return _graph != null && _graph.ContainsEdge(_index);
+			}
+		}
+
+		public TEdge Weight {
+			get {
+				return _graph.GetEdgeWeight(_index);
+			}
+			set {
+				_graph.SetEdgeWeight(_index, value);
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteEdge(_index);
 			_index = -1;
