@@ -45,6 +45,26 @@ namespace GraphModelLibrary.Rewrite {
 			return new WeightedEdgeProxy<TNode, TEdge>(this, edgeIndex);
 		}
 
+		public TNode GetNodeWeight(int nodeIndex) {
+			return _nodeWeights[nodeIndex];
+		}
+
+		public TEdge GetEdgeWeight(int edgeIndex) {
+			return _edgeWeights[edgeIndex];
+		}
+
+		public void SetNodeWeight(int nodeIndex, TNode weight) {
+			_nodeWeights[nodeIndex] = weight;
+		}
+
+		public void SetEdgeWeight(int edgeIndex, TEdge weight) {
+			_edgeWeights[edgeIndex] = weight;
+		}
+
+		public int FindEdge(int nodeFromIndex, int nodeToIndex) {
+			return _graph.GetEdges(nodeFromIndex, nodeToIndex).First();
+		}
+
 		private Graph _graph;
 		private Dictionary<int, TNode> _nodeWeights;
 		private Dictionary<int, TEdge> _edgeWeights;
