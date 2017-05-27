@@ -28,11 +28,11 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public EdgeProxy AddOutgoingEdge(NodeProxy otherNode) {
-			return _graph.CreateEdgeProxy(_index, otherNode._index);
+			return EdgeProxy.Create(_graph, _index, otherNode._index);
 		}
 
 		public EdgeProxy AddIncomingEdge(NodeProxy otherNode) {
-			return _graph.CreateEdgeProxy(otherNode._index, _index);
+			return EdgeProxy.Create(_graph, otherNode._index, _index);
 		}
 
 		public void Delete() {
