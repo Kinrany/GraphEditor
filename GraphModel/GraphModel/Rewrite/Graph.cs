@@ -32,16 +32,16 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
-		/// Create an edge that goes from node index1 to node index1.
+		/// Create a new edge.
 		/// </summary>
-		/// <param name="index1">Index of the first node.</param>
-		/// <param name="index2">Index of the second node.</param>
+		/// <param name="nodeFromIndex">Index of the first node.</param>
+		/// <param name="nodeToIndex">Index of the second node.</param>
 		/// <returns>Index of the created edge.</returns>
-		public int CreateEdge(int index1, int index2) {
+		public int CreateEdge(int nodeFromIndex, int nodeToIndex) {
 			int edgeIndex = _edgeIndices.NewIndex();
-			_outgoingEdges[index1].Add(edgeIndex);
-			_incomingEdges[index2].Add(edgeIndex);
-			_edges[edgeIndex] = new Tuple<int, int>(index1, index2);
+			_outgoingEdges[nodeFromIndex].Add(edgeIndex);
+			_incomingEdges[nodeToIndex].Add(edgeIndex);
+			_edges[edgeIndex] = new Tuple<int, int>(nodeFromIndex, nodeToIndex);
 			return edgeIndex;
 		}
 		
@@ -80,8 +80,8 @@ namespace GraphModelLibrary.Rewrite {
 			_nodeIndices.Remove(nodeIndex);
 		}
 
-		public EdgeProxy CreateEdgeProxy(int index1, int index2) {
-			int edgeIndex = this.CreateEdge(index1, index2);
+		public EdgeProxy CreateEdgeProxy(int nodeFromIndex, int nodeToIndex) {
+			int edgeIndex = this.CreateEdge(nodeFromIndex, nodeToIndex);
 			return new EdgeProxy(this, edgeIndex);
 		}
 
