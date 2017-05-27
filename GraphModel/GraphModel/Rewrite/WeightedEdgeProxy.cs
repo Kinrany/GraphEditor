@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
-	public class WeightedEdgeProxy<TNode, TEdge> where TNode:new() where TEdge:new() {
+	public class WeightedEdgeProxy<TNode, TEdge> {
 
 		public WeightedEdgeProxy(WeightedGraph<TNode, TEdge> graph, int index) {
 			this._graph = graph;
