@@ -13,6 +13,18 @@ namespace GraphModelLibrary.Rewrite {
 			_edgeWeights = new Dictionary<int, TEdge>();
 		}
 		
+		public int NodeCount {
+			get {
+				return _graph.NodeCount;
+			}
+		}
+
+		public int EdgeCount {
+			get {
+				return _graph.EdgeCount;
+			}
+		}
+
 		public int CreateNode(TNode weight) {
 			int index = _graph.CreateNode();
 			_nodeWeights[index] = weight;
