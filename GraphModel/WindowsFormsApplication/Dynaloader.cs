@@ -32,7 +32,6 @@ namespace WindowsFormsApplication {
 			if (loaded())
 				unload();
 			m_dll = LoadLibrary(name);
-			MessageBox.Show(loaded().ToString());
 			return loaded();
 		}
 
@@ -53,7 +52,6 @@ namespace WindowsFormsApplication {
 
 		public T load_function<T>(string name) where T : class {
 			IntPtr address = GetProcAddress(m_dll, name);
-			MessageBox.Show(address.ToString());
 			if (address == IntPtr.Zero)
 				return null;
 			System.Delegate fn_ptr = Marshal.GetDelegateForFunctionPointer(address, typeof(T));

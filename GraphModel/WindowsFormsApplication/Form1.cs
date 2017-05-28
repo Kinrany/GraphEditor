@@ -143,43 +143,35 @@ namespace WindowsFormsApplication {
 			return c2.PointToClient(c1.PointToScreen(p));
 		}
 
+        //Legacy mult
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		[return: MarshalAs(UnmanagedType.I4)]
 		private delegate int mult_t([MarshalAs(UnmanagedType.I4)] int num);
 
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		[return: MarshalAs(UnmanagedType.I4)]
-		private delegate int main_t([MarshalAs(UnmanagedType.I4)] int num, string path);
-
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		[return: MarshalAs(UnmanagedType.LPStr)]
-		private delegate string solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
-
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		[return: MarshalAs(UnmanagedType.I4)]
-		private delegate string disp_t([MarshalAs(UnmanagedType.LPStr)] string path);
-
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		[return: MarshalAs(UnmanagedType.I4)]
-		private delegate void print_t([MarshalAs(UnmanagedType.LPStr)]string path);
-
+        //Legacy print
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		private delegate string adv_print_t([MarshalAs(UnmanagedType.LPStr)]string path);
-		
-		private void CodeImport_Click(object sender, EventArgs e) {
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.LPStr)]
+        private delegate string solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
+
+
+        private void CodeImport_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
 				string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 
-				Dynaloader loader = new Dynaloader(path);
-				solve_t solve = loader.load_function<solve_t>("solve");
+                //MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
 
-				string path_to_graph_2 = solve(path_to_graph);
-				GraphModel = GraphModel.Load(path_to_graph_2);
-			}
+                Dynaloader loader = new Dynaloader(path);
+				solve_t solve = loader.load_function<solve_t>("solve");
+                string path_to_graph_2 = solve(path_to_graph);
+                GraphModel = GraphModel.Load(path_to_graph_2);
+            }
 		}
 	}
 }
