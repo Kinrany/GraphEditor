@@ -5,7 +5,7 @@ using System.IO;
 
 namespace UnitTestProject {
 	[TestClass]
-	public class GraphModelLibraryUnitTest {
+	public class GraphModelRewriteUnitTest {
 		[TestMethod]
 		public void Parsing1() {
 			string text =
