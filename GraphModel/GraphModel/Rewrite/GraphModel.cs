@@ -28,7 +28,8 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public class EdgeWeight {
-			public EdgeWeight(string value = DEFAULT_VALUE) : this(DEFAULT_COLOR) { }
+			public EdgeWeight(string value = DEFAULT_VALUE) 
+				: this(DEFAULT_COLOR, value) { }
 			public EdgeWeight(Color color, string value = DEFAULT_VALUE) {
 				this.Color = color;
 				this.Value = value;
