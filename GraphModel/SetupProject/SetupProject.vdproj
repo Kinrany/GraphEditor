@@ -15,14 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+        "MsmKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
-        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
+        "MsmKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
+        "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
+        "OwnerKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,12 +39,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
-        "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
+        "OwnerKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+        "OwnerKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -150,15 +150,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3F8ABCEE913807EE7B5EC554E91C6468"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GraphModelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:UILogicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_3F8ABCEE913807EE7B5EC554E91C6468"
+                    {
+                    "Name" = "8:UILogicLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:GraphModelLibrary.dll"
+            "SourcePath" = "8:UILogicLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
@@ -176,15 +181,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5C631BF9738B73273ECDC33B3DAE453"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47552D82A115E8B3C0ADB994761E9E22"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UILogicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GraphModelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_47552D82A115E8B3C0ADB994761E9E22"
+                    {
+                    "Name" = "8:GraphModelLibrary.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
-            "SourcePath" = "8:UILogicLibrary.dll"
+            "SourcePath" = "8:GraphModelLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
@@ -406,7 +416,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_C2EF9FECD67641D2842015A93E8CF0F0"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Готово"
+                    "DisplayName" = "8:Finished"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFinishedDlg.wid"
@@ -450,7 +460,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_110F34F3791C471FA3CE421F39669561"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Папка установки"
+                    "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFolderDlg.wid"
@@ -472,7 +482,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_1D2E6C01D2504267986AB1187D0AAFEA"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Добро пожаловать!"
+                    "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminWelcomeDlg.wid"
@@ -520,7 +530,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_3D28F71EF99F4F0E8A52E86047BBD8E4"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Подтверждение установки"
+                    "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminConfirmDlg.wid"
@@ -563,7 +573,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D2FBD04369F040CABB87F11FC99E155C"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Ход выполнения"
+                    "DisplayName" = "8:Progress"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdProgressDlg.wid"
@@ -607,7 +617,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_8B848E93A8A04EDEA73337C95FB4633D"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Ход выполнения"
+                    "DisplayName" = "8:Progress"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminProgressDlg.wid"
@@ -651,7 +661,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_ED5ADEDCDECF4A11BF27E3AA8BCF8B95"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Готово"
+                    "DisplayName" = "8:Finished"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdAdminFinishedDlg.wid"
@@ -682,7 +692,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_4BF92EEE84EB4FAE8FED9148F4C437BF"
                     {
                     "Sequence" = "3:100"
-                    "DisplayName" = "8:Добро пожаловать!"
+                    "DisplayName" = "8:Welcome"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdWelcomeDlg.wid"
@@ -730,7 +740,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_6FF811E5A3E142BE8328E21EAC60BDD4"
                     {
                     "Sequence" = "3:200"
-                    "DisplayName" = "8:Папка установки"
+                    "DisplayName" = "8:Installation Folder"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdFolderDlg.wid"
@@ -765,7 +775,7 @@
                     "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_D9FB32F97D7F45B29E8A86D699FCAD79"
                     {
                     "Sequence" = "3:300"
-                    "DisplayName" = "8:Подтверждение установки"
+                    "DisplayName" = "8:Confirm Installation"
                     "UseDynamicProperties" = "11:TRUE"
                     "IsDependency" = "11:FALSE"
                     "SourcePath" = "8:<VsdDialogDir>\\VsdConfirmDlg.wid"
@@ -794,7 +804,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B058A08A8811424C9F8C257C6C266E92"
             {
-            "SourcePath" = "8:..\\WindowsFormsApplication\\obj\\Release\\WindowsFormsApplication.exe"
+            "SourcePath" = "8:..\\WindowsFormsApplication\\obj\\Debug\\WindowsFormsApplication.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
@@ -815,6 +825,34 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{D532B930-50FA-464D-9B7A-284C4EC7ACE7}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_CA64DB46784143F0BFE0D2D5AD613C68"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:SourceFiles"
+            "OutputProjectGuid" = "8:{953D9E13-B128-4F18-A8CC-A18FFA57CD5B}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {
