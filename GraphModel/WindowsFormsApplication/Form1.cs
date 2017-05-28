@@ -189,7 +189,7 @@ namespace WindowsFormsApplication {
                 main_t main = loader.load_function<main_t>("main");
                 main(1, path_to_graph);*/
 
-				dynaloader loader = new dynaloader(path);
+				Dynaloader loader = new Dynaloader(path);
 				solve_t solve = loader.load_function<solve_t>("solve");
 				//MessageBox.Show(solve(path_to_graph));
 
@@ -215,61 +215,6 @@ namespace WindowsFormsApplication {
 
 
 			}
-		}
-	}
-
-	class dynaloader {
-		private IntPtr m_dll = IntPtr.Zero;
-
-		public dynaloader() {
-		}
-
-		public dynaloader(string dll_name) {
-			load(dll_name);
-		}
-
-		~dynaloader() {
-			if (loaded())
-				unload();
-		}
-
-		public bool loaded() {
-			return m_dll != IntPtr.Zero;
-		}
-
-		[DllImport("kernel32.dll")]
-		private static extern IntPtr LoadLibrary(string dllToLoad);
-
-		public bool load(string name) {
-			if (loaded())
-				unload();
-			m_dll = LoadLibrary(name);
-			MessageBox.Show(loaded().ToString());
-			return loaded();
-		}
-
-		[DllImport("kernel32.dll")]
-		private static extern bool FreeLibrary(IntPtr hModule);
-
-		public bool unload() {
-			if (!loaded())
-				return true;
-			if (!FreeLibrary(m_dll))
-				return false;
-			m_dll = IntPtr.Zero;
-			return true;
-		}
-
-		[DllImport("kernel32.dll")]
-		private static extern IntPtr GetProcAddress(IntPtr hModule, string procedureName);
-
-		public T load_function<T>(string name) where T : class {
-			IntPtr address = GetProcAddress(m_dll, name);
-			MessageBox.Show(address.ToString());
-			if (address == IntPtr.Zero)
-				return null;
-			System.Delegate fn_ptr = Marshal.GetDelegateForFunctionPointer(address, typeof(T));
-			return fn_ptr as T;
 		}
 	}
 }
