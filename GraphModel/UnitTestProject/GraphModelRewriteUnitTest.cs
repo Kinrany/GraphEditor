@@ -1,7 +1,7 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GraphModelLibrary.Rewrite;
-using System.IO;
 
 namespace UnitTestProject {
 	[TestClass]
@@ -73,12 +73,35 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 			GraphModel model = GraphModelParser.Load(path);
 		}
+		
+		[TestMethod]
+		public void Serializing1_EmptyGraph() {
+			GraphModel graph = new GraphModel();
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			Assert.IsTrue(serialized[0] == "0");
+		}
 
 		[TestMethod]
-		public void Serializing1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-			string[] result = GraphModelParser.SerializeA1(model);
+		public void Serializing2_SingleNode() {
+			GraphModel graph = new GraphModel();
+			graph.CreateNode(new GraphModel.NodeWeight());
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			Assert.IsTrue(serialized[0] == "1");
+		}
+
+		[TestMethod]
+		public void Serializing3_SingleEdge() {
+			GraphModel graph = new GraphModel();
+			graph.CreateNode(new GraphModel.NodeWeight());
+			graph.CreateEdge(0, 0, new GraphModel.EdgeWeight("1"));
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+			
+			Assert.IsTrue(serialized[1] == "1");
 		}
 
 		[TestMethod]
