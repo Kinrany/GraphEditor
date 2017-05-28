@@ -177,7 +177,8 @@ namespace WindowsFormsApplication {
 				Dynaloader loader = new Dynaloader(path);
 				solve_t solve = loader.load_function<solve_t>("solve");
 
-				GraphModel = GraphModel.Load(solve(path_to_graph));
+				string path_to_graph_2 = solve(path_to_graph);
+				GraphModel = GraphModel.Load(path_to_graph_2);
 			}
 		}
 	}
