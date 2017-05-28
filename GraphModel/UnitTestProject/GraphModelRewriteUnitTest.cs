@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GraphModelLibrary.Rewrite;
 
@@ -102,6 +104,34 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 			
 			Assert.IsTrue(serialized[1] == "1");
+		}
+
+		[TestMethod]
+		public void Serializing4_TextOnly() {
+			GraphModel graph = new GraphModel();
+			string text = 
+@"Hello world!
+How are you?
+
+I'm fine too!";
+			graph.Text = text;
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			serialized = serialized
+				.SkipWhile((str) => str != "Text:")
+				.Skip(1)
+				.ToArray();
+			string[] textLines = new string[] {
+				"Hello world!",
+				"How are you?",
+				"",
+				"I'm fine too!"
+			};
+			Assert.IsTrue(serialized.Length == textLines.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.IsTrue(serialized[i] == textLines[i]);
+			}
 		}
 
 		[TestMethod]

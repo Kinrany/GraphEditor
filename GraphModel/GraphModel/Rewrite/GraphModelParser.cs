@@ -161,7 +161,7 @@ namespace GraphModelLibrary.Rewrite {
 			// текст, если есть
 			if (graph.Text != null && graph.Text != "") {
 				text.Add("Text:");
-				text.AddRange(graph.Text.Split('\n', '\r'));
+				text.AddRange(graph.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None));
 			}
 
 			return text.ToArray();
