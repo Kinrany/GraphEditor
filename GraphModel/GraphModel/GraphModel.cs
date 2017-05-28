@@ -276,7 +276,8 @@ namespace GraphModelLibrary {
 			Color.Teal,
 			Color.DarkBlue,
 			Color.Violet,
-			Color.Brown
+			Color.Brown,
+			Color.Aquamarine
 		};
 
 		/// <summary>

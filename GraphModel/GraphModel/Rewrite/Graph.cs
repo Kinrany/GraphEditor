@@ -140,13 +140,17 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<int> NodeEnumerator {
 			get {
-				return (IEnumerable<int>)_nodeIndices;
+				foreach (int nodeIndex in _nodeIndices) {
+					yield return nodeIndex;
+				}
 			}
 		}
 
 		public IEnumerable<int> EdgeEnumerator {
 			get {
-				return (IEnumerable<int>)_edgeIndices;
+				foreach (int edgeIndex in _edgeIndices) {
+					yield return edgeIndex;
+				}
 			}
 		}
 

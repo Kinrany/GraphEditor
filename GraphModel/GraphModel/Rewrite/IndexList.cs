@@ -38,7 +38,12 @@ namespace GraphModelLibrary.Rewrite {
 
 		public int Last {
 			get {
-				return _list.Last();
+				if (_list.Count == 0) {
+					return -1;
+				}
+				else {
+					return _list.Last();
+				}
 			}
 		}
 
