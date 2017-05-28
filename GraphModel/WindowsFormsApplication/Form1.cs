@@ -91,7 +91,7 @@ namespace WindowsFormsApplication {
 
 			_editTool = new EditTool(mouse, keyboard);
 
-			
+
 			graphBox.Paint += graphBox_Draw;
 
 			_timer = new Timer();
@@ -143,35 +143,35 @@ namespace WindowsFormsApplication {
 			return c2.PointToClient(c1.PointToScreen(p));
 		}
 
-        //Legacy mult
+		//Legacy mult
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		[return: MarshalAs(UnmanagedType.I4)]
 		private delegate int mult_t([MarshalAs(UnmanagedType.I4)] int num);
 
-        //Legacy print
+		//Legacy print
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		private delegate string adv_print_t([MarshalAs(UnmanagedType.LPStr)]string path);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.LPStr)]
-        private delegate string solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
+		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
+		[return: MarshalAs(UnmanagedType.LPStr)]
+		private delegate string solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
 
 
-        private void CodeImport_Click(object sender, EventArgs e) {
+		private void CodeImport_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
 				string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 
-                //MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
+				//MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
 
-                Dynaloader loader = new Dynaloader(path);
+				Dynaloader loader = new Dynaloader(path);
 				solve_t solve = loader.load_function<solve_t>("solve");
-                string path_to_graph_2 = solve(path_to_graph);
-                GraphModel = GraphModel.Load(path_to_graph_2);
-            }
+				string path_to_graph_2 = solve(path_to_graph);
+				GraphModel = GraphModel.Load(path_to_graph_2);
+			}
 		}
 	}
 }
