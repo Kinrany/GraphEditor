@@ -172,8 +172,8 @@ namespace WindowsFormsApplication {
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
-				string path_to_graph = @"C:\Users\Vladimir\Desktop\Diploma\GraphEditor\GraphModel\WindowsFormsApplication\Examples\exampleA1-3.txt";
-				
+				string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+
 				Dynaloader loader = new Dynaloader(path);
 				solve_t solve = loader.load_function<solve_t>("solve");
 
