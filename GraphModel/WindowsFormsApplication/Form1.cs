@@ -143,12 +143,6 @@ namespace WindowsFormsApplication {
 			return c2.PointToClient(c1.PointToScreen(p));
 		}
 
-		/*[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-        [return: MarshalAs(UnmanagedType.I4)]
-        private delegate int main_t(
-        [MarshalAs(UnmanagedType.I4)] int index,
-        string message);*/
-
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
 		[return: MarshalAs(UnmanagedType.I4)]
 		private delegate int mult_t([MarshalAs(UnmanagedType.I4)] int num);
@@ -172,48 +166,18 @@ namespace WindowsFormsApplication {
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		private delegate string adv_print_t([MarshalAs(UnmanagedType.LPStr)]string path);
-
-		//[DllImport(@"C:\Users\Vladimir\Desktop\dlltest\CCode\tryhard\x64\Release\tryhard.dll")]
-		//public static extern int MultiplyByTen(int num);
-
+		
 		private void CodeImport_Click(object sender, EventArgs e) {
-			//private const string DllFilePath = @"c:\pathto\mydllfile.dll";
-
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
 				string path_to_graph = @"C:\Users\Vladimir\Desktop\Diploma\GraphEditor\GraphModel\WindowsFormsApplication\Examples\exampleA1-3.txt";
-
-				/*dynaloader loader = new dynaloader(path);
-                main_t main = loader.load_function<main_t>("main");
-                main(1, path_to_graph);*/
-
+				
 				Dynaloader loader = new Dynaloader(path);
 				solve_t solve = loader.load_function<solve_t>("solve");
-				//MessageBox.Show(solve(path_to_graph));
 
 				GraphModel = GraphModel.Load(solve(path_to_graph));
-
-				/*dynaloader loader = new dynaloader(path);
-                adv_print_t solve = loader.load_function<adv_print_t>("adv_print");
-                MessageBox.Show(solve(path_to_graph)); */
-
-				//dynaloader loader = new dynaloader(path);
-				//adv_print_t printer = loader.load_function<adv_print_t>("adv_print");
-				//printer(path_to_graph);
-
-				/*dynaloader loader = new dynaloader(path);
-                mult_t main = loader.load_function<mult_t>("MultiplyByTen");
-                MessageBox.Show(main(10).ToString());
-
-                dynaloader loader2 = new dynaloader(path2);
-                mult_t main2 = loader2.load_function<mult_t>("MultiplyByTwelve");
-                mult_t main3 = loader2.load_function<mult_t>("MultiplyByHundred");
-                MessageBox.Show(main2(10).ToString());
-                MessageBox.Show(main3(65536).ToString());*/
-
-
 			}
 		}
 	}
