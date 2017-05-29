@@ -76,6 +76,21 @@ namespace WindowsFormsApplication {
 					case MouseButtons.Left:
 						mouse.LeftButtonUp(location);
 
+                        foreach(var x in GraphModel.Graph)
+                        {
+                            //x.GetIncomingEdges();
+                            /*foreach(var y in GraphModel.Graph)
+                            {
+                                if(x == y)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    x.
+                                }
+                            }*/
+                        }
                         /*MessageBox.Show(GraphModel.Graph._list.Count.ToString());
                         DataGridMatrix.ColumnCount = GraphModel.Graph._list.Count;
                         var row = new DataGridViewRow();
