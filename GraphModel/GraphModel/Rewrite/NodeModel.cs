@@ -18,12 +18,20 @@ namespace GraphModelLibrary.Rewrite {
 			return new NodeModel(graph, nodeIndex);
 		}
 
-		public EdgeModel AddOutgoingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight) {
+		public EdgeModel AddOutgoingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight = null) {
+			if (weight == null) {
+				weight = new GraphModel.EdgeWeight();
+			}
+
 			int edgeIndex = this.Graph.CreateEdge(this.Index, otherNode.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
 		}
 
-		public EdgeModel AddIncomingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight) {
+		public EdgeModel AddIncomingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight = null) {
+			if (weight == null) {
+				weight = new GraphModel.EdgeWeight();
+			}
+
 			int edgeIndex = this.Graph.CreateEdge(otherNode.Index, this.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
 		}
