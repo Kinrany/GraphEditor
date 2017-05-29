@@ -21,7 +21,7 @@ namespace GraphModelLibrary {
 			get; set;
 		}
 
-		static readonly Color _defaultColor = Color.Magenta;
+		static readonly Color _defaultColor = Color.DarkBlue;
 		static readonly Point _defaultLocation = Point.Empty;
 	}
 }

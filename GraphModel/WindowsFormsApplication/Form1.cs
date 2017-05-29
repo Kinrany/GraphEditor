@@ -16,10 +16,10 @@ using System.Runtime.InteropServices;
 namespace WindowsFormsApplication {
 	public partial class Form1 : Form {
 		public Form1() {
-			InitializeComponent();
-		}
+            InitializeComponent();
+        }
 
-		public GraphModel GraphModel {
+        public GraphModel GraphModel {
 			get {
 				return _graphModel;
 			}
@@ -27,7 +27,7 @@ namespace WindowsFormsApplication {
 				_graphModel = value;
 				GraphView = new GraphView(_graphModel.Graph);
 				GraphModelChanged();
-			}
+            }
 		}
 		public GraphView GraphView {
 			get {
@@ -131,7 +131,12 @@ namespace WindowsFormsApplication {
 			_timer.Interval = 1000 / 30;
 			_timer.Tick += (s, h) => graphBox.Invalidate();
 			_timer.Start();
-		}
+
+            string path = @"C:\Users\Vladimir\Desktop\Diploma\GraphEditor\GraphModel\WindowsFormsApplication\Examples\exampleA1-3.txt";//Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+            GraphModel = GraphModel.Load(path);
+            FileLoader.LoadMatrix(path, DataGridMatrix);
+            FileLoader.LoadText(path, TextBox);
+        }
 
 		private void graphBox_Draw(object sender, PaintEventArgs e) {
 			Graphics g = e.Graphics;
@@ -171,6 +176,7 @@ namespace WindowsFormsApplication {
             if (result == DialogResult.OK)
             {
                 string path = openFileDialog.FileName;
+                PathToFile = path;
                 GraphModel = GraphModel.Load(path);
                 FileLoader.LoadMatrix(path, DataGridMatrix);
                 FileLoader.LoadText(path, TextBox);
@@ -201,19 +207,27 @@ namespace WindowsFormsApplication {
             if (result == DialogResult.OK)
             {
                 string path = openFileDialog.FileName;
-                string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+                string path_to_graph = PathToFile;
 
                 //MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
 
-                Dynaloader loader = new Dynaloader(path);
-                solve_t solve = loader.load_function<solve_t>("solve");
-                string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
-                MessageBox.Show(path_to_graph_2);
-                GraphModel = GraphModel.Load(path_to_graph_2);
-
-                FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
-                FileLoader.LoadText(path_to_graph_2, TextBox);
+                try
+                {
+                    Dynaloader loader = new Dynaloader(path);
+                    solve_t solve = loader.load_function<solve_t>("solve");
+                    string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
+                    MessageBox.Show(path_to_graph_2);
+                    GraphModel = GraphModel.Load(path_to_graph_2);
+                    FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
+                    FileLoader.LoadText(path_to_graph_2, TextBox);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
         }
+
+        private string PathToFile;
     }
 }

@@ -35,6 +35,6 @@ namespace UILogicLibrary {
 
 		readonly NodeModel _start;
 
-		static readonly Color _defaultNodeColor = Color.DarkRed;
+		static readonly Color _defaultNodeColor = Color.Black;
 	}
 }

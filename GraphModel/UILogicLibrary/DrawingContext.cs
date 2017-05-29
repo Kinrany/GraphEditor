@@ -10,7 +10,7 @@ namespace UILogicLibrary {
 
 		public readonly Graphics Graphics;
 		public readonly Point MousePosition;
-		public Color DefaultColor = Color.Magenta;
+		public Color DefaultColor = Color.Black;
 		public float DefaultWidth = 1;
 
 		public DrawingContext(Graphics g, Point mouse) {
