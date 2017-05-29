@@ -36,6 +36,16 @@ namespace GraphModelLibrary.Rewrite {
 		public static bool operator!=(NodeProxy node1, NodeProxy node2) {
 			return !(node1 == node2);
 		}
+		public override bool Equals(object obj) {
+			NodeProxy other = obj as NodeProxy;
+			return other != null && this == other;
+		}
+		public override int GetHashCode() {
+			int hash = 486187739;
+			hash = (hash + 16777619) ^ _graph.GetHashCode();
+			hash = (hash + 16777619) ^ _index.GetHashCode();
+			return hash;
+		}
 
 		public EdgeProxy AddOutgoingEdge(NodeProxy otherNode) {
 			return EdgeProxy.Create(_graph, _index, otherNode._index);
