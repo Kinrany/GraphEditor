@@ -11,6 +11,12 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public WeightedGraph<TNode, TEdge> Graph {
+			get {
+				return _graph;
+			}
+		}
+
 		public int Index {
 			get {
 				if (IsValid) {
@@ -45,7 +51,7 @@ namespace GraphModelLibrary.Rewrite {
 			return WeightedEdgeProxy<TNode, TEdge>.Create(_graph, otherNode._index, _index, weight);
 		}
 
-		public IEnumerator<WeightedEdgeProxy<TNode, TEdge>> OutgoingEnumerator {
+		public IEnumerable<WeightedEdgeProxy<TNode, TEdge>> OutgoingEnumerator {
 			get {
 				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
 					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
@@ -53,7 +59,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public IEnumerator<WeightedEdgeProxy<TNode, TEdge>> IncomingEnumerator {
+		public IEnumerable<WeightedEdgeProxy<TNode, TEdge>> IncomingEnumerator {
 			get {
 				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
 					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
