@@ -75,7 +75,25 @@ namespace WindowsFormsApplication {
 				switch (a.Button) {
 					case MouseButtons.Left:
 						mouse.LeftButtonUp(location);
-						break;
+
+                        /*MessageBox.Show(GraphModel.Graph._list.Count.ToString());
+                        DataGridMatrix.ColumnCount = GraphModel.Graph._list.Count;
+                        var row = new DataGridViewRow();
+                        for (int columnIndex = 0; columnIndex < DataGridMatrix.ColumnCount + 1; ++columnIndex)
+                        {
+                            row.Cells.Add(new DataGridViewTextBoxCell()
+                            {
+                                Value = 0
+                            });
+                        }
+                        DataGridMatrix.ColumnCount = DataGridMatrix.ColumnCount + 1;
+                        DataGridMatrix.Rows.Add(row);
+                        for (int i = 0; i < DataGridMatrix.ColumnCount; i++)
+                        {
+                            DataGridMatrix.Rows[i].Cells[DataGridMatrix.ColumnCount - 1].Value = 0;
+                        }*/
+
+                        break;
 					case MouseButtons.Right:
 						mouse.RightButtonUp(location);
 						break;
@@ -98,33 +116,6 @@ namespace WindowsFormsApplication {
 			_timer.Interval = 1000 / 30;
 			_timer.Tick += (s, h) => graphBox.Invalidate();
 			_timer.Start();
-		}
-
-		// buttons
-		private void loadGraphButton_Click(object sender, EventArgs e) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			DialogResult result = openFileDialog.ShowDialog();
-			if (result == DialogResult.OK) {
-				string path = openFileDialog.FileName;
-				GraphModel = GraphModel.Load(path);
-			}
-		}
-		private void loadExampleButton_Click(object sender, EventArgs e) {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-4.txt");
-			GraphModel = GraphModel.Load(path);
-		}
-		private void saveButton_Click(object sender, EventArgs e) {
-			if (GraphModel == null) {
-				saveButtonLabel.Text = "Сначала нужно открыть граф";
-			}
-			else {
-				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				DialogResult result = saveFileDialog.ShowDialog();
-				if (result == DialogResult.OK) {
-					string path = saveFileDialog.FileName;
-					GraphModel.Save(path);
-				}
-			}
 		}
 
 		private void graphBox_Draw(object sender, PaintEventArgs e) {
@@ -157,15 +148,45 @@ namespace WindowsFormsApplication {
 		[return: MarshalAs(UnmanagedType.SysInt)]
 		private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
 
-        //[DllImport(@"C:\Users\Vladimir\Desktop\Diploma\GraphEditor\GraphModel\WindowsFormsApplication\Examples\tryhard.dll")]
-        //public static extern IntPtr print(string path);
+        private void toolStripOpenGraph_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            FileLoader File = new FileLoader();
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+                GraphModel = GraphModel.Load(path);
+                FileLoader.LoadMatrix(path, DataGridMatrix);
+                FileLoader.LoadText(path, TextBox);
+            }
+        }
 
-        private void CodeImport_Click(object sender, EventArgs e) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			DialogResult result = openFileDialog.ShowDialog();
-			if (result == DialogResult.OK) {
-				string path = openFileDialog.FileName;
-				string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+        private void toolStripSaveGraph_Click(object sender, EventArgs e)
+        {
+            if (GraphModel == null)
+            {
+                saveButtonLabel.Text = "Сначала нужно открыть граф";
+            }
+            else {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                DialogResult result = saveFileDialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    string path = saveFileDialog.FileName;
+                    GraphModel.Save(path);
+                }
+            }
+        }
+
+        private void toolStripImportCode_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+                string path_to_graph = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 
                 //MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
 
@@ -174,7 +195,10 @@ namespace WindowsFormsApplication {
                 string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
                 MessageBox.Show(path_to_graph_2);
                 GraphModel = GraphModel.Load(path_to_graph_2);
+
+                FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
+                FileLoader.LoadText(path_to_graph_2, TextBox);
             }
-		}
-	}
+        }
+    }
 }

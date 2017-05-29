@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="ConcreteKeyboard.cs" />
     <Compile Include="Dynaloader.cs" />
+    <Compile Include="FileLoader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
