@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace UILogicLibrary {
 
 		public readonly Graphics Graphics;
 		public readonly Point MousePosition;
-		public Color DefaultColor = Color.Magenta;
+		public Color DefaultColor = Color.Black;
 		public float DefaultWidth = 1;
 
 		public DrawingContext(Graphics g, Point mouse) {
@@ -68,8 +69,19 @@ namespace UILogicLibrary {
 		public void DrawArrow(Point a, Point b, Color? color = null) {
 			Color c = color ?? DefaultColor;
 			Pen pen = new Pen(c, 2);
-			Graphics.DrawLine(pen, a, b);
-		}
+
+            GraphicsPath capPath = new GraphicsPath();
+            //capPath.AddLine(-10, 0, 10, 0);
+            //capPath.AddLine(-10, 0, 0, 10);
+            //capPath.AddLine(0, 10, 10, 0);
+
+            capPath.AddLine(-3, -12, 3, -12);
+            capPath.AddLine(-3, -12, 0, -6);
+            capPath.AddLine(0, -6, 3, -12);
+            pen.CustomEndCap = new System.Drawing.Drawing2D.CustomLineCap(null, capPath);
+
+            Graphics.DrawLine(pen, a, b);
+        }
 
 		Pen _pen;
 		SolidBrush _brush;

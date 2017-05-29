@@ -173,7 +173,7 @@ namespace GraphModelLibrary {
 		readonly Graph _graph;
 		string _text;
 
-		static readonly Color _defaultEdgeColor = Color.Aquamarine;
+		static readonly Color _defaultEdgeColor = Color.Black;
 
 		/// <summary>
 		/// Внутренний конструктор модели графа.
