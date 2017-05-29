@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
-	public class EdgeModel : WeightedNodeProxy<GraphModel.NodeWeight, GraphModel.EdgeWeight> {
+	public class EdgeModel : WeightedEdgeProxy<GraphModel.NodeWeight, GraphModel.EdgeWeight> {
 		public EdgeModel(GraphModel graph, int index) : base(graph, index) { }
 
 		public new GraphModel Graph {
@@ -13,12 +13,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public NodeModel NodeFrom {
+		public new NodeModel NodeFrom {
 			get {
 				return new NodeModel(this.Graph, this.Graph.GetNodeFrom(this.Index));
 			}
 		}
-		public NodeModel NodeTo {
+		public new NodeModel NodeTo {
 			get {
 				return new NodeModel(this.Graph, this.Graph.GetNodeTo(this.Index));
 			}
