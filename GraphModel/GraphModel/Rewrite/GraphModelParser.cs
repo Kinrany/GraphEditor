@@ -78,7 +78,7 @@ namespace GraphModelLibrary.Rewrite {
 
 								Color color = Helper.IntToColor[colorNumber];
 
-								int? edgeIndex = graph.GetEdge(nodeFromIndex, nodeToIndex);
+								int? edgeIndex = graph.GetEdgeBetween(nodeFromIndex, nodeToIndex);
 								graph.GetEdgeWeight((int)edgeIndex).Color = color;
 
 								line = queue.Dequeue();
@@ -125,7 +125,7 @@ namespace GraphModelLibrary.Rewrite {
 				string[] edgeValues = new string[N];
 
 				for (int j = 0; j < N; ++j) {
-					int? edgeIndex = graph.GetEdge(i, j);
+					int? edgeIndex = graph.GetEdgeBetween(i, j);
 
 					if (edgeIndex != null) {
 						edgeValues[j] = graph.GetEdgeWeight((int)edgeIndex).Value;

@@ -124,7 +124,7 @@ namespace GraphModelLibrary.Rewrite {
 			return _edges[edgeIndex].Item2;
 		}
 
-		public int[] GetEdges(int nodeFromIndex, int nodeToIndex) {
+		public int[] GetEdgesBetween(int nodeFromIndex, int nodeToIndex) {
 			return _outgoingEdges[nodeFromIndex]
 				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)
 				.ToArray();

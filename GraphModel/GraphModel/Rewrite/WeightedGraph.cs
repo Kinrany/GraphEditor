@@ -88,8 +88,8 @@ namespace GraphModelLibrary.Rewrite {
 			_edgeWeights[edgeIndex] = weight;
 		}
 
-		public int? GetEdge(int nodeFromIndex, int nodeToIndex) {
-			int[] indices = _graph.GetEdges(nodeFromIndex, nodeToIndex);
+		public int? GetEdgeBetween(int nodeFromIndex, int nodeToIndex) {
+			int[] indices = _graph.GetEdgesBetween(nodeFromIndex, nodeToIndex);
 			if (indices.Length > 0) {
 				return indices.First();
 			}
