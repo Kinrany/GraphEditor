@@ -132,7 +132,7 @@ namespace WindowsFormsApplication {
 			_timer.Tick += (s, h) => graphBox.Invalidate();
 			_timer.Start();
 
-            string path = @"C:\Users\Vladimir\Desktop\Diploma\GraphEditor\GraphModel\WindowsFormsApplication\Examples\exampleA1-3.txt";//Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
             GraphModel = GraphModel.Load(path);
             FileLoader.LoadMatrix(path, DataGridMatrix);
             FileLoader.LoadText(path, TextBox);
