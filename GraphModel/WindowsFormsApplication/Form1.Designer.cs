@@ -23,118 +23,137 @@
 		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		private void InitializeComponent() {
-			this.loadGraphButton = new System.Windows.Forms.Button();
-			this.graphBox = new System.Windows.Forms.GroupBox();
-			this.loadExampleButton = new System.Windows.Forms.Button();
-			this.debugLabel = new System.Windows.Forms.Label();
-			this.saveButton = new System.Windows.Forms.Button();
-			this.saveButtonLabel = new System.Windows.Forms.Label();
-			this.CodeImport = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// loadGraphButton
-			// 
-			this.loadGraphButton.Location = new System.Drawing.Point(37, 32);
-			this.loadGraphButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.loadGraphButton.Name = "loadGraphButton";
-			this.loadGraphButton.Size = new System.Drawing.Size(139, 28);
-			this.loadGraphButton.TabIndex = 0;
-			this.loadGraphButton.Text = "Открыть граф";
-			this.loadGraphButton.UseVisualStyleBackColor = true;
-			this.loadGraphButton.Click += new System.EventHandler(this.loadGraphButton_Click);
-			// 
-			// graphBox
-			// 
-			this.graphBox.Location = new System.Drawing.Point(67, 118);
-			this.graphBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.graphBox.Name = "graphBox";
-			this.graphBox.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.graphBox.Size = new System.Drawing.Size(1072, 414);
-			this.graphBox.TabIndex = 2;
-			this.graphBox.TabStop = false;
-			// 
-			// loadExampleButton
-			// 
-			this.loadExampleButton.Location = new System.Drawing.Point(37, 68);
-			this.loadExampleButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.loadExampleButton.Name = "loadExampleButton";
-			this.loadExampleButton.Size = new System.Drawing.Size(139, 28);
-			this.loadExampleButton.TabIndex = 3;
-			this.loadExampleButton.Text = "Открыть пример";
-			this.loadExampleButton.UseVisualStyleBackColor = true;
-			this.loadExampleButton.Click += new System.EventHandler(this.loadExampleButton_Click);
-			// 
-			// debugLabel
-			// 
-			this.debugLabel.AutoSize = true;
-			this.debugLabel.Location = new System.Drawing.Point(788, 556);
-			this.debugLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.debugLabel.Name = "debugLabel";
-			this.debugLabel.Size = new System.Drawing.Size(98, 17);
-			this.debugLabel.TabIndex = 4;
-			this.debugLabel.Text = "<debug label>";
-			// 
-			// saveButton
-			// 
-			this.saveButton.Location = new System.Drawing.Point(260, 32);
-			this.saveButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.saveButton.Name = "saveButton";
-			this.saveButton.Size = new System.Drawing.Size(100, 28);
-			this.saveButton.TabIndex = 5;
-			this.saveButton.Text = "Сохранить";
-			this.saveButton.UseVisualStyleBackColor = true;
-			this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
-			// 
-			// saveButtonLabel
-			// 
-			this.saveButtonLabel.AutoSize = true;
-			this.saveButtonLabel.Location = new System.Drawing.Point(369, 43);
-			this.saveButtonLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.saveButtonLabel.Name = "saveButtonLabel";
-			this.saveButtonLabel.Size = new System.Drawing.Size(0, 17);
-			this.saveButtonLabel.TabIndex = 6;
-			// 
-			// CodeImport
-			// 
-			this.CodeImport.Location = new System.Drawing.Point(403, 32);
-			this.CodeImport.Name = "CodeImport";
-			this.CodeImport.Size = new System.Drawing.Size(130, 28);
-			this.CodeImport.TabIndex = 7;
-			this.CodeImport.Text = "Импорт кода";
-			this.CodeImport.UseVisualStyleBackColor = true;
-			this.CodeImport.Click += new System.EventHandler(this.CodeImport_Click);
-			// 
-			// Form1
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1183, 583);
-			this.Controls.Add(this.CodeImport);
-			this.Controls.Add(this.saveButtonLabel);
-			this.Controls.Add(this.saveButton);
-			this.Controls.Add(this.debugLabel);
-			this.Controls.Add(this.loadExampleButton);
-			this.Controls.Add(this.graphBox);
-			this.Controls.Add(this.loadGraphButton);
-			this.DoubleBuffered = true;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-			this.Name = "Form1";
-			this.Text = "Form1";
-			this.Load += new System.EventHandler(this.Form1_Load);
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.graphBox = new System.Windows.Forms.GroupBox();
+            this.debugLabel = new System.Windows.Forms.Label();
+            this.saveButtonLabel = new System.Windows.Forms.Label();
+            this.DataGridMatrix = new System.Windows.Forms.DataGridView();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripOpenGraph = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSaveGraph = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripImportCode = new System.Windows.Forms.ToolStripMenuItem();
+            this.TextBox = new System.Windows.Forms.RichTextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // graphBox
+            // 
+            this.graphBox.Location = new System.Drawing.Point(67, 118);
+            this.graphBox.Margin = new System.Windows.Forms.Padding(4);
+            this.graphBox.Name = "graphBox";
+            this.graphBox.Padding = new System.Windows.Forms.Padding(4);
+            this.graphBox.Size = new System.Drawing.Size(751, 414);
+            this.graphBox.TabIndex = 2;
+            this.graphBox.TabStop = false;
+            // 
+            // debugLabel
+            // 
+            this.debugLabel.AutoSize = true;
+            this.debugLabel.Location = new System.Drawing.Point(788, 556);
+            this.debugLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.debugLabel.Name = "debugLabel";
+            this.debugLabel.Size = new System.Drawing.Size(98, 17);
+            this.debugLabel.TabIndex = 4;
+            this.debugLabel.Text = "<debug label>";
+            // 
+            // saveButtonLabel
+            // 
+            this.saveButtonLabel.AutoSize = true;
+            this.saveButtonLabel.Location = new System.Drawing.Point(369, 43);
+            this.saveButtonLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.saveButtonLabel.Name = "saveButtonLabel";
+            this.saveButtonLabel.Size = new System.Drawing.Size(0, 17);
+            this.saveButtonLabel.TabIndex = 6;
+            // 
+            // DataGridMatrix
+            // 
+            this.DataGridMatrix.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DataGridMatrix.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DataGridMatrix.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridMatrix.Location = new System.Drawing.Point(825, 135);
+            this.DataGridMatrix.Name = "DataGridMatrix";
+            this.DataGridMatrix.RowTemplate.Height = 24;
+            this.DataGridMatrix.Size = new System.Drawing.Size(346, 179);
+            this.DataGridMatrix.TabIndex = 8;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripOpenGraph,
+            this.toolStripSaveGraph,
+            this.toolStripImportCode});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1183, 28);
+            this.menuStrip1.TabIndex = 10;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripOpenGraph
+            // 
+            this.toolStripOpenGraph.Name = "toolStripOpenGraph";
+            this.toolStripOpenGraph.Size = new System.Drawing.Size(116, 24);
+            this.toolStripOpenGraph.Text = "Открыть граф";
+            this.toolStripOpenGraph.Click += new System.EventHandler(this.toolStripOpenGraph_Click);
+            // 
+            // toolStripSaveGraph
+            // 
+            this.toolStripSaveGraph.Name = "toolStripSaveGraph";
+            this.toolStripSaveGraph.Size = new System.Drawing.Size(132, 24);
+            this.toolStripSaveGraph.Text = "Сохранить граф";
+            this.toolStripSaveGraph.Click += new System.EventHandler(this.toolStripSaveGraph_Click);
+            // 
+            // toolStripImportCode
+            // 
+            this.toolStripImportCode.Name = "toolStripImportCode";
+            this.toolStripImportCode.Size = new System.Drawing.Size(112, 24);
+            this.toolStripImportCode.Text = "Импорт кода";
+            this.toolStripImportCode.Click += new System.EventHandler(this.toolStripImportCode_Click);
+            // 
+            // TextBox
+            // 
+            this.TextBox.BackColor = System.Drawing.SystemColors.Menu;
+            this.TextBox.Location = new System.Drawing.Point(825, 320);
+            this.TextBox.Name = "TextBox";
+            this.TextBox.ReadOnly = true;
+            this.TextBox.Size = new System.Drawing.Size(346, 212);
+            this.TextBox.TabIndex = 11;
+            this.TextBox.Text = "";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1183, 583);
+            this.Controls.Add(this.TextBox);
+            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.DataGridMatrix);
+            this.Controls.Add(this.saveButtonLabel);
+            this.Controls.Add(this.debugLabel);
+            this.Controls.Add(this.graphBox);
+            this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "Form1";
+            this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.Button loadGraphButton;
 		private System.Windows.Forms.GroupBox graphBox;
-		private System.Windows.Forms.Button loadExampleButton;
 		private System.Windows.Forms.Label debugLabel;
-		private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.Label saveButtonLabel;
-		private System.Windows.Forms.Button CodeImport;
-	}
+        private System.Windows.Forms.DataGridView DataGridMatrix;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripOpenGraph;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSaveGraph;
+        private System.Windows.Forms.ToolStripMenuItem toolStripImportCode;
+        private System.Windows.Forms.RichTextBox TextBox;
+    }
 }
 
