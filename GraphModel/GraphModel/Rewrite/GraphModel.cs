@@ -9,10 +9,24 @@ namespace GraphModelLibrary.Rewrite {
 
 		public GraphModel() : base() { }
 
-		public string Text { get; set; }
+		public string Text {
+			get {
+				return _text;
+			}
+			set {
+				if (value == null) {
+					throw new InvalidOperationException("Text can't be null.");
+				}
+
+				_text = value;
+			}
+		}
 
 
+		private string _text = "";
+	}
 
+	public partial class GraphModel { 
 		public class NodeWeight {
 			public NodeWeight(string value = DEFAULT_VALUE) : this(DEFAULT_COLOR) { }
 			public NodeWeight(Color color, string value = DEFAULT_VALUE) {
