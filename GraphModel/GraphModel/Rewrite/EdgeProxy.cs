@@ -30,6 +30,17 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public NodeProxy NodeFrom {
+			get {
+				return new NodeProxy(_graph, _graph.GetNodeFrom(_index));
+			}
+		}
+		public NodeProxy NodeTo {
+			get {
+				return new NodeProxy(_graph, _graph.GetNodeTo(_index));
+			}
+		}
+
 		public static EdgeProxy Create(Graph graph, int nodeToIndex, int nodeFromIndex) {
 			int index = graph.CreateEdge(nodeToIndex, nodeFromIndex);
 			return new EdgeProxy(graph, index);
