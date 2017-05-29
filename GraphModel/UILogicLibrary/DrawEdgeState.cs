@@ -20,7 +20,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
-			EdgeModel edge = new EdgeModel(_start, node);
+			EdgeModel edge = new EdgeModel(_start, node, _defaultNodeColor);
 			_start.AddOutgoingEdge(edge);
 			CurrentState = new DefaultState(EditTool);
 		}
@@ -34,5 +34,7 @@ namespace UILogicLibrary {
 		}
 
 		readonly NodeModel _start;
+
+		static readonly Color _defaultNodeColor = Color.DarkRed;
 	}
 }

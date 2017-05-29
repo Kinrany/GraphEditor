@@ -6,23 +6,22 @@ using System.Text;
 
 namespace GraphModelLibrary {
 	public class NodeModel : Node {
-		public NodeModel(NodeColor color = _defaultColor) :base() {
-			this.Color = color;
-			this.Location = _defaultLocation;
-		}
-		public NodeModel(Point location, NodeColor color = _defaultColor) : base() {
+		public NodeModel() :this(_defaultLocation, _defaultColor) { }
+		public NodeModel(Color color) :this(_defaultLocation, _defaultColor) { }
+		public NodeModel(Point location) : this(location, _defaultColor) { }
+		public NodeModel(Point location, Color color) : base() {
 			this.Color = color;
 			this.Location = location;
 		}
 
-		public NodeColor Color {
+		public Color Color {
 			get; set;
 		}
 		public Point Location {
 			get; set;
 		}
 
-		const NodeColor _defaultColor = NodeColor.Magenta;
-		readonly Point _defaultLocation = Point.Empty;
+		static readonly Color _defaultColor = Color.Magenta;
+		static readonly Point _defaultLocation = Point.Empty;
 	}
 }
