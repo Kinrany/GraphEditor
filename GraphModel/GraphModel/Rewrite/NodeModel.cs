@@ -13,6 +13,11 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static NodeModel Create(GraphModel graph, GraphModel.NodeWeight weight) {
+			int nodeIndex = graph.CreateNode(weight);
+			return new NodeModel(graph, nodeIndex);
+		}
+
 		public EdgeModel AddOutgoingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight) {
 			int edgeIndex = this.Graph.CreateEdge(this.Index, otherNode.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
