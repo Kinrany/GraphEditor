@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary
 {
@@ -120,7 +120,7 @@ namespace UILogicLibrary
 		void DrawSelected(DrawingContext context) {
 			Pen pen = new Pen(Color.DarkBlue, 1);
 			foreach (NodeModel node in Selection) {
-				context.DrawCircle(node.Location, GraphView.NodeRadius + 1, pen);
+				context.DrawCircle(node.Weight.Location, GraphView.NodeRadius + 1, pen);
 			}
 		}
 	}

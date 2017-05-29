@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 using ExtensionMethods;
 using UILogicLibrary;
 
@@ -24,7 +24,7 @@ namespace WindowsFormsApplication {
 			}
 			private set {
 				_graphModel = value;
-				GraphView = new GraphView(_graphModel.Graph);
+				GraphView = new GraphView(_graphModel);
 				GraphModelChanged();
 			}
 		}
@@ -105,12 +105,12 @@ namespace WindowsFormsApplication {
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
-				GraphModel = GraphModel.Load(path);
+				GraphModel = GraphModelParser.Load(path);
 			}
 		}
 		private void loadExampleButton_Click(object sender, EventArgs e) {
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-4.txt");
-			GraphModel = GraphModel.Load(path);
+			GraphModel = GraphModelParser.Load(path);
 		}
 		private void saveButton_Click(object sender, EventArgs e) {
 			if (GraphModel == null) {
@@ -121,7 +121,7 @@ namespace WindowsFormsApplication {
 				DialogResult result = saveFileDialog.ShowDialog();
 				if (result == DialogResult.OK) {
 					string path = saveFileDialog.FileName;
-					GraphModel.Save(path);
+					GraphModelParser.Save(this.GraphModel, path);
 				}
 			}
 		}

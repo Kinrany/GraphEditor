@@ -4,29 +4,29 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
-	public class Selection : IEnumerable<Node> {
+	public class Selection : IEnumerable<NodeModel> {
 		public Selection(EditTool editTool) {
-			this._selectedNodes = new HashSet<Node>();
+			this._selectedNodes = new HashSet<NodeModel>();
 			this._editTool = editTool;
 		}
 
-		public void Add(ICollection<Node> collection) {
-			foreach (Node node in collection) {
+		public void Add(ICollection<NodeModel> collection) {
+			foreach (NodeModel node in collection) {
 				_selectedNodes.Add(node);
 			}
 		}
-		public void Add(params Node[] nodes) {
-			foreach (Node node in nodes) {
+		public void Add(params NodeModel[] nodes) {
+			foreach (NodeModel node in nodes) {
 				_selectedNodes.Add(node);
 			}
 		}
 		public void Add(Rectangle rect) {
-			var list = new List<Node>();
-			foreach (NodeModel node in _editTool.GraphView.Graph) {
-				if (rect.Contains(node.Location)) {
+			var list = new List<NodeModel>();
+			foreach (NodeModel node in NodeModel.Enumerate(this.Graph)) {
+				if (rect.Contains(node.Weight.Location)) {
 					list.Add(node);
 				}
 			}
@@ -36,17 +36,16 @@ namespace UILogicLibrary {
 			_selectedNodes.Clear();
 		}
 		public void Delete() {
-			foreach (Node node in _selectedNodes) {
-				_editTool.GraphView.Graph.Remove(node);
+			foreach (NodeModel node in _selectedNodes) {
 				node.Delete();
 			}
 			_selectedNodes.Clear();
 		}
-		public void Set(ICollection<Node> collection) {
+		public void Set(ICollection<NodeModel> collection) {
 			Clear();
 			Add(collection);
 		}
-		public void Set(params Node[] nodes) {
+		public void Set(params NodeModel[] nodes) {
 			Clear();
 			Add(nodes);
 		}
@@ -60,10 +59,12 @@ namespace UILogicLibrary {
 		}
 		
 		
-		readonly HashSet<Node> _selectedNodes;
-		readonly EditTool _editTool;
+		private readonly HashSet<NodeModel> _selectedNodes;
+		private readonly EditTool _editTool;
 
-		IEnumerator<Node> IEnumerable<Node>.GetEnumerator() {
+		private GraphModel Graph { get { return _editTool.GraphView.Graph; } }
+
+		IEnumerator<NodeModel> IEnumerable<NodeModel>.GetEnumerator() {
 			return _selectedNodes.GetEnumerator();
 		}
 	}

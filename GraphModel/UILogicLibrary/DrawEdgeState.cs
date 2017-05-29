@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
 	class DrawEdgeState : EditToolState {
@@ -12,7 +12,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void Draw(DrawingContext context) {
-			context.DrawArrow(_start.Location, context.MousePosition);
+			context.DrawArrow(_start.Weight.Location, context.MousePosition);
 		}
 
 		public override void MouseLeftClick(Point location) {
@@ -20,8 +20,9 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
-			EdgeModel edge = new EdgeModel(_start, node, _defaultNodeColor);
-			_start.AddOutgoingEdge(edge);
+			EdgeModel edge = _start.AddOutgoingEdge(node);
+			edge.Weight.Color = _defaultNodeColor;
+
 			CurrentState = new DefaultState(EditTool);
 		}
 

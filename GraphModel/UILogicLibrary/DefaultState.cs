@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
 	public class DefaultState : EditToolState {
@@ -18,8 +18,8 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(Point location) {
-			NodeModel node = new NodeModel(location);
-			EditTool.GraphView.Graph.Add(node);
+			NodeModel node = NodeModel.Create(EditTool.GraphView.Graph, new GraphModel.NodeWeight());
+			node.Weight.Location = location;
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
