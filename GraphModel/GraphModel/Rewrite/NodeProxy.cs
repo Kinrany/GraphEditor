@@ -10,14 +10,17 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public Graph Graph {
+			get {
+				ThrowUnlessValid();
+				return _graph;
+			}
+		}
+
 		public int Index {
 			get {
-				if (IsValid) {
-					return _index;
-				}
-				else {
-					throw new InvalidOperationException("This is not a valid node object.");
-				}
+				ThrowUnlessValid();
+				return _index;
 			}
 		}
 
@@ -59,5 +62,11 @@ namespace GraphModelLibrary.Rewrite {
 
 		private Graph _graph;
 		private int _index;
+
+		private void ThrowUnlessValid() {
+			if (!this.IsValid) {
+				throw new InvalidOperationException("This is not a valid node object.")
+			}
+		}
 	}
 }
