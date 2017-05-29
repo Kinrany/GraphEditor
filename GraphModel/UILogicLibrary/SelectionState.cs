@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
 	public class SelectionState : EditToolState {
@@ -21,7 +21,7 @@ namespace UILogicLibrary {
 			Depressed(location);
 		}
 		public override void MouseLeftDepressed(NodeModel node) {
-			Depressed(node.Location);
+			Depressed(node.Weight.Location);
 		}
 
 		Point _start;

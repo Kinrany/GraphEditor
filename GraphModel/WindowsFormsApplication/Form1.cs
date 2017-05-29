@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 using ExtensionMethods;
 using UILogicLibrary;
 
@@ -20,21 +20,12 @@ namespace WindowsFormsApplication {
 
 		public GraphModel GraphModel {
 			get {
-				return _graphModel;
-			}
-			private set {
-				_graphModel = value;
-				GraphView = new GraphView(_graphModel.Graph);
-				GraphModelChanged();
+				return this.GraphView.Graph;
 			}
 		}
 		public GraphView GraphView {
 			get {
-				return _graphView;
-			}
-			private set {
-				_graphView = value;
-				_editTool.GraphView = _graphView;
+				return this._editTool.GraphView;
 			}
 		}
 
@@ -48,9 +39,7 @@ namespace WindowsFormsApplication {
 				return cp;
 			}
 		}
-
-		private GraphModel _graphModel = null;
-		private GraphView _graphView = null;
+		
 		private EditTool _editTool = null;
 		private Timer _timer;
 
@@ -105,12 +94,12 @@ namespace WindowsFormsApplication {
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
-				GraphModel = GraphModel.Load(path);
+				this.SetGraphModel(GraphModelParser.Load(path));
 			}
 		}
 		private void loadExampleButton_Click(object sender, EventArgs e) {
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-4.txt");
-			GraphModel = GraphModel.Load(path);
+			this.SetGraphModel(GraphModelParser.Load(path));
 		}
 		private void saveButton_Click(object sender, EventArgs e) {
 			if (GraphModel == null) {
@@ -121,7 +110,7 @@ namespace WindowsFormsApplication {
 				DialogResult result = saveFileDialog.ShowDialog();
 				if (result == DialogResult.OK) {
 					string path = saveFileDialog.FileName;
-					GraphModel.Save(path);
+					GraphModelParser.Save(this.GraphModel, path);
 				}
 			}
 		}
@@ -138,8 +127,9 @@ namespace WindowsFormsApplication {
 			debugLabel.Text = _editTool.State.ToString();
 		}
 
-		Point ConvertPoint(Point p, Control c1, Control c2) {
-			return c2.PointToClient(c1.PointToScreen(p));
+		private void SetGraphModel(GraphModel graph) {
+			_editTool.GraphView = new GraphView(graph);
+			GraphModelChanged();
 		}
 	}
 }

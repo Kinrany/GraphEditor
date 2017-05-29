@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
 	public interface IGraphView {
@@ -11,7 +11,7 @@ namespace UILogicLibrary {
 	}
 
 	public class GraphView : IGraphView {
-		public GraphView(Graph graph) {
+		public GraphView(GraphModel graph) {
 			this._graph = graph;
 		}
 
@@ -32,15 +32,15 @@ namespace UILogicLibrary {
 			}
 		}
 
-		public Graph Graph {
+		public GraphModel Graph {
 			get {
 				return _graph;
 			}
 		}
 
 		public Object FindClicked(Point p) {
-			foreach (NodeModel node in Graph) {
-				if (distance(node.Location, p) < NodeRadius) {
+			foreach (NodeModel node in NodeModel.Enumerate(_graph)) {
+				if (distance(node.Weight.Location, p) < NodeRadius) {
 					return node;
 				}
 			}
@@ -48,7 +48,7 @@ namespace UILogicLibrary {
 		}
 		
 
-		Graph _graph;
+		GraphModel _graph;
 		int _nodeRadius = 12;
 		int _edgeWidth = 2;
 

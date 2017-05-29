@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using GraphModelLibrary;
+using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
 	class DragState : EditToolState{
@@ -12,7 +12,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseMoved(Point location) {
-			_node.Location = location;
+			_node.Weight.Location = location;
 		}
 
 		public override void MouseLeftDepressed(NodeModel node) {
