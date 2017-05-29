@@ -45,6 +45,22 @@ namespace GraphModelLibrary.Rewrite {
 			return WeightedEdgeProxy<TNode, TEdge>.Create(_graph, otherNode._index, _index, weight);
 		}
 
+		public IEnumerator<WeightedEdgeProxy<TNode, TEdge>> OutgoingEnumerator {
+			get {
+				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
+					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
+				}
+			}
+		}
+
+		public IEnumerator<WeightedEdgeProxy<TNode, TEdge>> IncomingEnumerator {
+			get {
+				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
+					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
+				}
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteNode(_index);
 			_index = -1;

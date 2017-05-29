@@ -118,6 +118,14 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public IEnumerable<int> OutgoingEnumerator(int nodeIndex) {
+			return _graph.OutgoingEnumerator(nodeIndex);
+		}
+
+		public IEnumerable<int> IncomingEnumerator(int nodeIndex) {
+			return _graph.IncomingEnumerator(nodeIndex);
+		}
+
 		public void Reindex() {
 			_graph.NodeReindexEvent += CallNodeReindexEvent;
 			_graph.EdgeReindexEvent += CallEdgeReindexEvent;

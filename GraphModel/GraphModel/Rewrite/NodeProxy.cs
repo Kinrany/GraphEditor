@@ -35,6 +35,22 @@ namespace GraphModelLibrary.Rewrite {
 			return EdgeProxy.Create(_graph, otherNode._index, _index);
 		}
 
+		public IEnumerable<EdgeProxy> OutgoingEnumerator {
+			get {
+				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
+					yield return new EdgeProxy(_graph, edgeIndex);
+				}
+			}
+		}
+
+		public IEnumerable<EdgeProxy> IncomingEnumerator {
+			get {
+				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
+					yield return new EdgeProxy(_graph, edgeIndex);
+				}
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteNode(_index);
 			_index = -1;
