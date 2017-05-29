@@ -11,6 +11,13 @@ namespace GraphModelLibrary.Rewrite {
 			this._index = index;
 		}
 
+		public WeightedGraph<TNode, TEdge> Graph {
+			get {
+				ThrowUnlessValid();
+				return _graph;
+			}
+		}
+
 		public int Index {
 			get {
 				if (IsValid) {
@@ -37,6 +44,17 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public WeightedNodeProxy<TNode, TEdge> NodeFrom {
+			get {
+				return new WeightedNodeProxy<TNode, TEdge>(_graph, _graph.GetNodeFrom(_index));
+			}
+		}
+		public WeightedNodeProxy<TNode, TEdge> NodeTo {
+			get {
+				return new WeightedNodeProxy<TNode, TEdge>(_graph, _graph.GetNodeTo(_index));
+			}
+		}
+
 		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, int nodeFromIndex, int nodeToIndex, TEdge weight) {
 			int edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
 			return new WeightedEdgeProxy<TNode, TEdge>(graph, edgeIndex);
@@ -53,5 +71,11 @@ namespace GraphModelLibrary.Rewrite {
 
 		private WeightedGraph<TNode, TEdge> _graph;
 		private int _index;
+
+		private void ThrowUnlessValid() {
+			if (!this.IsValid) {
+				throw new InvalidOperationException("This is not a valid node object.")
+			}
+		}
 	}
 }
