@@ -67,6 +67,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static IEnumerable<WeightedNodeProxy<TNode, TEdge>> Enumerate(WeightedGraph<TNode, TEdge> graph) {
+			foreach (int nodeIndex in graph.NodeEnumerator) {
+				yield return new WeightedNodeProxy<TNode, TEdge>(graph, nodeIndex);
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteNode(_index);
 			_index = -1;

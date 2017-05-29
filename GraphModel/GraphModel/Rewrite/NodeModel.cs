@@ -39,5 +39,10 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static IEnumerable<NodeModel> Enumerate(GraphModel graph) {
+			foreach (int nodeIndex in graph.NodeEnumerator) {
+				yield return new NodeModel(graph, nodeIndex);
+			}
+		}
 	}
 }

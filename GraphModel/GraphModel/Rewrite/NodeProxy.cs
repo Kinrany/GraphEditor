@@ -71,6 +71,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static IEnumerable<NodeProxy> Enumerate(Graph graph) {
+			foreach (int nodeIndex in graph.NodeEnumerator) {
+				yield return new NodeProxy(graph, nodeIndex);
+			}
+		}
+
 		public void Delete() {
 			_graph.DeleteNode(_index);
 			_index = -1;
