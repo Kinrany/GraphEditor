@@ -60,7 +60,7 @@ namespace GraphModelLibrary.Rewrite {
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {
-				throw new InvalidOperationException("This is not a valid node object.")
+				throw new InvalidOperationException("This is not a valid node object.");
 			}
 		}
 	}
