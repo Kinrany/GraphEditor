@@ -23,6 +23,8 @@ namespace UILogicLibrary
 
 			keyboard.KeyPressed += KeyPressed;
 			this._keyboard = keyboard;
+
+			this._graph = new GraphView(null);
 		}
 
 		public GraphView GraphView {
