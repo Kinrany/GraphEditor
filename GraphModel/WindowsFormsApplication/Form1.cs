@@ -16,10 +16,10 @@ using System.Runtime.InteropServices;
 namespace WindowsFormsApplication {
 	public partial class Form1 : Form {
 		public Form1() {
-            InitializeComponent();
-        }
+			InitializeComponent();
+		}
 
-        public GraphModel GraphModel {
+		public GraphModel GraphModel {
 			get {
 				return this.GraphView.Graph;
 			}
@@ -40,7 +40,7 @@ namespace WindowsFormsApplication {
 				return cp;
 			}
 		}
-		
+
 		private EditTool _editTool = null;
 		private Timer _timer;
 
@@ -51,56 +51,23 @@ namespace WindowsFormsApplication {
 			graphBox.MouseDown += (s, a) => {
 				Point location = a.Location;
 				switch (a.Button) {
-					case MouseButtons.Left:
-						mouse.LeftButtonDown(location);
-						break;
-					case MouseButtons.Right:
-						mouse.RightButtonDown(location);
-						break;
+				case MouseButtons.Left:
+					mouse.LeftButtonDown(location);
+					break;
+				case MouseButtons.Right:
+					mouse.RightButtonDown(location);
+					break;
 				}
 			};
 			graphBox.MouseUp += (s, a) => {
 				Point location = a.Location;
 				switch (a.Button) {
-					case MouseButtons.Left:
-						mouse.LeftButtonUp(location);
-
-                        foreach(var x in GraphModel.Graph)
-                        {
-                            //x.GetIncomingEdges();
-                            /*foreach(var y in GraphModel.Graph)
-                            {
-                                if(x == y)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    x.
-                                }
-                            }*/
-                        }
-                        /*MessageBox.Show(GraphModel.Graph._list.Count.ToString());
-                        DataGridMatrix.ColumnCount = GraphModel.Graph._list.Count;
-                        var row = new DataGridViewRow();
-                        for (int columnIndex = 0; columnIndex < DataGridMatrix.ColumnCount + 1; ++columnIndex)
-                        {
-                            row.Cells.Add(new DataGridViewTextBoxCell()
-                            {
-                                Value = 0
-                            });
-                        }
-                        DataGridMatrix.ColumnCount = DataGridMatrix.ColumnCount + 1;
-                        DataGridMatrix.Rows.Add(row);
-                        for (int i = 0; i < DataGridMatrix.ColumnCount; i++)
-                        {
-                            DataGridMatrix.Rows[i].Cells[DataGridMatrix.ColumnCount - 1].Value = 0;
-                        }*/
-
-                        break;
-					case MouseButtons.Right:
-						mouse.RightButtonUp(location);
-						break;
+				case MouseButtons.Left:
+					mouse.LeftButtonUp(location);
+					break;
+				case MouseButtons.Right:
+					mouse.RightButtonUp(location);
+					break;
 				}
 			};
 			graphBox.MouseMove += (s, a) => {
@@ -121,11 +88,11 @@ namespace WindowsFormsApplication {
 			_timer.Tick += (s, h) => graphBox.Invalidate();
 			_timer.Start();
 
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-            GraphModel = GraphModel.Load(path);
-            FileLoader.LoadMatrix(path, DataGridMatrix);
-            FileLoader.LoadText(path, TextBox);
-        }
+			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
+			SetGraphModel(GraphModelParser.Load(path));
+			FileLoader.LoadMatrix(path, DataGridMatrix);
+			FileLoader.LoadText(path, TextBox);
+		}
 		// buttons
 		private void loadGraphButton_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -184,66 +151,57 @@ namespace WindowsFormsApplication {
 		[return: MarshalAs(UnmanagedType.SysInt)]
 		private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
 
-        private void toolStripOpenGraph_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            FileLoader File = new FileLoader();
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                string path = openFileDialog.FileName;
-                PathToFile = path;
-                GraphModel = GraphModel.Load(path);
-                FileLoader.LoadMatrix(path, DataGridMatrix);
-                FileLoader.LoadText(path, TextBox);
-            }
-        }
+		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			FileLoader File = new FileLoader();
+			DialogResult result = openFileDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				string path = openFileDialog.FileName;
+				PathToFile = path;
+				SetGraphModel(GraphModelParser.Load(path));
+				FileLoader.LoadMatrix(path, DataGridMatrix);
+				FileLoader.LoadText(path, TextBox);
+			}
+		}
 
-        private void toolStripSaveGraph_Click(object sender, EventArgs e)
-        {
-            if (GraphModel == null)
-            {
-                saveButtonLabel.Text = "Сначала нужно открыть граф";
-            }
-            else {
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                DialogResult result = saveFileDialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    string path = saveFileDialog.FileName;
-                    GraphModel.Save(path);
-                }
-            }
-        }
+		private void toolStripSaveGraph_Click(object sender, EventArgs e) {
+			if (GraphModel == null) {
+				saveButtonLabel.Text = "Сначала нужно открыть граф";
+			}
+			else {
+				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				DialogResult result = saveFileDialog.ShowDialog();
+				if (result == DialogResult.OK) {
+					string path = saveFileDialog.FileName;
+					GraphModelParser.Save(this.GraphModel, path);
+				}
+			}
+		}
 
-        private void toolStripImportCode_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                string path = openFileDialog.FileName;
-                string path_to_graph = PathToFile;
+		private void toolStripImportCode_Click(object sender, EventArgs e) {
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			DialogResult result = openFileDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				string path = openFileDialog.FileName;
+				string path_to_graph = PathToFile;
 
-                //MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
+				//MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
 
-                try
-                {
-                    Dynaloader loader = new Dynaloader(path);
-                    solve_t solve = loader.load_function<solve_t>("solve");
-                    string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
-                    MessageBox.Show(path_to_graph_2);
-                    GraphModel = GraphModel.Load(path_to_graph_2);
-                    FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
-                    FileLoader.LoadText(path_to_graph_2, TextBox);
-                }
-                catch(Exception ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-            }
-        }
+				try {
+					Dynaloader loader = new Dynaloader(path);
+					solve_t solve = loader.load_function<solve_t>("solve");
+					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
+					MessageBox.Show(path_to_graph_2);
+					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
+					FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
+					FileLoader.LoadText(path_to_graph_2, TextBox);
+				}
+				catch (Exception ex) {
+					MessageBox.Show(ex.ToString());
+				}
+			}
+		}
 
-        private string PathToFile;
-    }
+		private string PathToFile;
+	}
 }
