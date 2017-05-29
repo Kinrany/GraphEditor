@@ -30,6 +30,13 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static bool operator==(NodeProxy node1, NodeProxy node2) {
+			return node1._graph == node2._graph && node1._index == node2._index;
+		}
+		public static bool operator!=(NodeProxy node1, NodeProxy node2) {
+			return !(node1 == node2);
+		}
+
 		public EdgeProxy AddOutgoingEdge(NodeProxy otherNode) {
 			return EdgeProxy.Create(_graph, _index, otherNode._index);
 		}
