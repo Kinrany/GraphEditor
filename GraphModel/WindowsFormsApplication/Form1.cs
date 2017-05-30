@@ -85,7 +85,27 @@ namespace WindowsFormsApplication {
 			_timer.Start();
 
 			this.SetGraphModel(this.GraphModel);
+
+			this.DataGridMatrix.CellEndEdit += DataGridMatrix_CellEndEdit;
 		}
+
+		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+			int nodeFromIndex = e.RowIndex;
+			int nodeToIndex = e.ColumnIndex;
+			int? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
+			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+			EdgeModel edge;
+			if (edgeIndex != null) {
+				edge = new EdgeModel(GraphModel, (int)edgeIndex);
+			}
+			else {
+				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);
+			}
+
+			edge.Weight.Value = value;
+		}
+
 		// buttons
 		private void loadGraphButton_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();

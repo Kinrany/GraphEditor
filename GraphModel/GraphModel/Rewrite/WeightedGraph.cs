@@ -61,15 +61,15 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void DeleteNode(int nodeIndex) {
-			_nodeWeights.Remove(nodeIndex);
 			_graph.DeleteNode(nodeIndex);
+			_nodeWeights.Remove(nodeIndex);
 
 			this.ChangedEvent();
 		}
 
 		public void DeleteEdge(int edgeIndex) {
-			_edgeWeights.Remove(edgeIndex);
 			_graph.DeleteEdge(edgeIndex);
+			_edgeWeights.Remove(edgeIndex);
 
 			this.ChangedEvent();
 		}

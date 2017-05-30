@@ -24,6 +24,18 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static EdgeModel Create(GraphModel graph, int nodeFromIndex, int nodeToIndex, GraphModel.EdgeWeight weight = null) {
+			if (weight == null) {
+				weight = new GraphModel.EdgeWeight();
+			}
+
+			int edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+			return new EdgeModel(graph, edgeIndex);
+		}
+		public static EdgeModel Create(GraphModel graph, EdgeProxy nodeFrom, EdgeProxy nodeTo, GraphModel.EdgeWeight weight = null) {
+			return Create(graph, nodeFrom.Index, nodeTo.Index, weight);
+		}
+
 		public static EdgeModel Between(GraphModel graph, NodeModel nodeFrom, NodeModel nodeTo) {
 			int? edgeIndex = graph.GetEdgeBetween(nodeFrom.Index, nodeTo.Index);
 			if (edgeIndex == null) {

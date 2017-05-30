@@ -32,11 +32,13 @@ namespace GraphModelLibrary.Rewrite {
 
 		public NodeProxy NodeFrom {
 			get {
+				ThrowUnlessValid();
 				return new NodeProxy(_graph, _graph.GetNodeFrom(_index));
 			}
 		}
 		public NodeProxy NodeTo {
 			get {
+				ThrowUnlessValid();
 				return new NodeProxy(_graph, _graph.GetNodeTo(_index));
 			}
 		}
@@ -74,6 +76,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void Delete() {
+			ThrowUnlessValid();
 			_graph.DeleteEdge(_index);
 			_index = -1;
 			_graph = null;

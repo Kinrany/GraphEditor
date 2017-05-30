@@ -64,6 +64,7 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<EdgeProxy> OutgoingEnumerator {
 			get {
+				ThrowUnlessValid();
 				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
@@ -72,6 +73,7 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<EdgeProxy> IncomingEnumerator {
 			get {
+				ThrowUnlessValid();
 				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
@@ -85,6 +87,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void Delete() {
+			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
 			_index = -1;
 			_graph = null;

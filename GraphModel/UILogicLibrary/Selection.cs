@@ -36,10 +36,12 @@ namespace UILogicLibrary {
 			_selectedNodes.Clear();
 		}
 		public void Delete() {
-			foreach (NodeModel node in _selectedNodes) {
+			var oldSelection = _selectedNodes.ToArray();
+			_selectedNodes.Clear();
+
+			foreach (NodeModel node in oldSelection) {
 				node.Delete();
 			}
-			_selectedNodes.Clear();
 		}
 		public void Set(ICollection<NodeModel> collection) {
 			Clear();
