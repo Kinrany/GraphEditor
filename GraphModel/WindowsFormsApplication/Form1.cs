@@ -127,6 +127,7 @@ namespace WindowsFormsApplication {
 
 		private void SetGraphModel(GraphModel graph) {
 			_editTool.GraphView = new GraphView(graph);
+			_editTool.Selection.Clear();
 			MatrixUpdater.UpdateMatrix(graph, DataGridMatrix);
 			TextBox.Text = graph.Text;
 			saveButtonLabel.Text = "";
@@ -154,8 +155,6 @@ namespace WindowsFormsApplication {
 				string path = openFileDialog.FileName;
 				PathToFile = path;
 				SetGraphModel(GraphModelParser.Load(path));
-				MatrixUpdater.LoadMatrix(path, DataGridMatrix);
-				MatrixUpdater.LoadText(path, TextBox);
 			}
 		}
 
@@ -188,8 +187,6 @@ namespace WindowsFormsApplication {
 					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
 					MessageBox.Show(path_to_graph_2);
 					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
-					MatrixUpdater.LoadMatrix(path_to_graph_2, DataGridMatrix);
-					MatrixUpdater.LoadText(path_to_graph_2, TextBox);
 				}
 				catch (Exception ex) {
 					MessageBox.Show(ex.ToString());
