@@ -223,5 +223,19 @@ namespace WindowsFormsApplication {
 		}
 
 		private string PathToFile;
+
+		private void coloringModeButton_CheckedChanged(object sender, EventArgs e) {
+			RadioButton button = (RadioButton)sender;
+			if (button.Checked) {
+				_editTool.State = new ColoringState(_editTool);
+			}
+		}
+
+		private void defaultModeButton_CheckedChanged(object sender, EventArgs e) {
+			RadioButton button = (RadioButton)sender;
+			if (button.Checked) {
+				_editTool.State = new DefaultState(_editTool);
+			}
+		}
 	}
 }

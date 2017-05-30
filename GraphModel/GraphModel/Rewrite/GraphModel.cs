@@ -72,17 +72,46 @@ namespace GraphModelLibrary.Rewrite {
 				this.Location = new Point(0, 0);
 			}
 
-			public Color Color;
-			public string Value;
-			public Point Location;
+			public Color Color {
+				get {
+					return _color;
+				}
+				set {
+					_color = value;
+					this.FireChangedEvent();
+				}
+			}
+			public string Value {
+				get {
+					return _value;
+				}
+				set {
+					_value = value;
+					this.FireChangedEvent();
+				}
+			}
+			public Point Location {
+				get {
+					return _location;
+				}
+				set {
+					_location = value;
+					this.FireChangedEvent();
+				}
+			}
 
 			public event Action ChangedEvent = () => { };
 			public void FireChangedEvent() {
 				this.ChangedEvent();
 			}
 
+
 			private static Color DEFAULT_COLOR = Color.Blue;
 			private const string DEFAULT_VALUE = "";
+
+			private Color _color;
+			private string _value;
+			private Point _location;
 		}
 
 		public class EdgeWeight {
@@ -93,16 +122,36 @@ namespace GraphModelLibrary.Rewrite {
 				this.Value = value;
 			}
 
-			public Color Color;
-			public string Value;
+			public Color Color {
+				get {
+					return _color;
+				}
+				set {
+					_color = value;
+					this.FireChangedEvent();
+				}
+			}
+			public string Value {
+				get {
+					return _value;
+				}
+				set {
+					_value = value;
+					this.FireChangedEvent();
+				}
+			}
 
 			public event Action ChangedEvent = () => { };
 			public void FireChangedEvent() {
 				this.ChangedEvent();
 			}
 
+
 			private static Color DEFAULT_COLOR = Color.Gray;
 			private const string DEFAULT_VALUE = "";
+
+			private Color _color;
+			private string _value;
 		}
 	}
 }
