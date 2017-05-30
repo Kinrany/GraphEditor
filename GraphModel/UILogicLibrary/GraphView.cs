@@ -12,11 +12,8 @@ namespace UILogicLibrary {
 
 	public class GraphView : IGraphView {
 		public GraphView(GraphModel graph) {
-			this._graph = graph;
-
-			if (_graph != null) {
-				this.setLocations();
-			}
+			this._graph = graph ?? new GraphModel();
+			this.setLocations();
 		}
 
 		public int NodeRadius {

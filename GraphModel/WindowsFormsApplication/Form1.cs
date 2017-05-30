@@ -30,9 +30,6 @@ namespace WindowsFormsApplication {
 			}
 		}
 
-		public event MyDelegate GraphModelChanged;
-		public delegate void MyDelegate();
-
 		protected override CreateParams CreateParams {
 			get {
 				var cp = base.CreateParams;
@@ -45,7 +42,6 @@ namespace WindowsFormsApplication {
 		private Timer _timer;
 
 		private void Form1_Load(object sender, EventArgs e) {
-			GraphModelChanged += () => { saveButtonLabel.Text = ""; };
 
 			var mouse = new Mouse();
 			graphBox.MouseDown += (s, a) => {
@@ -88,10 +84,7 @@ namespace WindowsFormsApplication {
 			_timer.Tick += (s, h) => graphBox.Invalidate();
 			_timer.Start();
 
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			SetGraphModel(GraphModelParser.Load(path));
-			FileLoader.LoadMatrix(path, DataGridMatrix);
-			FileLoader.LoadText(path, TextBox);
+			this.SetGraphModel(this.GraphModel);
 		}
 		// buttons
 		private void loadGraphButton_Click(object sender, EventArgs e) {
@@ -134,7 +127,9 @@ namespace WindowsFormsApplication {
 
 		private void SetGraphModel(GraphModel graph) {
 			_editTool.GraphView = new GraphView(graph);
-			GraphModelChanged();
+			FileLoader.UpdateMatrix(graph, DataGridMatrix);
+			FileLoader.UpdateText(graph, TextBox);
+			saveButtonLabel.Text = "";
 		}
 
 		//Legacy mult

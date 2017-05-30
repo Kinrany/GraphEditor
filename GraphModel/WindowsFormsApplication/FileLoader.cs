@@ -8,14 +8,12 @@ using GraphModelLibrary.Rewrite;
 
 namespace WindowsFormsApplication {
 	class FileLoader {
-		public static void LoadMatrix(string path, DataGridView DataGridMatrix) {
-			GraphModel graph = GraphModelParser.Load(path);
-
-			DataGridMatrix.Rows.Clear();
-			DataGridMatrix.Refresh();
+		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
+			dataGridMatrix.Rows.Clear();
+			dataGridMatrix.Refresh();
 
 			int N = graph.NodeCount;
-			DataGridMatrix.ColumnCount = N;
+			dataGridMatrix.ColumnCount = N;
 			var rowCount = N;
 			var rowLength = N;
 
@@ -28,14 +26,21 @@ namespace WindowsFormsApplication {
 						Value = graph.GetEdgeWeight(edgeIndex).Value
 					});
 				}
-				
-				DataGridMatrix.Rows.Add(row);
+
+				dataGridMatrix.Rows.Add(row);
 			}
 		}
-
-		public static void LoadText(string path, RichTextBox TextBox) {
+		public static void LoadMatrix(string path, DataGridView dataGridMatrix) {
 			GraphModel graph = GraphModelParser.Load(path);
-			TextBox.Text = graph.Text;
+			UpdateMatrix(graph, dataGridMatrix);
+		}
+
+		public static void UpdateText(GraphModel graph, RichTextBox textBox) {
+			textBox.Text = graph.Text;
+		}
+		public static void LoadText(string path, RichTextBox textBox) {
+			GraphModel graph = GraphModelParser.Load(path);
+			UpdateText(graph, textBox);
 		}
 	}
 }
