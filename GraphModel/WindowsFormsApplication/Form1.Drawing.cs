@@ -44,7 +44,12 @@ namespace WindowsFormsApplication {
 				foreach (EdgeModel edge in nodeFrom.OutgoingEnumerator) {
 					NodeModel nodeTo = edge.NodeTo;
 					Color color = edge.Weight.Color;
-					context.DrawArrow(nodeFrom.Weight.Location, nodeTo.Weight.Location, color);
+					string value = edge.Weight.Value;
+
+					// draw only if the edge is not zero
+					if (value != "0") {
+						context.DrawArrow(nodeFrom.Weight.Location, nodeTo.Weight.Location, color);
+					}
 				}
 			}
 		}
