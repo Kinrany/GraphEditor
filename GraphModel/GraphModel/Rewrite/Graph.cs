@@ -181,15 +181,10 @@ namespace GraphModelLibrary.Rewrite {
 				NodeReindexEvent(reindexed.Item1, reindexed.Item2);
 			}
 
-			foreach (var reindexed in _edgeIndices.Reindex) {
-				EdgeReindexEvent(reindexed.Item1, reindexed.Item2);
-			}
-
 			this.ChangedEvent();
 		}
 
-		public event Action<int, int> NodeReindexEvent;
-		public event Action<int, int> EdgeReindexEvent;
+		public event Action<int, int> NodeReindexEvent = (int _, int __) => { };
 
 		public event Action ChangedEvent = () => { };
 

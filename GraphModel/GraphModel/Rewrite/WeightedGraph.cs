@@ -142,14 +142,11 @@ namespace GraphModelLibrary.Rewrite {
 
 		public void Reindex() {
 			_graph.NodeReindexEvent += CallNodeReindexEvent;
-			_graph.EdgeReindexEvent += CallEdgeReindexEvent;
 			_graph.Reindex();
 			_graph.NodeReindexEvent -= CallNodeReindexEvent;
-			_graph.EdgeReindexEvent -= CallEdgeReindexEvent;
 		}
 
-		public event Action<int, int> NodeReindexEvent;
-		public event Action<int, int> EdgeReindexEvent;
+		public event Action<int, int> NodeReindexEvent = (int _, int __) => { };
 
 		public event Action ChangedEvent = () => { };
 
@@ -160,10 +157,6 @@ namespace GraphModelLibrary.Rewrite {
 
 		private void CallNodeReindexEvent(int arg1, int arg2) {
 			NodeReindexEvent(arg1, arg2);
-		}
-
-		private void CallEdgeReindexEvent(int arg1, int arg2) {
-			EdgeReindexEvent(arg1, arg2);
 		}
 	}
 }

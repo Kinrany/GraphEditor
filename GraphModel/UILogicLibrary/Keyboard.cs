@@ -7,7 +7,7 @@ namespace UILogicLibrary {
 	public abstract class Keyboard {
 		public abstract bool IsKeyDown(Key key);
 
-		public event KeyPressedDelegate KeyPressed;
+		public event KeyPressedDelegate KeyPressed = (Key _) => { };
 
 		public delegate void KeyPressedDelegate(Key key);
 
