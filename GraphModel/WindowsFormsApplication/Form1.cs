@@ -243,9 +243,12 @@ namespace WindowsFormsApplication {
 		}
 
 		private void colorPickerButton_Click(object sender, EventArgs e) {
-			ColorDialog dialog = new ColorDialog();
-			dialog.ShowDialog();
-			this._editTool.PickedColor = dialog.Color;
+			colorDialog.CustomColors = Helper.IntToColor
+				.Take(16)
+				.Select((x) => Color.FromArgb(0,x.B,x.G,x.R).ToArgb())
+				.ToArray();
+			colorDialog.ShowDialog();
+			this._editTool.PickedColor = colorDialog.Color;
 		}
 	}
 }

@@ -38,6 +38,7 @@ namespace UILogicLibrary {
 		private void CreateNode(Point location) {
 			var nodeWeight = new GraphModel.NodeWeight();
 			nodeWeight.Location = location;
+			nodeWeight.Color = EditTool.PickedColor;
 
 			NodeModel node = NodeModel.Create(EditTool.GraphView.Graph, nodeWeight);
 

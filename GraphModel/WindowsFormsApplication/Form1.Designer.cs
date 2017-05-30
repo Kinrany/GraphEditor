@@ -35,6 +35,7 @@
 			this.coloringModeRadioButton = new System.Windows.Forms.RadioButton();
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
 			this.colorPickerButton = new System.Windows.Forms.Button();
+			this.colorDialog = new System.Windows.Forms.ColorDialog();
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -156,6 +157,11 @@
 			this.colorPickerButton.UseVisualStyleBackColor = true;
 			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
 			// 
+			// colorDialog
+			// 
+			this.colorDialog.AllowFullOpen = false;
+			this.colorDialog.SolidColorOnly = true;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,6 +201,7 @@
 		private System.Windows.Forms.RadioButton coloringModeRadioButton;
 		private System.Windows.Forms.RadioButton defaultModeButton;
 		private System.Windows.Forms.Button colorPickerButton;
+		private System.Windows.Forms.ColorDialog colorDialog;
 	}
 }
 

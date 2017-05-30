@@ -168,7 +168,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 	}
 
-	static class Helper {
+	public static class Helper {
 
 		static Helper() {
 			// заполняем ColorToInt в соответствии с IntToColor
