@@ -10,9 +10,7 @@ namespace UILogicLibrary {
 		public ColoringState(EditTool editTool) : base(editTool) { }
 
 		public override void MouseLeftClick(NodeModel node) {
-			node.Weight.Color = Color.Red;
+			node.Weight.Color = EditTool.PickedColor;
 		}
-
-
 	}
 }

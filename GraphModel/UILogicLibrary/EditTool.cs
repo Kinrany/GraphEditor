@@ -60,6 +60,15 @@ namespace UILogicLibrary
 			}
 		}
 
+		public Color PickedColor {
+			get {
+				return _pickedColor;
+			}
+			set {
+				_pickedColor = value;
+			}
+		}
+
 		public void Draw(DrawingContext context) {
 			State.Draw(context);
 			DrawSelected(context);
@@ -70,6 +79,8 @@ namespace UILogicLibrary
 		readonly Selection _selectionManager;
 		GraphView _graph = null;
 		EditToolState _state;
+
+		Color _pickedColor = Color.Red;
 
 		void MouseLeftClick(Point p) {
 			Object o = GraphView?.FindClicked(p);
