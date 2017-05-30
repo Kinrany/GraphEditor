@@ -36,14 +36,14 @@ namespace GraphModelLibrary.Rewrite {
 
 		public new void DeleteNode(int nodeIndex) {
 			NodeWeight weight = this.GetNodeWeight(nodeIndex);
-			this.ChangedEvent -= weight.FireChangedEvent;
 			base.DeleteNode(nodeIndex);
+			this.ChangedEvent -= weight.FireChangedEvent;
 		}
 
 		public new void DeleteEdge(int edgeIndex) {
 			EdgeWeight weight = this.GetEdgeWeight(edgeIndex);
-			this.ChangedEvent -= weight.FireChangedEvent;
 			base.DeleteEdge(edgeIndex);
+			this.ChangedEvent -= weight.FireChangedEvent;
 		}
 
 		public new void SetNodeWeight(int nodeIndex, NodeWeight weight) {

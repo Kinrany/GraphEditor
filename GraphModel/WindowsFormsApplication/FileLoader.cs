@@ -10,34 +10,24 @@ namespace WindowsFormsApplication {
 	class MatrixUpdater {
 		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
 			dataGridMatrix.Rows.Clear();
-			dataGridMatrix.Refresh();
 
-			int N = graph.NodeCount;
-			dataGridMatrix.ColumnCount = N;
-			var rowCount = N;
-			var rowLength = N;
+			dataGridMatrix.ColumnCount = graph.NodeCount;
 
-			for (int rowIndex = 0; rowIndex < rowCount; ++rowIndex) {
+			foreach (NodeModel nodeFrom in NodeModel.Enumerate(graph)) {
 				var row = new DataGridViewRow();
 
-				for (int columnIndex = 0; columnIndex < rowLength; ++columnIndex) {
-					int? edgeIndex = graph.GetEdgeBetween(rowIndex, columnIndex);
-
-					string value;
-					if (edgeIndex == null) {
-						value = "";
-					}
-					else {
-						value = graph.GetEdgeWeight((int)edgeIndex).Value;
-					}
+				foreach (NodeModel nodeTo in NodeModel.Enumerate(graph)) {
+					EdgeModel edge = EdgeModel.Between(graph, nodeFrom, nodeTo);
 
 					row.Cells.Add(new DataGridViewTextBoxCell() {
-						Value = value
+						Value = (edge == null) ? "" : edge.Weight.Value
 					});
 				}
 
 				dataGridMatrix.Rows.Add(row);
 			}
+
+			dataGridMatrix.Refresh();
 		}
 	}
 }
