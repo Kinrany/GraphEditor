@@ -8,6 +8,8 @@ namespace GraphModelLibrary.Rewrite {
 		public NodeProxy(Graph graph, int index) {
 			this._graph = graph;
 			this._index = index;
+
+			_graph.NodeReindexEvent += NodeReindexHandler;
 		}
 
 		public Graph Graph {
@@ -89,9 +91,11 @@ namespace GraphModelLibrary.Rewrite {
 		public void Delete() {
 			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
+			_graph.NodeReindexEvent -= NodeReindexHandler;
 			_index = -1;
 			_graph = null;
 		}
+
 
 		private Graph _graph;
 		private int _index;
@@ -99,6 +103,12 @@ namespace GraphModelLibrary.Rewrite {
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {
 				throw new InvalidOperationException("This is not a valid node object.");
+			}
+		}
+
+		private void NodeReindexHandler(int oldIndex, int newIndex) {
+			if (_index == oldIndex) {
+				_index = newIndex;
 			}
 		}
 	}

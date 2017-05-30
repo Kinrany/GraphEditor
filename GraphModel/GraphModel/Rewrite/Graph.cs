@@ -18,6 +18,35 @@ namespace GraphModelLibrary.Rewrite {
 			_outgoingEdges = new Dictionary<int, HashSet<int>>();
 			_incomingEdges = new Dictionary<int, HashSet<int>>();
 			_edges = new Dictionary<int, Tuple<int, int>>();
+
+			this.NodeReindexEvent += ReindexOutgoingEdges;
+			this.NodeReindexEvent += ReindexIncomingEdges;
+			this.NodeReindexEvent += ReindexEdges;
+		}
+
+		private void ReindexOutgoingEdges(int arg1, int arg2) {
+			throw new NotImplementedException();
+		}
+
+		private void ReindexIncomingEdges(int arg1, int arg2) {
+			throw new NotImplementedException();
+		}
+
+		private void ReindexEdges(int arg1, int arg2) {
+			foreach (var edgeKeyValue in _edges) {
+				int nodeFromIndex = edgeKeyValue.Value.Item1;
+				int nodeToIndex = edgeKeyValue.Value.Item2;
+
+				if (nodeFromIndex == arg1) {
+					nodeFromIndex = arg2;
+				}
+				if (nodeToIndex == arg1) {
+					nodeToIndex = arg2;
+				}
+
+				Tuple<int, int> newValue = new Tuple<int, int>(nodeFromIndex, nodeToIndex);
+				_edges[edgeKeyValue.Key] = newValue;
+			}
 		}
 
 		/// <summary>

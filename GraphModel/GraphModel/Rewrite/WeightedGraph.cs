@@ -7,9 +7,13 @@ namespace GraphModelLibrary.Rewrite {
 	public class WeightedGraph<TNode, TEdge> {
 
 		public WeightedGraph() {
-			_graph = new Graph();
 			_nodeWeights = new Dictionary<int, TNode>();
 			_edgeWeights = new Dictionary<int, TEdge>();
+			_graph = new Graph();
+
+			_graph.NodeReindexEvent += (int oldIndex, int newIndex) => {
+				this.NodeReindexEvent(oldIndex, newIndex);
+			};
 		}
 		
 		public int NodeCount {
@@ -141,9 +145,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void Reindex() {
-			_graph.NodeReindexEvent += CallNodeReindexEvent;
 			_graph.Reindex();
-			_graph.NodeReindexEvent -= CallNodeReindexEvent;
 		}
 
 		public event Action<int, int> NodeReindexEvent = (int _, int __) => { };
@@ -154,9 +156,5 @@ namespace GraphModelLibrary.Rewrite {
 		private Graph _graph;
 		private Dictionary<int, TNode> _nodeWeights;
 		private Dictionary<int, TEdge> _edgeWeights;
-
-		private void CallNodeReindexEvent(int arg1, int arg2) {
-			NodeReindexEvent(arg1, arg2);
-		}
 	}
 }

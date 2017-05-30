@@ -9,6 +9,8 @@ namespace GraphModelLibrary.Rewrite {
 		public WeightedNodeProxy(WeightedGraph<TNode, TEdge> graph, int index) {
 			this._graph = graph;
 			this._index = index;
+
+			_graph.NodeReindexEvent += NodeReindexHandler;
 		}
 
 		public WeightedGraph<TNode, TEdge> Graph {
@@ -36,9 +38,11 @@ namespace GraphModelLibrary.Rewrite {
 
 		public TNode Weight {
 			get {
+				ThrowUnlessValid();
 				return _graph.GetNodeWeight(_index);
 			}
 			set {
+				ThrowUnlessValid();
 				_graph.SetNodeWeight(_index, value);
 			}
 		}
@@ -98,12 +102,27 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void Delete() {
+			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
+			_graph.NodeReindexEvent -= NodeReindexHandler;
 			_index = -1;
 			_graph = null;
 		}
 
+
 		private WeightedGraph<TNode, TEdge> _graph;
 		private int _index;
+
+		private void ThrowUnlessValid() {
+			if (!this.IsValid) {
+				throw new InvalidOperationException("This is not a valid node object.");
+			}
+		}
+
+		private void NodeReindexHandler(int oldIndex, int newIndex) {
+			if (_index == oldIndex) {
+				_index = newIndex;
+			}
+		}
 	}
 }
