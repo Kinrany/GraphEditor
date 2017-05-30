@@ -7,7 +7,7 @@ using GraphModelLibrary.Rewrite;
 
 
 namespace WindowsFormsApplication {
-	class FileLoader {
+	class MatrixUpdater {
 		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
 			dataGridMatrix.Rows.Clear();
 			dataGridMatrix.Refresh();
@@ -29,18 +29,6 @@ namespace WindowsFormsApplication {
 
 				dataGridMatrix.Rows.Add(row);
 			}
-		}
-		public static void LoadMatrix(string path, DataGridView dataGridMatrix) {
-			GraphModel graph = GraphModelParser.Load(path);
-			UpdateMatrix(graph, dataGridMatrix);
-		}
-
-		public static void UpdateText(GraphModel graph, RichTextBox textBox) {
-			textBox.Text = graph.Text;
-		}
-		public static void LoadText(string path, RichTextBox textBox) {
-			GraphModel graph = GraphModelParser.Load(path);
-			UpdateText(graph, textBox);
 		}
 	}
 }

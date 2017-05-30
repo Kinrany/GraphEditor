@@ -127,8 +127,8 @@ namespace WindowsFormsApplication {
 
 		private void SetGraphModel(GraphModel graph) {
 			_editTool.GraphView = new GraphView(graph);
-			FileLoader.UpdateMatrix(graph, DataGridMatrix);
-			FileLoader.UpdateText(graph, TextBox);
+			MatrixUpdater.UpdateMatrix(graph, DataGridMatrix);
+			TextBox.Text = graph.Text;
 			saveButtonLabel.Text = "";
 		}
 
@@ -148,14 +148,14 @@ namespace WindowsFormsApplication {
 
 		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
-			FileLoader File = new FileLoader();
+			MatrixUpdater File = new MatrixUpdater();
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
 				PathToFile = path;
 				SetGraphModel(GraphModelParser.Load(path));
-				FileLoader.LoadMatrix(path, DataGridMatrix);
-				FileLoader.LoadText(path, TextBox);
+				MatrixUpdater.LoadMatrix(path, DataGridMatrix);
+				MatrixUpdater.LoadText(path, TextBox);
 			}
 		}
 
@@ -188,8 +188,8 @@ namespace WindowsFormsApplication {
 					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
 					MessageBox.Show(path_to_graph_2);
 					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
-					FileLoader.LoadMatrix(path_to_graph_2, DataGridMatrix);
-					FileLoader.LoadText(path_to_graph_2, TextBox);
+					MatrixUpdater.LoadMatrix(path_to_graph_2, DataGridMatrix);
+					MatrixUpdater.LoadText(path_to_graph_2, TextBox);
 				}
 				catch (Exception ex) {
 					MessageBox.Show(ex.ToString());
