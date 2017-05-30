@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GraphModelLibrary;
+using GraphModelLibrary.Legacy;
 using System.IO;
 
 namespace UnitTestProject {

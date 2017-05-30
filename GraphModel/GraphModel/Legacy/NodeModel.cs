@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class NodeModel : Node {
 		public NodeModel() :this(_defaultLocation, _defaultColor) { }
 		public NodeModel(Color color) :this(_defaultLocation, _defaultColor) { }

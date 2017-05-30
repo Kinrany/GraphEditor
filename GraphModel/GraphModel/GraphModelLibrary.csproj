@@ -58,13 +58,13 @@
   <ItemGroup>
     <Compile Include="ArrayExtension.cs" />
     <Compile Include="BiDictionary.cs" />
-    <Compile Include="EdgeModel.cs" />
-    <Compile Include="Edge.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="GraphModel.cs" />
+    <Compile Include="Legacy\EdgeModel.cs" />
+    <Compile Include="Legacy\Edge.cs" />
+    <Compile Include="Legacy\Graph.cs" />
+    <Compile Include="Legacy\GraphModel.cs" />
     <Compile Include="IKeyValueCollectionExtension.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeModel.cs" />
+    <Compile Include="Legacy\Node.cs" />
+    <Compile Include="Legacy\NodeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rewrite\EdgeModel.cs" />
     <Compile Include="Rewrite\GraphModel.cs" />

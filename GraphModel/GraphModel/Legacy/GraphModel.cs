@@ -8,7 +8,7 @@ using ExtensionMethods;
 using CustomDataStructures;
 
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class GraphModel {
 
 		/// <summary>

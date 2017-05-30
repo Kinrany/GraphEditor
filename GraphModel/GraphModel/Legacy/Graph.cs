@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class Graph : IEnumerable<Node> {
 		public Graph() {
 			_list = new List<Node>();

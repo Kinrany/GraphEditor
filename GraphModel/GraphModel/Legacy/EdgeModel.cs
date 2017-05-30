@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class EdgeModel : Edge {
 		public EdgeModel(Node from, Node to, Color color) : base(from, to) {
 			this._color = color;

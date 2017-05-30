@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class Edge {
 		public Edge(Node from, Node to) {
 			this._from = from;

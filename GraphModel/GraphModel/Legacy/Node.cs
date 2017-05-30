@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GraphModelLibrary {
+namespace GraphModelLibrary.Legacy {
 	public class Node {
 		public Node() {
 			this._incomingEdges = new HashSet<Edge>();
