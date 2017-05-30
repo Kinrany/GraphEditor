@@ -34,25 +34,8 @@ namespace WindowsFormsApplication {
 		}
 
 		public static void LoadText(string path, RichTextBox TextBox) {
-			int counter = 0;
-			string line;
-			string tmp = null;
-
-			System.IO.StreamReader file = new System.IO.StreamReader(path);
-
-			while ((line = file.ReadLine()) != null) {
-				counter++;
-				if (line == "Text:") {
-					while ((line = file.ReadLine()) != null) {
-						tmp += line;
-					}
-				}
-				if (tmp != null) {
-					TextBox.Text = tmp;
-				}
-			}
-
-			file.Close();
+			GraphModel graph = GraphModelParser.Load(path);
+			TextBox.Text = graph.Text;
 		}
 	}
 }
