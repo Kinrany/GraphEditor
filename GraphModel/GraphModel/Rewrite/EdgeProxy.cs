@@ -42,6 +42,13 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public static bool operator ==(EdgeProxy edge1, EdgeProxy edge2) {
+			if (object.ReferenceEquals(edge1, edge2)) {
+				return true;
+			}
+			if (object.ReferenceEquals(edge1, null) || object.ReferenceEquals(edge2, null)) {
+				return false;
+			}
+
 			return edge1._graph == edge2._graph && edge1._index == edge2._index;
 		}
 		public static bool operator !=(EdgeProxy edge1, EdgeProxy edge2) {

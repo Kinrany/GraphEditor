@@ -18,8 +18,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(Point location) {
-			NodeModel node = NodeModel.Create(EditTool.GraphView.Graph, new GraphModel.NodeWeight());
-			node.Weight.Location = location;
+			this.CreateNode(location);
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
@@ -33,6 +32,25 @@ namespace UILogicLibrary {
 		public override void KeyPressed(Keyboard.Key key) {
 			if (key == Keyboard.Key.Delete) {
 				EditTool.Selection.Delete();
+			}
+		}
+
+		private void CreateNode(Point location) {
+			var nodeWeight = new GraphModel.NodeWeight();
+			nodeWeight.Location = location;
+
+			NodeModel node = NodeModel.Create(EditTool.GraphView.Graph, nodeWeight);
+
+			foreach (NodeModel other in NodeModel.Enumerate(EditTool.GraphView.Graph)) {
+				if (node.Equals(other)) {
+					continue;
+				}
+
+				var outgoingEdgeWeight = new GraphModel.EdgeWeight("0");
+				node.AddOutgoingEdge(other, outgoingEdgeWeight);
+
+				var incomingEdgeWeight = new GraphModel.EdgeWeight("0");
+				node.AddIncomingEdge(other, incomingEdgeWeight);
 			}
 		}
 	}

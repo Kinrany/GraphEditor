@@ -31,6 +31,13 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public static bool operator==(NodeProxy node1, NodeProxy node2) {
+			if (object.ReferenceEquals(node1, node2)) {
+				return true;
+			}
+			if (object.ReferenceEquals(node1, null) || object.ReferenceEquals(node2, null)) {
+				return false;
+			}
+
 			return node1._graph == node2._graph && node1._index == node2._index;
 		}
 		public static bool operator!=(NodeProxy node1, NodeProxy node2) {

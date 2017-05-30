@@ -43,6 +43,30 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static bool operator ==(WeightedNodeProxy<TNode, TEdge> node1, WeightedNodeProxy<TNode, TEdge> node2) {
+			if (object.ReferenceEquals(node1, node2)) {
+				return true;
+			}
+			if (object.ReferenceEquals(node1, null) || object.ReferenceEquals(node2, null)) {
+				return false;
+			}
+
+			return node1._graph == node2._graph && node1._index == node2._index;
+		}
+		public static bool operator !=(WeightedNodeProxy<TNode, TEdge> node1, WeightedNodeProxy<TNode, TEdge> node2) {
+			return !(node1 == node2);
+		}
+		public override bool Equals(object obj) {
+			WeightedNodeProxy<TNode, TEdge> other = obj as WeightedNodeProxy<TNode, TEdge>;
+			return other != null && this == other;
+		}
+		public override int GetHashCode() {
+			int hash = 486187739;
+			hash = (hash + 16777619) ^ _graph.GetHashCode();
+			hash = (hash + 16777619) ^ _index.GetHashCode();
+			return hash;
+		}
+
 		public WeightedEdgeProxy<TNode, TEdge> AddOutgoingEdge(WeightedNodeProxy<TNode, TEdge> otherNode, TEdge weight) {
 			return WeightedEdgeProxy<TNode, TEdge>.Create(_graph, _index, otherNode._index, weight);
 		}

@@ -23,5 +23,15 @@ namespace GraphModelLibrary.Rewrite {
 				return new NodeModel(this.Graph, this.Graph.GetNodeTo(this.Index));
 			}
 		}
+
+		public static EdgeModel Between(GraphModel graph, NodeModel nodeFrom, NodeModel nodeTo) {
+			int? edgeIndex = graph.GetEdgeBetween(nodeFrom.Index, nodeTo.Index);
+			if (edgeIndex == null) {
+				return null;
+			}
+			else {
+				return new EdgeModel(graph, (int)edgeIndex);
+			}
+		}
 	}
 }
