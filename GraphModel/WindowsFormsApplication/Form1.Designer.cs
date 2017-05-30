@@ -34,6 +34,7 @@
 			this.TextBox = new System.Windows.Forms.RichTextBox();
 			this.coloringModeRadioButton = new System.Windows.Forms.RadioButton();
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
+			this.colorPickerButton = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
@@ -145,11 +146,22 @@
 			this.defaultModeButton.UseVisualStyleBackColor = true;
 			this.defaultModeButton.CheckedChanged += new System.EventHandler(this.defaultModeButton_CheckedChanged);
 			// 
+			// colorPickerButton
+			// 
+			this.colorPickerButton.Location = new System.Drawing.Point(741, 58);
+			this.colorPickerButton.Name = "colorPickerButton";
+			this.colorPickerButton.Size = new System.Drawing.Size(103, 23);
+			this.colorPickerButton.TabIndex = 14;
+			this.colorPickerButton.Text = "Выбрать цвет";
+			this.colorPickerButton.UseVisualStyleBackColor = true;
+			this.colorPickerButton.Click += new System.EventHandler(this.colorPickerButton_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(887, 474);
+			this.Controls.Add(this.colorPickerButton);
 			this.Controls.Add(this.defaultModeButton);
 			this.Controls.Add(this.coloringModeRadioButton);
 			this.Controls.Add(this.TextBox);
@@ -182,6 +194,7 @@
         private System.Windows.Forms.RichTextBox TextBox;
 		private System.Windows.Forms.RadioButton coloringModeRadioButton;
 		private System.Windows.Forms.RadioButton defaultModeButton;
+		private System.Windows.Forms.Button colorPickerButton;
 	}
 }
 

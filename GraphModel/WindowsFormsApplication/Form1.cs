@@ -143,6 +143,10 @@ namespace WindowsFormsApplication {
 			_editTool.Draw(context);
 
 			debugLabel.Text = _editTool.State.ToString();
+
+			var bounds = g.VisibleClipBounds;
+			var brush = new SolidBrush(_editTool.PickedColor);
+			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
 		}
 
 		private void SetGraphModel(GraphModel graph) {
@@ -236,6 +240,12 @@ namespace WindowsFormsApplication {
 			if (button.Checked) {
 				_editTool.State = new DefaultState(_editTool);
 			}
+		}
+
+		private void colorPickerButton_Click(object sender, EventArgs e) {
+			ColorDialog dialog = new ColorDialog();
+			dialog.ShowDialog();
+			this._editTool.PickedColor = dialog.Color;
 		}
 	}
 }
