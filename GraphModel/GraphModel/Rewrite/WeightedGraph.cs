@@ -45,23 +45,33 @@ namespace GraphModelLibrary.Rewrite {
 		public int CreateNode(TNode weight) {
 			int index = _graph.CreateNode();
 			_nodeWeights[index] = weight;
+
+			this.ChangedEvent();
+
 			return index;
 		}
 		
 		public int CreateEdge(int nodeFromIndex, int nodeToIndex, TEdge weight) {
 			int edgeIndex = _graph.CreateEdge(nodeFromIndex, nodeToIndex);
 			_edgeWeights[edgeIndex] = weight;
+
+			this.ChangedEvent();
+
 			return edgeIndex;
 		}
 
 		public void DeleteNode(int nodeIndex) {
 			_nodeWeights.Remove(nodeIndex);
 			_graph.DeleteNode(nodeIndex);
+
+			this.ChangedEvent();
 		}
 
 		public void DeleteEdge(int edgeIndex) {
 			_edgeWeights.Remove(edgeIndex);
 			_graph.DeleteEdge(edgeIndex);
+
+			this.ChangedEvent();
 		}
 
 		public int GetNodeFrom(int edgeIndex) {
@@ -82,10 +92,14 @@ namespace GraphModelLibrary.Rewrite {
 
 		public void SetNodeWeight(int nodeIndex, TNode weight) {
 			_nodeWeights[nodeIndex] = weight;
+
+			this.ChangedEvent();
 		}
 
 		public void SetEdgeWeight(int edgeIndex, TEdge weight) {
 			_edgeWeights[edgeIndex] = weight;
+
+			this.ChangedEvent();
 		}
 
 		public int? GetEdgeBetween(int nodeFromIndex, int nodeToIndex) {
@@ -136,6 +150,8 @@ namespace GraphModelLibrary.Rewrite {
 
 		public event Action<int, int> NodeReindexEvent;
 		public event Action<int, int> EdgeReindexEvent;
+
+		public event Action ChangedEvent = () => { };
 
 
 		private Graph _graph;

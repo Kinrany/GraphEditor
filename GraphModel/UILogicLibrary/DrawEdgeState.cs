@@ -20,8 +20,8 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
-			EdgeModel edge = _start.AddOutgoingEdge(node);
-			edge.Weight.Color = _defaultNodeColor;
+			var edgeWeight = new GraphModel.EdgeWeight(_defaultEdgeColor, "1");
+			EdgeModel edge = _start.AddOutgoingEdge(node, edgeWeight);
 
 			CurrentState = new DefaultState(EditTool);
 		}
@@ -36,6 +36,6 @@ namespace UILogicLibrary {
 
 		readonly NodeModel _start;
 
-		static readonly Color _defaultNodeColor = Color.Black;
+		static readonly Color _defaultEdgeColor = Color.Black;
 	}
 }

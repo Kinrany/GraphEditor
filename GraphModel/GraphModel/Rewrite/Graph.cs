@@ -64,6 +64,9 @@ namespace GraphModelLibrary.Rewrite {
 			int nodeIndex = _nodeIndices.NewIndex();
 			_outgoingEdges[nodeIndex] = new HashSet<int>();
 			_incomingEdges[nodeIndex] = new HashSet<int>();
+
+			this.ChangedEvent();
+
 			return nodeIndex;
 		}
 
@@ -78,6 +81,9 @@ namespace GraphModelLibrary.Rewrite {
 			_outgoingEdges[nodeFromIndex].Add(edgeIndex);
 			_incomingEdges[nodeToIndex].Add(edgeIndex);
 			_edges[edgeIndex] = new Tuple<int, int>(nodeFromIndex, nodeToIndex);
+
+			this.ChangedEvent();
+
 			return edgeIndex;
 		}
 		
@@ -92,6 +98,8 @@ namespace GraphModelLibrary.Rewrite {
 			_edges.Remove(edgeIndex);
 
 			_edgeIndices.Remove(edgeIndex);
+
+			this.ChangedEvent();
 		}
 
 		/// <summary>
@@ -114,6 +122,8 @@ namespace GraphModelLibrary.Rewrite {
 			_incomingEdges.Remove(nodeIndex);
 
 			_nodeIndices.Remove(nodeIndex);
+
+			this.ChangedEvent();
 		}
 
 		public int GetNodeFrom(int edgeIndex) {
@@ -174,10 +184,14 @@ namespace GraphModelLibrary.Rewrite {
 			foreach (var reindexed in _edgeIndices.Reindex) {
 				EdgeReindexEvent(reindexed.Item1, reindexed.Item2);
 			}
+
+			this.ChangedEvent();
 		}
 
 		public event Action<int, int> NodeReindexEvent;
 		public event Action<int, int> EdgeReindexEvent;
+
+		public event Action ChangedEvent = () => { };
 
 		private INodeIndexList _nodeIndices;
 		private IEdgeIndexList _edgeIndices;

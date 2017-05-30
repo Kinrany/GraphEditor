@@ -126,11 +126,19 @@ namespace WindowsFormsApplication {
 		}
 
 		private void SetGraphModel(GraphModel graph) {
+			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
+
 			_editTool.GraphView = new GraphView(graph);
 			_editTool.Selection.Clear();
-			MatrixUpdater.UpdateMatrix(graph, DataGridMatrix);
-			TextBox.Text = graph.Text;
+
+			graph.ChangedEvent += OnGraphModelChanged;
+			OnGraphModelChanged();
+
 			saveButtonLabel.Text = "";
+		}
+		private void OnGraphModelChanged() {
+			MatrixUpdater.UpdateMatrix(this.GraphModel, DataGridMatrix);
+			TextBox.Text = this.GraphModel.Text;
 		}
 
 		//Legacy mult

@@ -21,9 +21,18 @@ namespace WindowsFormsApplication {
 				var row = new DataGridViewRow();
 
 				for (int columnIndex = 0; columnIndex < rowLength; ++columnIndex) {
-					int edgeIndex = (int)graph.GetEdgeBetween(rowIndex, columnIndex);
+					int? edgeIndex = graph.GetEdgeBetween(rowIndex, columnIndex);
+
+					string value;
+					if (edgeIndex == null) {
+						value = "";
+					}
+					else {
+						value = graph.GetEdgeWeight((int)edgeIndex).Value;
+					}
+
 					row.Cells.Add(new DataGridViewTextBoxCell() {
-						Value = graph.GetEdgeWeight(edgeIndex).Value
+						Value = value
 					});
 				}
 

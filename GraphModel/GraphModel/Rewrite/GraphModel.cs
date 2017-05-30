@@ -22,6 +22,43 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public new int CreateNode(NodeWeight weight) {
+			int nodeIndex = base.CreateNode(weight);
+			this.ChangedEvent += weight.FireChangedEvent;
+			return nodeIndex;
+		}
+
+		public new int CreateEdge(int nodeFromIndex, int nodeToIndex, EdgeWeight weight) {
+			int edgeIndex = base.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+			this.ChangedEvent += weight.FireChangedEvent;
+			return edgeIndex;
+		}
+
+		public new void DeleteNode(int nodeIndex) {
+			NodeWeight weight = this.GetNodeWeight(nodeIndex);
+			this.ChangedEvent -= weight.FireChangedEvent;
+			base.DeleteNode(nodeIndex);
+		}
+
+		public new void DeleteEdge(int edgeIndex) {
+			EdgeWeight weight = this.GetEdgeWeight(edgeIndex);
+			this.ChangedEvent -= weight.FireChangedEvent;
+			base.DeleteEdge(edgeIndex);
+		}
+
+		public new void SetNodeWeight(int nodeIndex, NodeWeight weight) {
+			NodeWeight oldWeight = this.GetNodeWeight(nodeIndex);
+			this.ChangedEvent -= oldWeight.FireChangedEvent;
+			this.ChangedEvent += weight.FireChangedEvent;
+			base.SetNodeWeight(nodeIndex, weight);
+		}
+
+		public new void SetEdgeWeight(int edgeIndex, EdgeWeight weight) {
+			EdgeWeight oldWeight = this.GetEdgeWeight(edgeIndex);
+			this.ChangedEvent -= oldWeight.FireChangedEvent;
+			this.ChangedEvent += weight.FireChangedEvent;
+			base.SetEdgeWeight(edgeIndex, weight);
+		}
 
 		private string _text = "";
 	}
@@ -39,6 +76,11 @@ namespace GraphModelLibrary.Rewrite {
 			public string Value;
 			public Point Location;
 
+			public event Action ChangedEvent = () => { };
+			public void FireChangedEvent() {
+				this.ChangedEvent();
+			}
+
 			private static Color DEFAULT_COLOR = Color.Blue;
 			private const string DEFAULT_VALUE = "";
 		}
@@ -53,6 +95,11 @@ namespace GraphModelLibrary.Rewrite {
 
 			public Color Color;
 			public string Value;
+
+			public event Action ChangedEvent = () => { };
+			public void FireChangedEvent() {
+				this.ChangedEvent();
+			}
 
 			private static Color DEFAULT_COLOR = Color.Gray;
 			private const string DEFAULT_VALUE = "";
