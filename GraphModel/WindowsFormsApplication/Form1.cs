@@ -250,5 +250,19 @@ namespace WindowsFormsApplication {
 			colorDialog.ShowDialog();
 			this._editTool.PickedColor = colorDialog.Color;
 		}
+
+		private void ToolStripSaveImage_Click(object sender, EventArgs eventArgs) {
+			Rectangle rect = graphBox.ClientRectangle;
+			Bitmap bitmap = new Bitmap(rect.Width, rect.Height);
+			graphBox.DrawToBitmap(bitmap, new Rectangle(0, 0, rect.Width, rect.Height));
+
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.DefaultExt = ".png";
+			dialog.Filter = "PNG files |*.png";
+			dialog.ShowDialog();
+			var path = dialog.FileName;
+			bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
+			dialog.Dispose();
+		}
 	}
 }

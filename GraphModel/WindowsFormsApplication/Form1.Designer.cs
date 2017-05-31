@@ -31,6 +31,7 @@
 			this.toolStripOpenGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSaveGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripImportCode = new System.Windows.Forms.ToolStripMenuItem();
+			this.ToolStripSaveImage = new System.Windows.Forms.ToolStripMenuItem();
 			this.TextBox = new System.Windows.Forms.RichTextBox();
 			this.coloringModeRadioButton = new System.Windows.Forms.RadioButton();
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
@@ -83,7 +84,8 @@
 			this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripOpenGraph,
             this.toolStripSaveGraph,
-            this.toolStripImportCode});
+            this.toolStripImportCode,
+            this.ToolStripSaveImage});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -111,6 +113,13 @@
 			this.toolStripImportCode.Size = new System.Drawing.Size(91, 20);
 			this.toolStripImportCode.Text = "Импорт кода";
 			this.toolStripImportCode.Click += new System.EventHandler(this.toolStripImportCode_Click);
+			// 
+			// ToolStripSaveImage
+			// 
+			this.ToolStripSaveImage.Name = "ToolStripSaveImage";
+			this.ToolStripSaveImage.Size = new System.Drawing.Size(154, 20);
+			this.ToolStripSaveImage.Text = "Сохранить изображение";
+			this.ToolStripSaveImage.Click += new System.EventHandler(this.ToolStripSaveImage_Click);
 			// 
 			// TextBox
 			// 
@@ -202,6 +211,7 @@
 		private System.Windows.Forms.RadioButton defaultModeButton;
 		private System.Windows.Forms.Button colorPickerButton;
 		private System.Windows.Forms.ColorDialog colorDialog;
+		private System.Windows.Forms.ToolStripMenuItem ToolStripSaveImage;
 	}
 }
 
