@@ -9,7 +9,11 @@ namespace WindowsFormsApplication {
 	class Dynaloader {
 		private IntPtr m_dll = IntPtr.Zero;
 
-		public Dynaloader(Form1 form) {
+        public Dynaloader()
+        {
+        }
+
+        public Dynaloader(Form1 form) {
 		}
 
 		public Dynaloader(string dll_name) {

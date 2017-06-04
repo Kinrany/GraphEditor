@@ -5,7 +5,8 @@
 
 extern "C"
 {
-	__declspec(dllexport) const char* solve(char* file)
+	__declspec(dllexport) 
+	const char* solve(char* file)
 	{
 		std::string name = file;
 		std::string outname = name.substr(0, name.size() - 4) + "c.txt";

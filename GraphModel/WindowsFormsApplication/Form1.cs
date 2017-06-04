@@ -175,11 +175,15 @@ namespace WindowsFormsApplication {
 		[return: MarshalAs(UnmanagedType.LPStr)]
 		private delegate string adv_print_t([MarshalAs(UnmanagedType.LPStr)]string path);
 
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		[return: MarshalAs(UnmanagedType.SysInt)]
-		private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.SysInt)]
+        private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
 
-		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.SysInt)]
+        private delegate IntPtr check_t([MarshalAs(UnmanagedType.LPStr)] string path);
+
+        private void toolStripOpenGraph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			MatrixUpdater File = new MatrixUpdater();
 			DialogResult result = openFileDialog.ShowDialog();
@@ -217,8 +221,14 @@ namespace WindowsFormsApplication {
 					Dynaloader loader = new Dynaloader(path);
 					solve_t solve = loader.load_function<solve_t>("solve");
 					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
-					MessageBox.Show(path_to_graph_2);
-					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
+                    SetGraphModel(GraphModelParser.Load(path_to_graph_2));
+                    //MessageBox.Show(path_to_graph_2);
+                    if (checker.loaded())
+                    {
+                        check_t check = loader.load_function<check_t>("check");
+                        string path_to_graph_3 = Marshal.PtrToStringAnsi(check(path_to_graph_2));
+                        SetGraphModel(GraphModelParser.Load(path_to_graph_3));
+                    }
 				}
 				catch (Exception ex) {
 					MessageBox.Show(ex.ToString());
@@ -226,9 +236,28 @@ namespace WindowsFormsApplication {
 			}
 		}
 
-		private string PathToFile;
+        private void LoadCheckerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                string path = openFileDialog.FileName;
+                try
+                {
+                    checker = new Dynaloader(path);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            }
+        }
 
-		private void coloringModeButton_CheckedChanged(object sender, EventArgs e) {
+        private string PathToFile;
+        private Dynaloader checker = new Dynaloader();
+
+        private void coloringModeButton_CheckedChanged(object sender, EventArgs e) {
 			RadioButton button = (RadioButton)sender;
 			if (button.Checked) {
 				_editTool.State = new ColoringState(_editTool);
@@ -250,5 +279,5 @@ namespace WindowsFormsApplication {
 			colorDialog.ShowDialog();
 			this._editTool.PickedColor = colorDialog.Color;
 		}
-	}
+    }
 }
