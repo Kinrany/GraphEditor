@@ -12,6 +12,7 @@ namespace UILogicLibrary {
 		public readonly Point MousePosition;
 		public Color DefaultColor = Color.Black;
 		public float DefaultWidth = 1;
+		public Font DefaultFont = new Font(FontFamily.GenericMonospace, 14, FontStyle.Bold);
 
 		public DrawingContext(Graphics g, Point mouse) {
 			this.Graphics = g;
@@ -82,6 +83,12 @@ namespace UILogicLibrary {
 
             Graphics.DrawLine(pen, a, b);
         }
+		public void DrawText(string text, PointF position, Brush brush = null) {
+			brush = brush ?? this.DefaultBrush;
+			Font font = DefaultFont;
+			position = position - new SizeF(font.Size/2 + 4, font.Size/2 + 2);
+			Graphics.DrawString(text, DefaultFont, brush, position);
+		}
 
 		Pen _pen;
 		SolidBrush _brush;

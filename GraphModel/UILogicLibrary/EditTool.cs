@@ -72,6 +72,7 @@ namespace UILogicLibrary
 		public void Draw(DrawingContext context) {
 			State.Draw(context);
 			DrawSelected(context);
+			DrawNodeNumbers(context);
 		}
 
 		readonly Mouse _mouse;
@@ -134,6 +135,11 @@ namespace UILogicLibrary
 			Pen pen = new Pen(Color.DarkBlue, 1);
 			foreach (NodeModel node in Selection) {
 				context.DrawCircle(node.Weight.Location, GraphView.NodeRadius + 1, pen);
+			}
+		}
+		void DrawNodeNumbers(DrawingContext context) {
+			foreach (NodeModel node in NodeModel.Enumerate(GraphView.Graph)) {
+				context.DrawText(node.Index.ToString(), node.Weight.Location, Brushes.Black);
 			}
 		}
 	}
