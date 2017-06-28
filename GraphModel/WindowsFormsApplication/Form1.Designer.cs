@@ -62,6 +62,7 @@
 			this.debugLabel.Size = new System.Drawing.Size(74, 13);
 			this.debugLabel.TabIndex = 4;
 			this.debugLabel.Text = "<debug label>";
+			this.debugLabel.Visible = false;
 			// 
 			// saveButtonLabel
 			// 
