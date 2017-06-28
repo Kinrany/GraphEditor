@@ -7,7 +7,7 @@ using System.Text;
 using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
-	public class GraphModelParser {
+	public static class GraphModelParser {
 		/// <summary>
 		/// Загружает граф из файла.
 		/// </summary>
