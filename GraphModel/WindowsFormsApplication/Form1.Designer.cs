@@ -43,16 +43,21 @@
 			// 
 			// graphBox
 			// 
-			this.graphBox.Location = new System.Drawing.Point(50, 96);
+			this.graphBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.graphBox.Location = new System.Drawing.Point(12, 96);
 			this.graphBox.Name = "graphBox";
-			this.graphBox.Size = new System.Drawing.Size(563, 336);
+			this.graphBox.Size = new System.Drawing.Size(623, 415);
 			this.graphBox.TabIndex = 2;
 			this.graphBox.TabStop = false;
 			// 
 			// debugLabel
 			// 
+			this.debugLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.debugLabel.AutoSize = true;
-			this.debugLabel.Location = new System.Drawing.Point(591, 452);
+			this.debugLabel.Enabled = false;
+			this.debugLabel.Location = new System.Drawing.Point(756, 35);
 			this.debugLabel.Name = "debugLabel";
 			this.debugLabel.Size = new System.Drawing.Size(74, 13);
 			this.debugLabel.TabIndex = 4;
@@ -70,14 +75,15 @@
 			// 
 			this.DataGridMatrix.AllowUserToAddRows = false;
 			this.DataGridMatrix.AllowUserToDeleteRows = false;
+			this.DataGridMatrix.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.DataGridMatrix.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.DataGridMatrix.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			this.DataGridMatrix.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.DataGridMatrix.Location = new System.Drawing.Point(619, 110);
+			this.DataGridMatrix.Location = new System.Drawing.Point(640, 96);
 			this.DataGridMatrix.Margin = new System.Windows.Forms.Padding(2);
 			this.DataGridMatrix.Name = "DataGridMatrix";
 			this.DataGridMatrix.RowTemplate.Height = 24;
-			this.DataGridMatrix.Size = new System.Drawing.Size(260, 145);
+			this.DataGridMatrix.Size = new System.Drawing.Size(330, 273);
 			this.DataGridMatrix.TabIndex = 8;
 			// 
 			// menuStrip1
@@ -91,7 +97,7 @@
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-			this.menuStrip1.Size = new System.Drawing.Size(887, 24);
+			this.menuStrip1.Size = new System.Drawing.Size(981, 24);
 			this.menuStrip1.TabIndex = 10;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -125,11 +131,13 @@
 			// 
 			// TextBox
 			// 
+			this.TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TextBox.BackColor = System.Drawing.SystemColors.Menu;
-			this.TextBox.Location = new System.Drawing.Point(619, 260);
+			this.TextBox.Location = new System.Drawing.Point(640, 373);
 			this.TextBox.Margin = new System.Windows.Forms.Padding(2);
 			this.TextBox.Name = "TextBox";
-			this.TextBox.Size = new System.Drawing.Size(260, 173);
+			this.TextBox.Size = new System.Drawing.Size(330, 138);
 			this.TextBox.TabIndex = 11;
 			this.TextBox.Text = "";
 			this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
@@ -137,7 +145,7 @@
 			// coloringModeRadioButton
 			// 
 			this.coloringModeRadioButton.AutoSize = true;
-			this.coloringModeRadioButton.Location = new System.Drawing.Point(506, 58);
+			this.coloringModeRadioButton.Location = new System.Drawing.Point(12, 73);
 			this.coloringModeRadioButton.Name = "coloringModeRadioButton";
 			this.coloringModeRadioButton.Size = new System.Drawing.Size(75, 17);
 			this.coloringModeRadioButton.TabIndex = 12;
@@ -149,18 +157,19 @@
 			// 
 			this.defaultModeButton.AutoSize = true;
 			this.defaultModeButton.Checked = true;
-			this.defaultModeButton.Location = new System.Drawing.Point(506, 35);
+			this.defaultModeButton.Location = new System.Drawing.Point(12, 50);
 			this.defaultModeButton.Name = "defaultModeButton";
-			this.defaultModeButton.Size = new System.Drawing.Size(65, 17);
+			this.defaultModeButton.Size = new System.Drawing.Size(109, 17);
 			this.defaultModeButton.TabIndex = 13;
 			this.defaultModeButton.TabStop = true;
-			this.defaultModeButton.Text = "Дефолт";
+			this.defaultModeButton.Text = "Редактирование";
 			this.defaultModeButton.UseVisualStyleBackColor = true;
 			this.defaultModeButton.CheckedChanged += new System.EventHandler(this.defaultModeButton_CheckedChanged);
 			// 
 			// colorPickerButton
 			// 
-			this.colorPickerButton.Location = new System.Drawing.Point(741, 58);
+			this.colorPickerButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.colorPickerButton.Location = new System.Drawing.Point(532, 67);
 			this.colorPickerButton.Name = "colorPickerButton";
 			this.colorPickerButton.Size = new System.Drawing.Size(103, 23);
 			this.colorPickerButton.TabIndex = 14;
@@ -177,7 +186,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(887, 474);
+			this.ClientSize = new System.Drawing.Size(981, 523);
 			this.Controls.Add(this.colorPickerButton);
 			this.Controls.Add(this.defaultModeButton);
 			this.Controls.Add(this.coloringModeRadioButton);
@@ -189,7 +198,7 @@
 			this.Controls.Add(this.graphBox);
 			this.DoubleBuffered = true;
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Шкатулка графов";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
