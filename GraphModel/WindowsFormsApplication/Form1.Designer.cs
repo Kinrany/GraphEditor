@@ -169,8 +169,8 @@
 			// 
 			// colorPickerButton
 			// 
-			this.colorPickerButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.colorPickerButton.Location = new System.Drawing.Point(532, 67);
+			this.colorPickerButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.colorPickerButton.Location = new System.Drawing.Point(532, 70);
 			this.colorPickerButton.Name = "colorPickerButton";
 			this.colorPickerButton.Size = new System.Drawing.Size(103, 23);
 			this.colorPickerButton.TabIndex = 14;
