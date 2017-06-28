@@ -24,6 +24,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static IEnumerable<EdgeModel> Enumerate (GraphModel graph) {
+			foreach (int edgeIndex in graph.EdgeEnumerator) {
+				yield return new EdgeModel(graph, edgeIndex);
+			}
+		}
+
 		public static EdgeModel Create(GraphModel graph, int nodeFromIndex, int nodeToIndex, GraphModel.EdgeWeight weight = null) {
 			if (weight == null) {
 				weight = new GraphModel.EdgeWeight();

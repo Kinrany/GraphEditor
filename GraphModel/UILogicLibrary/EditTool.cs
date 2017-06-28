@@ -72,6 +72,7 @@ namespace UILogicLibrary
 		public void Draw(DrawingContext context) {
 			State.Draw(context);
 			DrawSelected(context);
+			DrawEdgeValues(context);
 			DrawNodeNumbers(context);
 		}
 
@@ -140,6 +141,19 @@ namespace UILogicLibrary
 		void DrawNodeNumbers(DrawingContext context) {
 			foreach (NodeModel node in NodeModel.Enumerate(GraphView.Graph)) {
 				context.DrawText(node.Index.ToString(), node.Weight.Location, Brushes.Black);
+			}
+		}
+		void DrawEdgeValues(DrawingContext context) {
+			foreach (EdgeModel edge in EdgeModel.Enumerate(GraphView.Graph)) {
+				Point nodeFromLocation = edge.NodeFrom.Weight.Location;
+				Point nodeToLocation = edge.NodeTo.Weight.Location;
+				PointF drawPosition = new PointF(
+					nodeFromLocation.X / 2.0f + nodeToLocation.X / 2.0f,
+					nodeFromLocation.Y / 2.0f + nodeToLocation.Y / 2.0f);
+				string value = edge.Weight.Value;
+				if (value != "" && value != "0") {
+					context.DrawText(value, drawPosition);
+				}
 			}
 		}
 	}
