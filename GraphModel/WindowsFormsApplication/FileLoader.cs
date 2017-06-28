@@ -9,12 +9,20 @@ using GraphModelLibrary.Rewrite;
 namespace WindowsFormsApplication {
 	class MatrixUpdater {
 		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
-			dataGridMatrix.Rows.Clear();
+			dataGridMatrix.Columns.Clear();
 
-			dataGridMatrix.ColumnCount = graph.NodeCount;
+			dataGridMatrix.TopLeftHeaderCell.Value = @"from\to";
+			dataGridMatrix.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader);
+
+			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
+				var column = new DataGridViewTextBoxColumn();
+				column.Name = node.Index.ToString();
+				dataGridMatrix.Columns.Add(column);
+			}
 
 			foreach (NodeModel nodeFrom in NodeModel.Enumerate(graph)) {
 				var row = new DataGridViewRow();
+				row.HeaderCell.Value = nodeFrom.Index.ToString();
 
 				foreach (NodeModel nodeTo in NodeModel.Enumerate(graph)) {
 					EdgeModel edge = EdgeModel.Between(graph, nodeFrom, nodeTo);

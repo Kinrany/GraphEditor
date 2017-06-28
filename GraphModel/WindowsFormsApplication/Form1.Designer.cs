@@ -68,6 +68,8 @@
 			// 
 			// DataGridMatrix
 			// 
+			this.DataGridMatrix.AllowUserToAddRows = false;
+			this.DataGridMatrix.AllowUserToDeleteRows = false;
 			this.DataGridMatrix.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.DataGridMatrix.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			this.DataGridMatrix.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
