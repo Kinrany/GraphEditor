@@ -79,6 +79,7 @@ namespace WindowsFormsApplication {
 
 			graphBox.Paint += graphBox_Draw;
 
+			// automatically invalidates graphBox every X milliseconds
 			_timer = new Timer();
 			_timer.Interval = 1000 / 30;
 			_timer.Tick += (s, h) => graphBox.Invalidate();
