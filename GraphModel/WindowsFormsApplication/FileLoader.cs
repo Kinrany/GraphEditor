@@ -11,7 +11,7 @@ namespace WindowsFormsApplication {
 		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
 			dataGridMatrix.Columns.Clear();
 
-			dataGridMatrix.TopLeftHeaderCell.Value = @"from\to";
+			dataGridMatrix.TopLeftHeaderCell.Value = @"FROM \ TO";
 			dataGridMatrix.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader);
 
 			foreach (NodeModel node in NodeModel.Enumerate(graph)) {

@@ -129,10 +129,10 @@
 			this.TextBox.Location = new System.Drawing.Point(619, 260);
 			this.TextBox.Margin = new System.Windows.Forms.Padding(2);
 			this.TextBox.Name = "TextBox";
-			this.TextBox.ReadOnly = true;
 			this.TextBox.Size = new System.Drawing.Size(260, 173);
 			this.TextBox.TabIndex = 11;
 			this.TextBox.Text = "";
+			this.TextBox.TextChanged += new System.EventHandler(this.TextBox_TextChanged);
 			// 
 			// coloringModeRadioButton
 			// 

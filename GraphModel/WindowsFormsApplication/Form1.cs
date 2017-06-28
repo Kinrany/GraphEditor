@@ -264,5 +264,10 @@ namespace WindowsFormsApplication {
 			bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
 			dialog.Dispose();
 		}
+
+		private void TextBox_TextChanged(object sender, EventArgs e) {
+			RichTextBox textBox = (RichTextBox)sender;
+			GraphModel.Text = textBox.Text;
+		}
 	}
 }
