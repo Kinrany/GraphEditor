@@ -70,10 +70,7 @@ namespace UILogicLibrary
 		}
 
 		public void Draw(DrawingContext context) {
-			DrawEdges(context);
-			DrawEdgeValues(context);
-			DrawNodes(context);
-			DrawNodeNumbers(context);
+			this.GraphView.Draw(context);
 			State.Draw(context);
 			DrawSelected(context);
 		}
@@ -134,61 +131,10 @@ namespace UILogicLibrary
 			State.KeyPressed(key);
 		}
 
-		void DrawEdges(DrawingContext context) {
-			GraphModel graph = this.GraphView.Graph;
-
-			if (graph == null) {
-				throw new InvalidOperationException("Can't draw edges without a graph");
-			}
-
-			foreach (EdgeModel edge in EdgeModel.Enumerate(graph)) {
-				Point pointFrom = edge.NodeFrom.Weight.Location;
-				Point pointTo = edge.NodeTo.Weight.Location;
-				Color color = edge.Weight.Color;
-				string value = edge.Weight.Value;
-
-				bool shouldDraw = value != "0" && value != "";
-
-				if (shouldDraw) {
-					context.DrawArrow(pointFrom, pointTo, color);
-				}
-			}
-		}
-		void DrawNodes(DrawingContext context) {
-			GraphModel graph = this.GraphView.Graph;
-
-			if (graph == null) {
-				throw new InvalidOperationException("Can't draw nodes without a graph");
-			}
-
-			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
-				Point point = node.Weight.Location;
-				Color color = node.Weight.Color;
-				context.FillCircle(point, GraphView.NodeRadius, new SolidBrush(color));
-			}
-		}
 		void DrawSelected(DrawingContext context) {
 			Pen pen = new Pen(Color.DarkBlue, 1);
 			foreach (NodeModel node in Selection) {
 				context.DrawCircle(node.Weight.Location, GraphView.NodeRadius + 1, pen);
-			}
-		}
-		void DrawNodeNumbers(DrawingContext context) {
-			foreach (NodeModel node in NodeModel.Enumerate(GraphView.Graph)) {
-				context.DrawText(node.Index.ToString(), node.Weight.Location, Brushes.Black);
-			}
-		}
-		void DrawEdgeValues(DrawingContext context) {
-			foreach (EdgeModel edge in EdgeModel.Enumerate(GraphView.Graph)) {
-				Point nodeFromLocation = edge.NodeFrom.Weight.Location;
-				Point nodeToLocation = edge.NodeTo.Weight.Location;
-				PointF drawPosition = new PointF(
-					nodeFromLocation.X / 2.0f + nodeToLocation.X / 2.0f,
-					nodeFromLocation.Y / 2.0f + nodeToLocation.Y / 2.0f);
-				string value = edge.Weight.Value;
-				if (value != "" && value != "0") {
-					context.DrawText(value, drawPosition);
-				}
 			}
 		}
 	}
