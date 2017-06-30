@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NodeWeight = GraphModelLibrary.Rewrite.GraphModel.NodeWeight;
+using EdgeWeight = GraphModelLibrary.Rewrite.GraphModel.EdgeWeight;
+
 namespace GraphModelLibrary.Rewrite {
-	public class NodeModel : WeightedNodeProxy<GraphModel.NodeWeight, GraphModel.EdgeWeight> {
+	public class NodeModel : WeightedNodeProxy<NodeWeight, EdgeWeight> {
 		public NodeModel(GraphModel graph, int index) : base(graph, index) { }
 
 		public new GraphModel Graph {
@@ -13,23 +16,23 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static NodeModel Create(GraphModel graph, GraphModel.NodeWeight weight) {
+		public static NodeModel Create(GraphModel graph, NodeWeight weight) {
 			int nodeIndex = graph.CreateNode(weight);
 			return new NodeModel(graph, nodeIndex);
 		}
 
-		public EdgeModel AddOutgoingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight = null) {
+		public EdgeModel AddOutgoingEdge(NodeModel otherNode, EdgeWeight weight = null) {
 			if (weight == null) {
-				weight = new GraphModel.EdgeWeight();
+				weight = new EdgeWeight();
 			}
 
 			int edgeIndex = this.Graph.CreateEdge(this.Index, otherNode.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
 		}
 
-		public EdgeModel AddIncomingEdge(NodeModel otherNode, GraphModel.EdgeWeight weight = null) {
+		public EdgeModel AddIncomingEdge(NodeModel otherNode, EdgeWeight weight = null) {
 			if (weight == null) {
-				weight = new GraphModel.EdgeWeight();
+				weight = new EdgeWeight();
 			}
 
 			int edgeIndex = this.Graph.CreateEdge(otherNode.Index, this.Index, weight);
