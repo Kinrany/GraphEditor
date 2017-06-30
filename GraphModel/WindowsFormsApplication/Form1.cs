@@ -140,7 +140,6 @@ namespace WindowsFormsApplication {
 
 			DrawingContext context = new DrawingContext(g, mouse);
 			g.FillRegion(Brushes.Beige, g.Clip);
-			drawGraph(context);
 			_editTool.Draw(context);
 
 			debugLabel.Text = _editTool.State.ToString();

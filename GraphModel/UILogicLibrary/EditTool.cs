@@ -70,10 +70,12 @@ namespace UILogicLibrary
 		}
 
 		public void Draw(DrawingContext context) {
+			DrawEdges(context);
+			DrawEdgeValues(context);
+			DrawNodes(context);
+			DrawNodeNumbers(context);
 			State.Draw(context);
 			DrawSelected(context);
-			DrawEdgeValues(context);
-			DrawNodeNumbers(context);
 		}
 
 		readonly Mouse _mouse;
@@ -132,6 +134,39 @@ namespace UILogicLibrary
 			State.KeyPressed(key);
 		}
 
+		void DrawEdges(DrawingContext context) {
+			GraphModel graph = this.GraphView.Graph;
+
+			if (graph == null) {
+				throw new InvalidOperationException("Can't draw edges without a graph");
+			}
+
+			foreach (EdgeModel edge in EdgeModel.Enumerate(graph)) {
+				Point pointFrom = edge.NodeFrom.Weight.Location;
+				Point pointTo = edge.NodeTo.Weight.Location;
+				Color color = edge.Weight.Color;
+				string value = edge.Weight.Value;
+
+				bool shouldDraw = value != "0" && value != "";
+
+				if (shouldDraw) {
+					context.DrawArrow(pointFrom, pointTo, color);
+				}
+			}
+		}
+		void DrawNodes(DrawingContext context) {
+			GraphModel graph = this.GraphView.Graph;
+
+			if (graph == null) {
+				throw new InvalidOperationException("Can't draw nodes without a graph");
+			}
+
+			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
+				Point point = node.Weight.Location;
+				Color color = node.Weight.Color;
+				context.FillCircle(point, GraphView.NodeRadius, new SolidBrush(color));
+			}
+		}
 		void DrawSelected(DrawingContext context) {
 			Pen pen = new Pen(Color.DarkBlue, 1);
 			foreach (NodeModel node in Selection) {
