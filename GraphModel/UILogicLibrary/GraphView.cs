@@ -6,14 +6,12 @@ using System.Text;
 using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
-	public interface IGraphView {
-		int NodeRadius { get; set; }
-	}
+	public class GraphView {
 
-	public class GraphView : IGraphView {
 		public GraphView(GraphModel graph) {
-			this._graph = graph ?? new GraphModel();
-			this.setLocations();
+			graph = graph ?? new GraphModel();
+			NodeRearrangementAlgorithms.Circle(graph);
+			this._graph = graph;
 		}
 
 		public int NodeRadius {
@@ -63,20 +61,6 @@ namespace UILogicLibrary {
 			int dx = a.X - b.X;
 			int dy = a.Y - b.Y;
 			return Math.Sqrt(dx * dx + dy * dy);
-		}
-
-		private void setLocations() {
-			Rectangle bounds = new Rectangle(80, 80, 320, 160);
-			Point middle = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
-			int radius = Math.Min(bounds.Height, bounds.Width) * 4/5;
-
-			int n = _graph.NodeCount;
-			foreach (NodeModel node in NodeModel.Enumerate(_graph)) {
-				double angle = 2*Math.PI * (node.Index * 1.0 / n);
-				int dx = (int)Math.Round(radius * Math.Sin(angle));
-				int dy = (int)Math.Round(radius * Math.Cos(angle));
-				node.Weight.Location = middle + new Size(dx, dy);
-			}
 		}
 
 		void DrawEdges(DrawingContext context) {
