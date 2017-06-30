@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NodeWeight = GraphModelLibrary.Rewrite.GraphModel.NodeWeight;
+using EdgeWeight = GraphModelLibrary.Rewrite.GraphModel.EdgeWeight;
+
 namespace GraphModelLibrary.Rewrite {
-	public class EdgeModel : WeightedEdgeProxy<GraphModel.NodeWeight, GraphModel.EdgeWeight> {
+	public class EdgeModel : WeightedEdgeProxy<NodeWeight, EdgeWeight> {
 		public EdgeModel(GraphModel graph, int index) : base(graph, index) { }
 
 		public new GraphModel Graph {
@@ -30,15 +33,15 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static EdgeModel Create(GraphModel graph, int nodeFromIndex, int nodeToIndex, GraphModel.EdgeWeight weight = null) {
+		public static EdgeModel Create(GraphModel graph, int nodeFromIndex, int nodeToIndex, EdgeWeight weight = null) {
 			if (weight == null) {
-				weight = new GraphModel.EdgeWeight();
+				weight = new EdgeWeight();
 			}
 
 			int edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
 			return new EdgeModel(graph, edgeIndex);
 		}
-		public static EdgeModel Create(GraphModel graph, EdgeProxy nodeFrom, EdgeProxy nodeTo, GraphModel.EdgeWeight weight = null) {
+		public static EdgeModel Create(GraphModel graph, EdgeProxy nodeFrom, EdgeProxy nodeTo, EdgeWeight weight = null) {
 			return Create(graph, nodeFrom.Index, nodeTo.Index, weight);
 		}
 
