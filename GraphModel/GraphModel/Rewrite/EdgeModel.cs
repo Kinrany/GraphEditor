@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using NodeWeight = GraphModelLibrary.Rewrite.GraphModel.NodeWeight;
-using EdgeWeight = GraphModelLibrary.Rewrite.GraphModel.EdgeWeight;
-
 namespace GraphModelLibrary.Rewrite {
+	using NodeWeight = GraphModel.NodeWeight;
+	using EdgeWeight = GraphModel.EdgeWeight;
+
 	public class EdgeModel : WeightedEdgeProxy<NodeWeight, EdgeWeight> {
 		public EdgeModel(GraphModel graph, int index) : base(graph, index) { }
 
