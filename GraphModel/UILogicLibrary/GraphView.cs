@@ -8,10 +8,8 @@ using GraphModelLibrary.Rewrite;
 namespace UILogicLibrary {
 	public class GraphView {
 
-		public GraphView(GraphModel graph) {
-			graph = graph ?? new GraphModel();
-			NodeRearrangementAlgorithms.Circle(graph);
-			this._graph = graph;
+		public GraphView() {
+			//NodeRearrangementAlgorithms.Circle(graph);
 		}
 
 		public int NodeRadius {
@@ -31,29 +29,22 @@ namespace UILogicLibrary {
 			}
 		}
 
-		public GraphModel Graph {
-			get {
-				return _graph;
-			}
-		}
-
-		public Object FindClicked(Point p) {
-			foreach (NodeModel node in NodeModel.Enumerate(_graph)) {
+		public Object FindClicked(GraphModel graph, Point p) {
+			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
 				if (distance(node.Weight.Location, p) < NodeRadius) {
 					return node;
 				}
 			}
 			return null;
 		}
-		public void Draw(DrawingContext context) {
-			DrawEdges(context);
-			DrawEdgeValues(context);
-			DrawNodes(context);
-			DrawNodeNumbers(context);
+		public void Draw(GraphModel graph, DrawingContext context) {
+			DrawEdges(graph, context);
+			DrawEdgeValues(graph, context);
+			DrawNodes(graph, context);
+			DrawNodeNumbers(graph, context);
 		}
 
-
-		private GraphModel _graph;
+		
 		private int _nodeRadius = 12;
 		private int _edgeWidth = 2;
 
@@ -63,12 +54,12 @@ namespace UILogicLibrary {
 			return Math.Sqrt(dx * dx + dy * dy);
 		}
 
-		void DrawEdges(DrawingContext context) {
-			if (this.Graph == null) {
+		void DrawEdges(GraphModel graph, DrawingContext context) {
+			if (graph == null) {
 				throw new InvalidOperationException("Can't draw edges without a graph");
 			}
 
-			foreach (EdgeModel edge in EdgeModel.Enumerate(this.Graph)) {
+			foreach (EdgeModel edge in EdgeModel.Enumerate(graph)) {
 				Point pointFrom = edge.NodeFrom.Weight.Location;
 				Point pointTo = edge.NodeTo.Weight.Location;
 				Color color = edge.Weight.Color;
@@ -81,24 +72,24 @@ namespace UILogicLibrary {
 				}
 			}
 		}
-		void DrawNodes(DrawingContext context) {
-			if (this.Graph == null) {
+		void DrawNodes(GraphModel graph, DrawingContext context) {
+			if (graph == null) {
 				throw new InvalidOperationException("Can't draw nodes without a graph");
 			}
 
-			foreach (NodeModel node in NodeModel.Enumerate(this.Graph)) {
+			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
 				Point point = node.Weight.Location;
 				Color color = node.Weight.Color;
 				context.FillCircle(point, this.NodeRadius, new SolidBrush(color));
 			}
 		}
-		void DrawNodeNumbers(DrawingContext context) {
-			foreach (NodeModel node in NodeModel.Enumerate(this.Graph)) {
+		void DrawNodeNumbers(GraphModel graph, DrawingContext context) {
+			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
 				context.DrawText(node.Index.ToString(), node.Weight.Location, Brushes.Black);
 			}
 		}
-		void DrawEdgeValues(DrawingContext context) {
-			foreach (EdgeModel edge in EdgeModel.Enumerate(this.Graph)) {
+		void DrawEdgeValues(GraphModel graph, DrawingContext context) {
+			foreach (EdgeModel edge in EdgeModel.Enumerate(graph)) {
 				Point nodeFromLocation = edge.NodeFrom.Weight.Location;
 				Point nodeToLocation = edge.NodeTo.Weight.Location;
 				PointF drawPosition = new PointF(

@@ -24,21 +24,21 @@ namespace UILogicLibrary
 			keyboard.KeyPressed += KeyPressed;
 			this._keyboard = keyboard;
 
-			this._graph = new GraphView(null);
+			this._graphView = new GraphView();
 		}
 
-		public GraphView GraphView {
+		public GraphModel Graph {
 			get {
 				return _graph;
 			}
 			set {
-				_graph = value;
-				if (_graph == null) {
-					State = new EmptyState(this);
-				}
-				else {
-					State = new DefaultState(this);
-				}
+				_graph = value ?? new GraphModel();
+				this.State = new DefaultState(this);
+			}
+		}
+		public GraphView GraphView {
+			get {
+				return _graphView;
 			}
 		}
 		public EditToolState State {
@@ -59,7 +59,6 @@ namespace UILogicLibrary
 				return _selectionManager;
 			}
 		}
-
 		public Color PickedColor {
 			get {
 				return _pickedColor;
@@ -70,7 +69,7 @@ namespace UILogicLibrary
 		}
 
 		public void Draw(DrawingContext context) {
-			this.GraphView.Draw(context);
+			this.GraphView.Draw(this.Graph, context);
 			State.Draw(context);
 			DrawSelected(context);
 		}
@@ -78,13 +77,14 @@ namespace UILogicLibrary
 		readonly Mouse _mouse;
 		readonly Keyboard _keyboard;
 		readonly Selection _selectionManager;
-		GraphView _graph = null;
+		GraphModel _graph = new GraphModel();
+		GraphView _graphView = new GraphView();
 		EditToolState _state;
 
 		Color _pickedColor = Color.Red;
 
 		void MouseLeftClick(Point p) {
-			Object o = GraphView?.FindClicked(p);
+			Object o = GraphView?.FindClicked(this.Graph, p);
 
 			NodeModel node = o as NodeModel;
 			if (node != null) {
@@ -95,7 +95,7 @@ namespace UILogicLibrary
 			State.MouseLeftClick(p);
 		}
 		void MouseRightClick(Point p) {
-			Object o = GraphView?.FindClicked(p);
+			Object o = GraphView?.FindClicked(this.Graph, p);
 
 			NodeModel node = o as NodeModel;
 			if (node != null) {
@@ -106,7 +106,7 @@ namespace UILogicLibrary
 			State.MouseRightClick(p);
 		}
 		void MouseLeftPressed(Point p) {
-			Object o = GraphView?.FindClicked(p);
+			Object o = GraphView?.FindClicked(this.Graph, p);
 
 			NodeModel node = o as NodeModel;
 			if (node != null) {
@@ -117,7 +117,7 @@ namespace UILogicLibrary
 			State.MouseLeftPressed(p);
 		}
 		void MouseLeftDepressed(Point p) {
-			Object o = GraphView?.FindClicked(p);
+			Object o = GraphView?.FindClicked(this.Graph, p);
 
 			NodeModel node = o as NodeModel;
 			if (node != null) {

@@ -64,7 +64,7 @@ namespace UILogicLibrary {
 		private readonly HashSet<NodeModel> _selectedNodes;
 		private readonly EditTool _editTool;
 
-		private GraphModel Graph { get { return _editTool.GraphView.Graph; } }
+		private GraphModel Graph { get { return _editTool.Graph; } }
 
 		IEnumerator<NodeModel> IEnumerable<NodeModel>.GetEnumerator() {
 			return _selectedNodes.GetEnumerator();

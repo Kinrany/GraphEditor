@@ -21,7 +21,7 @@ namespace WindowsFormsApplication {
 
 		public GraphModel GraphModel {
 			get {
-				return this.GraphView.Graph;
+				return _editTool.Graph;
 			}
 		}
 		public GraphView GraphView {
@@ -152,7 +152,7 @@ namespace WindowsFormsApplication {
 		private void SetGraphModel(GraphModel graph) {
 			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
 
-			_editTool.GraphView = new GraphView(graph);
+			_editTool.Graph = graph;
 			_editTool.Selection.Clear();
 
 			graph.ChangedEvent += OnGraphModelChanged;

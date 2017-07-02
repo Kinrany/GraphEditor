@@ -40,9 +40,9 @@ namespace UILogicLibrary {
 			nodeWeight.Location = location;
 			nodeWeight.Color = EditTool.PickedColor;
 
-			NodeModel node = NodeModel.Create(EditTool.GraphView.Graph, nodeWeight);
+			NodeModel node = NodeModel.Create(EditTool.Graph, nodeWeight);
 
-			foreach (NodeModel other in NodeModel.Enumerate(EditTool.GraphView.Graph)) {
+			foreach (NodeModel other in NodeModel.Enumerate(EditTool.Graph)) {
 				if (node.Equals(other)) {
 					continue;
 				}
