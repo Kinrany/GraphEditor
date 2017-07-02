@@ -32,6 +32,8 @@
 			this.toolStripSaveGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripImportCode = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolStripSaveImage = new System.Windows.Forms.ToolStripMenuItem();
+			this.rearrangeNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.regularPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TextBox = new System.Windows.Forms.RichTextBox();
 			this.coloringModeRadioButton = new System.Windows.Forms.RadioButton();
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
@@ -94,7 +96,8 @@
             this.toolStripOpenGraph,
             this.toolStripSaveGraph,
             this.toolStripImportCode,
-            this.ToolStripSaveImage});
+            this.ToolStripSaveImage,
+            this.rearrangeNodesToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -129,6 +132,21 @@
 			this.ToolStripSaveImage.Size = new System.Drawing.Size(154, 20);
 			this.ToolStripSaveImage.Text = "Сохранить изображение";
 			this.ToolStripSaveImage.Click += new System.EventHandler(this.ToolStripSaveImage_Click);
+			// 
+			// rearrangeNodesToolStripMenuItem
+			// 
+			this.rearrangeNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.regularPolygonToolStripMenuItem});
+			this.rearrangeNodesToolStripMenuItem.Name = "rearrangeNodesToolStripMenuItem";
+			this.rearrangeNodesToolStripMenuItem.Size = new System.Drawing.Size(147, 20);
+			this.rearrangeNodesToolStripMenuItem.Text = "Упорядочить вершины";
+			// 
+			// regularPolygonToolStripMenuItem
+			// 
+			this.regularPolygonToolStripMenuItem.Name = "regularPolygonToolStripMenuItem";
+			this.regularPolygonToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+			this.regularPolygonToolStripMenuItem.Text = "Правильный многоугольник";
+			this.regularPolygonToolStripMenuItem.Click += new System.EventHandler(this.RegularRectangle_Click);
 			// 
 			// TextBox
 			// 
@@ -224,6 +242,8 @@
 		private System.Windows.Forms.Button colorPickerButton;
 		private System.Windows.Forms.ColorDialog colorDialog;
 		private System.Windows.Forms.ToolStripMenuItem ToolStripSaveImage;
+		private System.Windows.Forms.ToolStripMenuItem rearrangeNodesToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem regularPolygonToolStripMenuItem;
 	}
 }
 

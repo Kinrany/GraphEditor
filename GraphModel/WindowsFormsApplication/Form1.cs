@@ -269,5 +269,9 @@ namespace WindowsFormsApplication {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
 		}
+
+		private void RegularRectangle_Click(object sender, EventArgs e) {
+			NodeRearrangementAlgorithms.Circle(this.GraphModel);
+		}
 	}
 }

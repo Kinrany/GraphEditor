@@ -6,8 +6,8 @@ using System.Drawing;
 using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
-	static class NodeRearrangementAlgorithms {
-		public static void Circle(GraphModel graph) { 
+	public static class NodeRearrangementAlgorithms {
+		public static void Circle(GraphModel graph) {
 			Rectangle bounds = new Rectangle(80, 80, 320, 160);
 			Point middle = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
 			int radius = Math.Min(bounds.Height, bounds.Width) * 4 / 5;
