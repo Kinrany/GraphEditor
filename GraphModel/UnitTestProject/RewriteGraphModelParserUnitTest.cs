@@ -7,7 +7,7 @@ using GraphModelLibrary.Rewrite;
 
 namespace UnitTestProject {
 	[TestClass]
-	public class GraphModelRewriteUnitTest {
+	public class RewriteGraphModelParserUnitTest {
 		[TestMethod]
 		public void Parsing1() {
 			string text =

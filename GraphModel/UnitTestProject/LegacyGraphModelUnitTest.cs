@@ -5,7 +5,7 @@ using System.IO;
 
 namespace UnitTestProject {
 	[TestClass]
-	public class GraphModelUnitTest {
+	public class LegacyGraphModelUnitTest {
 		[TestMethod]
 		public void Parsing1() {
 			string text = 
