@@ -136,19 +136,14 @@ namespace GraphModelLibrary.Rewrite {
 		/// </summary>
 		/// <param name="nodeIndex">Node index.</param>
 		public void DeleteNode(int nodeIndex) {
-			foreach (int outgoingEdgeIndex in _outgoingEdges[nodeIndex]) {
-				var edge = _edges[outgoingEdgeIndex];
-				_incomingEdges[edge.Item2].Remove(outgoingEdgeIndex);
-				_edges.Remove(outgoingEdgeIndex);
-			}
-			_outgoingEdges.Remove(nodeIndex);
+			List<int> edgesToDelete = _outgoingEdges[nodeIndex]
+				.Concat(_incomingEdges[nodeIndex])
+				.Distinct()
+				.ToList();
 
-			foreach (int incomingEdgeIndex in _incomingEdges[nodeIndex]) {
-				var edge = _edges[incomingEdgeIndex];
-				_outgoingEdges[edge.Item1].Remove(incomingEdgeIndex);
-				_edges.Remove(incomingEdgeIndex);
+			foreach (int edgeIndex in edgesToDelete) {
+				this.DeleteEdge(edgeIndex);
 			}
-			_incomingEdges.Remove(nodeIndex);
 
 			_nodeIndices.Remove(nodeIndex);
 
