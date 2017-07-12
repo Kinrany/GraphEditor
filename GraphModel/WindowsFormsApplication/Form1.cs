@@ -41,6 +41,7 @@ namespace WindowsFormsApplication {
 		private EditTool _editTool = null;
 		private Timer _timer;
 
+
 		// loading
 		private void Form1_Load(object sender, EventArgs e) {
 			Mouse mouse = LoadMouse();
@@ -50,11 +51,7 @@ namespace WindowsFormsApplication {
 
 			graphBox.Paint += graphBox_Draw;
 
-			// automatically invalidates graphBox every X milliseconds
-			_timer = new Timer();
-			_timer.Interval = 1000 / 30;
-			_timer.Tick += (s, h) => graphBox.Invalidate();
-			_timer.Start();
+			this._timer = LoadTimer();
 
 			this.SetGraphModel(this.GraphModel);
 
@@ -97,6 +94,15 @@ namespace WindowsFormsApplication {
 			return keyboard;
 		}
 
+		private Timer LoadTimer() {
+			// automatically invalidates graphBox every X milliseconds
+			Timer timer = new Timer();
+			timer.Interval = 1000 / 30;
+			timer.Tick += (s, h) => graphBox.Invalidate();
+			timer.Start();
+			return timer;
+		}
+
 		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
 			int nodeFromIndex = e.RowIndex;
 			int nodeToIndex = e.ColumnIndex;
@@ -113,6 +119,7 @@ namespace WindowsFormsApplication {
 
 			edge.Weight.Value = value;
 		}
+
 
 		// buttons
 		private void loadGraphButton_Click(object sender, EventArgs e) {
