@@ -94,6 +94,21 @@ namespace WindowsFormsApplication {
 			return keyboard;
 		}
 
+		private void graphBox_Draw(object sender, PaintEventArgs e) {
+			Graphics g = e.Graphics;
+			Point mouse = graphBox.PointToClient(Cursor.Position);
+
+			DrawingContext context = new DrawingContext(g, mouse);
+			g.FillRegion(Brushes.Beige, g.Clip);
+			_editTool.Draw(context);
+
+			debugLabel.Text = _editTool.State.ToString();
+
+			var bounds = g.VisibleClipBounds;
+			var brush = new SolidBrush(_editTool.PickedColor);
+			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
+		}
+
 		private Timer LoadTimer() {
 			// automatically invalidates graphBox every X milliseconds
 			Timer timer = new Timer();
@@ -101,6 +116,22 @@ namespace WindowsFormsApplication {
 			timer.Tick += (s, h) => graphBox.Invalidate();
 			timer.Start();
 			return timer;
+		}
+
+		private void SetGraphModel(GraphModel graph) {
+			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
+
+			_editTool.Graph = graph;
+			_editTool.Selection.Clear();
+
+			graph.ChangedEvent += OnGraphModelChanged;
+			OnGraphModelChanged();
+
+			saveButtonLabel.Text = "";
+		}
+		private void OnGraphModelChanged() {
+			MatrixUpdater.UpdateMatrix(this.GraphModel, DataGridMatrix);
+			TextBox.Text = this.GraphModel.Text;
 		}
 
 		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
@@ -148,36 +179,6 @@ namespace WindowsFormsApplication {
 			}
 		}
 
-		private void graphBox_Draw(object sender, PaintEventArgs e) {
-			Graphics g = e.Graphics;
-			Point mouse = graphBox.PointToClient(Cursor.Position);
-
-			DrawingContext context = new DrawingContext(g, mouse);
-			g.FillRegion(Brushes.Beige, g.Clip);
-			_editTool.Draw(context);
-
-			debugLabel.Text = _editTool.State.ToString();
-
-			var bounds = g.VisibleClipBounds;
-			var brush = new SolidBrush(_editTool.PickedColor);
-			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
-		}
-
-		private void SetGraphModel(GraphModel graph) {
-			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
-
-			_editTool.Graph = graph;
-			_editTool.Selection.Clear();
-
-			graph.ChangedEvent += OnGraphModelChanged;
-			OnGraphModelChanged();
-
-			saveButtonLabel.Text = "";
-		}
-		private void OnGraphModelChanged() {
-			MatrixUpdater.UpdateMatrix(this.GraphModel, DataGridMatrix);
-			TextBox.Text = this.GraphModel.Text;
-		}
 
 		//Legacy mult
 		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
