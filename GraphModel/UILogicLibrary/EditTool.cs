@@ -33,6 +33,7 @@ namespace UILogicLibrary
 			}
 			set {
 				_graph = value ?? new GraphModel();
+				this.Selection.Clear();
 				this.State = new DefaultState(this);
 			}
 		}

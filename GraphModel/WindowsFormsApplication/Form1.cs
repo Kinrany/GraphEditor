@@ -122,7 +122,6 @@ namespace WindowsFormsApplication {
 			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
 
 			_editTool.Graph = graph;
-			_editTool.Selection.Clear();
 
 			graph.ChangedEvent += OnGraphModelChanged;
 			OnGraphModelChanged();
