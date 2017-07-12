@@ -44,10 +44,7 @@ namespace WindowsFormsApplication {
 		// loading
 		private void Form1_Load(object sender, EventArgs e) {
 			Mouse mouse = LoadMouse();
-
-			this.KeyPreview = true;
-			var keyboard = new ConcreteKeyboard(this);
-
+			ConcreteKeyboard keyboard = LoadKeyboard();
 			_editTool = new EditTool(mouse, keyboard);
 
 
@@ -93,6 +90,11 @@ namespace WindowsFormsApplication {
 				mouse.MouseMoved(location);
 			};
 			return mouse;
+		}
+		private ConcreteKeyboard LoadKeyboard() {
+			this.KeyPreview = true;
+			var keyboard = new ConcreteKeyboard(this);
+			return keyboard;
 		}
 
 		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
