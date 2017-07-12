@@ -41,8 +41,30 @@ namespace WindowsFormsApplication {
 		private EditTool _editTool = null;
 		private Timer _timer;
 
+		// loading
 		private void Form1_Load(object sender, EventArgs e) {
+			Mouse mouse = LoadMouse();
 
+			this.KeyPreview = true;
+			var keyboard = new ConcreteKeyboard(this);
+
+			_editTool = new EditTool(mouse, keyboard);
+
+
+			graphBox.Paint += graphBox_Draw;
+
+			// automatically invalidates graphBox every X milliseconds
+			_timer = new Timer();
+			_timer.Interval = 1000 / 30;
+			_timer.Tick += (s, h) => graphBox.Invalidate();
+			_timer.Start();
+
+			this.SetGraphModel(this.GraphModel);
+
+			this.DataGridMatrix.CellEndEdit += DataGridMatrix_CellEndEdit;
+		}
+
+		private Mouse LoadMouse() {
 			var mouse = new Mouse();
 			graphBox.MouseDown += (s, a) => {
 				Point location = a.Location;
@@ -70,24 +92,7 @@ namespace WindowsFormsApplication {
 				Point location = a.Location;
 				mouse.MouseMoved(location);
 			};
-
-			this.KeyPreview = true;
-			var keyboard = new ConcreteKeyboard(this);
-
-			_editTool = new EditTool(mouse, keyboard);
-
-
-			graphBox.Paint += graphBox_Draw;
-
-			// automatically invalidates graphBox every X milliseconds
-			_timer = new Timer();
-			_timer.Interval = 1000 / 30;
-			_timer.Tick += (s, h) => graphBox.Invalidate();
-			_timer.Start();
-
-			this.SetGraphModel(this.GraphModel);
-
-			this.DataGridMatrix.CellEndEdit += DataGridMatrix_CellEndEdit;
+			return mouse;
 		}
 
 		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
