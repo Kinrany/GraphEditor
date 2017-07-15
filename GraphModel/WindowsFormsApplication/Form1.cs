@@ -45,9 +45,6 @@ namespace WindowsFormsApplication {
 			ConcreteKeyboard keyboard = LoadKeyboard();
 			_editTool = new EditTool(mouse, keyboard);
 
-
-			graphBox.Paint += graphBox_Draw;
-
 			this._timer = LoadTimer();
 
 			this.SetGraphModel(this.GraphModel);
@@ -87,21 +84,6 @@ namespace WindowsFormsApplication {
 			this.KeyPreview = true;
 			var keyboard = new ConcreteKeyboard(this);
 			return keyboard;
-		}
-
-		private void graphBox_Draw(object sender, PaintEventArgs e) {
-			Graphics g = e.Graphics;
-			Point mouse = graphBox.PointToClient(Cursor.Position);
-
-			DrawingContext context = new DrawingContext(g, mouse);
-			g.FillRegion(Brushes.Beige, g.Clip);
-			_editTool.Draw(context);
-
-			debugLabel.Text = _editTool.State.ToString();
-
-			var bounds = g.VisibleClipBounds;
-			var brush = new SolidBrush(_editTool.PickedColor);
-			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
 		}
 
 		private Timer LoadTimer() {
@@ -153,7 +135,21 @@ namespace WindowsFormsApplication {
 		}
 
 
-		// handlers for data changed by user
+		// stuff
+		private void graphBox_Draw(object sender, PaintEventArgs e) {
+			Graphics g = e.Graphics;
+			Point mouse = graphBox.PointToClient(Cursor.Position);
+
+			DrawingContext context = new DrawingContext(g, mouse);
+			g.FillRegion(Brushes.Beige, g.Clip);
+			_editTool.Draw(context);
+
+			debugLabel.Text = _editTool.State.ToString();
+
+			var bounds = g.VisibleClipBounds;
+			var brush = new SolidBrush(_editTool.PickedColor);
+			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
+		}
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
