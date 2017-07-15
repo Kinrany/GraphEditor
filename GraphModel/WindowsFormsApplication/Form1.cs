@@ -144,35 +144,7 @@ namespace WindowsFormsApplication {
 
 			edge.Weight.Value = value;
 		}
-
-
-		// buttons
-		private void loadGraphButton_Click(object sender, EventArgs e) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			DialogResult result = openFileDialog.ShowDialog();
-			if (result == DialogResult.OK) {
-				string path = openFileDialog.FileName;
-				this.SetGraphModel(GraphModelParser.Load(path));
-			}
-		}
-		private void loadExampleButton_Click(object sender, EventArgs e) {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-4.txt");
-			this.SetGraphModel(GraphModelParser.Load(path));
-		}
-		private void saveButton_Click(object sender, EventArgs e) {
-			if (GraphModel == null) {
-				saveButtonLabel.Text = "Сначала нужно открыть граф";
-			}
-			else {
-				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				DialogResult result = saveFileDialog.ShowDialog();
-				if (result == DialogResult.OK) {
-					string path = saveFileDialog.FileName;
-					GraphModelParser.Save(this.GraphModel, path);
-				}
-			}
-		}
-
+		
 
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		[return: MarshalAs(UnmanagedType.SysInt)]
