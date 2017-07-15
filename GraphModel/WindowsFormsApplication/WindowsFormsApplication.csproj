@@ -49,6 +49,9 @@
   <ItemGroup>
     <Compile Include="ConcreteKeyboard.cs" />
     <Compile Include="Dynaloader.cs" />
+    <Compile Include="Form1ToolStrip.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MatrixUpdater.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

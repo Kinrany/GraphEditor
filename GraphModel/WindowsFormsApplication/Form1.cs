@@ -6,12 +6,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using GraphModelLibrary.Rewrite;
 using ExtensionMethods;
 using UILogicLibrary;
-using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication {
 	public partial class Form1 : Form {
@@ -35,6 +35,8 @@ namespace WindowsFormsApplication {
 
 		private EditTool _editTool = null;
 		private Timer _timer;
+
+		private string PathToFile;
 
 
 		// loading
@@ -146,66 +148,13 @@ namespace WindowsFormsApplication {
 		}
 		
 
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		[return: MarshalAs(UnmanagedType.SysInt)]
-		private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
-
-		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			MatrixUpdater File = new MatrixUpdater();
-			DialogResult result = openFileDialog.ShowDialog();
-			if (result == DialogResult.OK) {
-				string path = openFileDialog.FileName;
-				PathToFile = path;
-				SetGraphModel(GraphModelParser.Load(path));
-			}
-		}
-
-		private void toolStripSaveGraph_Click(object sender, EventArgs e) {
-			if (GraphModel == null) {
-				saveButtonLabel.Text = "Сначала нужно открыть граф";
-			}
-			else {
-				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				DialogResult result = saveFileDialog.ShowDialog();
-				if (result == DialogResult.OK) {
-					string path = saveFileDialog.FileName;
-					GraphModelParser.Save(this.GraphModel, path);
-				}
-			}
-		}
-
-		private void toolStripImportCode_Click(object sender, EventArgs e) {
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			DialogResult result = openFileDialog.ShowDialog();
-			if (result == DialogResult.OK) {
-				string path = openFileDialog.FileName;
-				string path_to_graph = PathToFile;
-
-				//MessageBox.Show(IntPtr.Size.ToString()); Use later if needed - shows bits of system. If 8 => x64
-
-				try {
-					Dynaloader loader = new Dynaloader(path);
-					solve_t solve = loader.load_function<solve_t>("solve");
-					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
-					MessageBox.Show(path_to_graph_2);
-					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
-				}
-				catch (Exception ex) {
-					MessageBox.Show(ex.ToString());
-				}
-			}
-		}
-
-		private string PathToFile;
-
+		// user interface
 		private void coloringModeButton_CheckedChanged(object sender, EventArgs e) {
 			RadioButton button = (RadioButton)sender;
 			if (button.Checked) {
 				_editTool.State = new ColoringState(_editTool);
 			}
 		}
-
 		private void defaultModeButton_CheckedChanged(object sender, EventArgs e) {
 			RadioButton button = (RadioButton)sender;
 			if (button.Checked) {
@@ -222,27 +171,11 @@ namespace WindowsFormsApplication {
 			this._editTool.PickedColor = colorDialog.Color;
 		}
 
-		private void ToolStripSaveImage_Click(object sender, EventArgs eventArgs) {
-			Rectangle rect = graphBox.ClientRectangle;
-			Bitmap bitmap = new Bitmap(rect.Width, rect.Height);
-			graphBox.DrawToBitmap(bitmap, new Rectangle(0, 0, rect.Width, rect.Height));
 
-			SaveFileDialog dialog = new SaveFileDialog();
-			dialog.DefaultExt = ".png";
-			dialog.Filter = "PNG files |*.png";
-			dialog.ShowDialog();
-			var path = dialog.FileName;
-			bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-			dialog.Dispose();
-		}
-
+		// textBox changed handling function
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
-		}
-
-		private void RegularRectangle_Click(object sender, EventArgs e) {
-			NodeRearrangementAlgorithms.Circle(this.GraphModel);
 		}
 	}
 }
