@@ -88,6 +88,7 @@
 			this.DataGridMatrix.RowTemplate.Height = 24;
 			this.DataGridMatrix.Size = new System.Drawing.Size(330, 273);
 			this.DataGridMatrix.TabIndex = 8;
+			this.DataGridMatrix.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridMatrix_CellEndEdit);
 			// 
 			// menuStrip1
 			// 

@@ -51,8 +51,6 @@ namespace WindowsFormsApplication {
 			this._timer = LoadTimer();
 
 			this.SetGraphModel(this.GraphModel);
-
-			this.DataGridMatrix.CellEndEdit += DataGridMatrix_CellEndEdit;
 		}
 
 		private Mouse LoadMouse() {
@@ -130,24 +128,7 @@ namespace WindowsFormsApplication {
 			TextBox.Text = this.GraphModel.Text;
 		}
 
-		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-			int nodeFromIndex = e.RowIndex;
-			int nodeToIndex = e.ColumnIndex;
-			int? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
-			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
-
-			EdgeModel edge;
-			if (edgeIndex != null) {
-				edge = new EdgeModel(GraphModel, (int)edgeIndex);
-			}
-			else {
-				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);
-			}
-
-			edge.Weight.Value = value;
-		}
 		
-
 		// user interface
 		private void coloringModeButton_CheckedChanged(object sender, EventArgs e) {
 			RadioButton button = (RadioButton)sender;
@@ -172,10 +153,26 @@ namespace WindowsFormsApplication {
 		}
 
 
-		// textBox changed handling function
+		// handlers for data changed by user
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
+		}
+		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+			int nodeFromIndex = e.RowIndex;
+			int nodeToIndex = e.ColumnIndex;
+			int? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
+			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+			EdgeModel edge;
+			if (edgeIndex != null) {
+				edge = new EdgeModel(GraphModel, (int)edgeIndex);
+			}
+			else {
+				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);
+			}
+
+			edge.Weight.Value = value;
 		}
 	}
 }
