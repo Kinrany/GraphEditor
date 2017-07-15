@@ -24,11 +24,6 @@ namespace WindowsFormsApplication {
 				return _editTool.Graph;
 			}
 		}
-		public GraphView GraphView {
-			get {
-				return this._editTool.GraphView;
-			}
-		}
 
 		protected override CreateParams CreateParams {
 			get {
