@@ -53,7 +53,7 @@ namespace WindowsFormsApplication {
 				}
 			}
 		}
-		private void ToolStripSaveImage_Click(object sender, EventArgs eventArgs) {
+		private void toolStripSaveImage_Click(object sender, EventArgs e) {
 			Rectangle rect = graphBox.ClientRectangle;
 			Bitmap bitmap = new Bitmap(rect.Width, rect.Height);
 			graphBox.DrawToBitmap(bitmap, new Rectangle(0, 0, rect.Width, rect.Height));
@@ -66,7 +66,7 @@ namespace WindowsFormsApplication {
 			bitmap.Save(path, System.Drawing.Imaging.ImageFormat.Png);
 			dialog.Dispose();
 		}
-		private void RegularRectangle_Click(object sender, EventArgs e) {
+		private void toolStripRearrangeCircle_Click(object sender, EventArgs e) {
 			NodeRearrangementAlgorithms.Circle(this.GraphModel);
 		}
 
