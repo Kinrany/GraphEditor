@@ -174,16 +174,6 @@ namespace WindowsFormsApplication {
 		}
 
 
-		//Legacy mult
-		[UnmanagedFunctionPointer(CallingConvention.Winapi)]
-		[return: MarshalAs(UnmanagedType.I4)]
-		private delegate int mult_t([MarshalAs(UnmanagedType.I4)] int num);
-
-		//Legacy print
-		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
-		[return: MarshalAs(UnmanagedType.LPStr)]
-		private delegate string adv_print_t([MarshalAs(UnmanagedType.LPStr)]string path);
-
 		[UnmanagedFunctionPointer(CallingConvention.StdCall)]
 		[return: MarshalAs(UnmanagedType.SysInt)]
 		private delegate IntPtr solve_t([MarshalAs(UnmanagedType.LPStr)] string path);
