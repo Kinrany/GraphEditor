@@ -25,6 +25,10 @@ namespace GraphModelLibrary.Rewrite {
 		public static implicit operator int(NodeIndex nodeIndex) {
 			return nodeIndex.Value;
 		}
+
+		public override string ToString() {
+			return this.Value.ToString();
+		}
 	}
 
 	class NodeIndexList : INodeIndexList {
@@ -92,6 +96,10 @@ namespace GraphModelLibrary.Rewrite {
 
 		public static implicit operator int(EdgeIndex edgeIndex) {
 			return edgeIndex.Value;
+		}
+
+		public override string ToString() {
+			return this.Value.ToString();
 		}
 	}
 
