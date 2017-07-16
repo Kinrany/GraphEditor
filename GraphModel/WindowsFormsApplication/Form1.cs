@@ -155,14 +155,17 @@ namespace WindowsFormsApplication {
 			GraphModel.Text = textBox.Text;
 		}
 		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-			int nodeFromIndex = e.RowIndex;
-			int nodeToIndex = e.ColumnIndex;
-			int? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
+			// HACK
+			// e.RowIndex and e.ColumnIndex do not match to real node indices
+
+			NodeIndex nodeFromIndex = new NodeIndex(e.RowIndex);
+			NodeIndex nodeToIndex = new NodeIndex(e.ColumnIndex);
+			EdgeIndex? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
 			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
 
 			EdgeModel edge;
 			if (edgeIndex != null) {
-				edge = new EdgeModel(GraphModel, (int)edgeIndex);
+				edge = new EdgeModel(GraphModel, (EdgeIndex)edgeIndex);
 			}
 			else {
 				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);

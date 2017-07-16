@@ -13,40 +13,11 @@ namespace GraphModelLibrary.Rewrite {
 		/// Create an empty graph.
 		/// </summary>
 		public Graph() {
-			_nodeIndices = new IndexList();
-			_edgeIndices = new IndexList();
-			_outgoingEdges = new Dictionary<int, HashSet<int>>();
-			_incomingEdges = new Dictionary<int, HashSet<int>>();
-			_edges = new Dictionary<int, Tuple<int, int>>();
-
-			this.NodeReindexEvent += ReindexOutgoingEdges;
-			this.NodeReindexEvent += ReindexIncomingEdges;
-			this.NodeReindexEvent += ReindexEdges;
-		}
-
-		private void ReindexOutgoingEdges(int arg1, int arg2) {
-			throw new NotImplementedException();
-		}
-
-		private void ReindexIncomingEdges(int arg1, int arg2) {
-			throw new NotImplementedException();
-		}
-
-		private void ReindexEdges(int arg1, int arg2) {
-			foreach (var edgeKeyValue in _edges) {
-				int nodeFromIndex = edgeKeyValue.Value.Item1;
-				int nodeToIndex = edgeKeyValue.Value.Item2;
-
-				if (nodeFromIndex == arg1) {
-					nodeFromIndex = arg2;
-				}
-				if (nodeToIndex == arg1) {
-					nodeToIndex = arg2;
-				}
-
-				Tuple<int, int> newValue = new Tuple<int, int>(nodeFromIndex, nodeToIndex);
-				_edges[edgeKeyValue.Key] = newValue;
-			}
+			_nodeIndices = new NodeIndexList();
+			_edgeIndices = new EdgeIndexList();
+			_outgoingEdges = new Dictionary<NodeIndex, HashSet<EdgeIndex>>();
+			_incomingEdges = new Dictionary<NodeIndex, HashSet<EdgeIndex>>();
+			_edges = new Dictionary<EdgeIndex, Tuple<NodeIndex, NodeIndex>>();
 		}
 
 		/// <summary>
@@ -68,31 +39,13 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
-		/// Index of the last node in this graph.
-		/// </summary>
-		public int LastNode {
-			get {
-				return _nodeIndices.Last;
-			}
-		}
-
-		/// <summary>
-		/// Index of the last edge in this graph.
-		/// </summary>
-		public int LastEdge {
-			get {
-				return _edgeIndices.Last;
-			}
-		}
-
-		/// <summary>
 		/// Create a new node.
 		/// </summary>
 		/// <returns>Index of the created node.</returns>
-		public int CreateNode() {
-			int nodeIndex = _nodeIndices.NewIndex();
-			_outgoingEdges[nodeIndex] = new HashSet<int>();
-			_incomingEdges[nodeIndex] = new HashSet<int>();
+		public NodeIndex CreateNode() {
+			NodeIndex nodeIndex = _nodeIndices.NewIndex();
+			_outgoingEdges[nodeIndex] = new HashSet<EdgeIndex>();
+			_incomingEdges[nodeIndex] = new HashSet<EdgeIndex>();
 
 			this.ChangedEvent();
 
@@ -105,11 +58,11 @@ namespace GraphModelLibrary.Rewrite {
 		/// <param name="nodeFromIndex">Index of the first node.</param>
 		/// <param name="nodeToIndex">Index of the second node.</param>
 		/// <returns>Index of the created edge.</returns>
-		public int CreateEdge(int nodeFromIndex, int nodeToIndex) {
-			int edgeIndex = _edgeIndices.NewIndex();
+		public EdgeIndex CreateEdge(NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
+			EdgeIndex edgeIndex = _edgeIndices.NewIndex();
 			_outgoingEdges[nodeFromIndex].Add(edgeIndex);
 			_incomingEdges[nodeToIndex].Add(edgeIndex);
-			_edges[edgeIndex] = new Tuple<int, int>(nodeFromIndex, nodeToIndex);
+			_edges[edgeIndex] = new Tuple<NodeIndex, NodeIndex>(nodeFromIndex, nodeToIndex);
 
 			this.ChangedEvent();
 
@@ -120,7 +73,7 @@ namespace GraphModelLibrary.Rewrite {
 		/// Delete the edge by it's index.
 		/// </summary>
 		/// <param name="edgeIndex">Edge index.</param>
-		public void DeleteEdge(int edgeIndex) {
+		public void DeleteEdge(EdgeIndex edgeIndex) {
 			var edge = _edges[edgeIndex];
 			_outgoingEdges[edge.Item1].Remove(edgeIndex);
 			_incomingEdges[edge.Item2].Remove(edgeIndex);
@@ -135,13 +88,13 @@ namespace GraphModelLibrary.Rewrite {
 		/// Delete the node by it's index.
 		/// </summary>
 		/// <param name="nodeIndex">Node index.</param>
-		public void DeleteNode(int nodeIndex) {
-			List<int> edgesToDelete = _outgoingEdges[nodeIndex]
+		public void DeleteNode(NodeIndex nodeIndex) {
+			List<EdgeIndex> edgesToDelete = _outgoingEdges[nodeIndex]
 				.Concat(_incomingEdges[nodeIndex])
 				.Distinct()
 				.ToList();
 
-			foreach (int edgeIndex in edgesToDelete) {
+			foreach (EdgeIndex edgeIndex in edgesToDelete) {
 				this.DeleteEdge(edgeIndex);
 			}
 
@@ -150,72 +103,62 @@ namespace GraphModelLibrary.Rewrite {
 			this.ChangedEvent();
 		}
 
-		public int GetNodeFrom(int edgeIndex) {
+		public NodeIndex GetNodeFrom(EdgeIndex edgeIndex) {
 			return _edges[edgeIndex].Item1;
 		}
 
-		public int GetNodeTo(int edgeIndex) {
+		public NodeIndex GetNodeTo(EdgeIndex edgeIndex) {
 			return _edges[edgeIndex].Item2;
 		}
 
-		public int[] GetEdgesBetween(int nodeFromIndex, int nodeToIndex) {
+		public EdgeIndex[] GetEdgesBetween(NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
 			return _outgoingEdges[nodeFromIndex]
 				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)
 				.ToArray();
 		}
 
-		public bool ContainsNode(int nodeIndex) {
+		public bool ContainsNode(NodeIndex nodeIndex) {
 			return _nodeIndices.Contains(nodeIndex);
 		}
 
-		public bool ContainsEdge(int edgeIndex) {
+		public bool ContainsEdge(EdgeIndex edgeIndex) {
 			return _edgeIndices.Contains(edgeIndex);
 		}
 
-		public IEnumerable<int> NodeEnumerator {
+		public IEnumerable<NodeIndex> NodeEnumerator {
 			get {
-				foreach (int nodeIndex in _nodeIndices) {
+				foreach (NodeIndex nodeIndex in _nodeIndices) {
 					yield return nodeIndex;
 				}
 			}
 		}
 
-		public IEnumerable<int> EdgeEnumerator {
+		public IEnumerable<EdgeIndex> EdgeEnumerator {
 			get {
-				foreach (int edgeIndex in _edgeIndices) {
+				foreach (EdgeIndex edgeIndex in _edgeIndices) {
 					yield return edgeIndex;
 				}
 			}
 		}
 
-		public IEnumerable<int> OutgoingEnumerator(int nodeIndex) {
-			foreach (int edgeIndex in _outgoingEdges[nodeIndex]) {
+		public IEnumerable<EdgeIndex> OutgoingEnumerator(NodeIndex nodeIndex) {
+			foreach (EdgeIndex edgeIndex in _outgoingEdges[nodeIndex]) {
 				yield return edgeIndex;
 			}
 		}
 
-		public IEnumerable<int> IncomingEnumerator(int nodeIndex) {
-			foreach (int edgeIndex in _incomingEdges[nodeIndex]) {
+		public IEnumerable<EdgeIndex> IncomingEnumerator(NodeIndex nodeIndex) {
+			foreach (EdgeIndex edgeIndex in _incomingEdges[nodeIndex]) {
 				yield return edgeIndex;
 			}
 		}
-
-		public void Reindex() {
-			foreach (var reindexed in _nodeIndices.Reindex) {
-				NodeReindexEvent(reindexed.Item1, reindexed.Item2);
-			}
-
-			this.ChangedEvent();
-		}
-
-		public event Action<int, int> NodeReindexEvent = (int _, int __) => { };
-
+		
 		public event Action ChangedEvent = () => { };
 
 		private INodeIndexList _nodeIndices;
 		private IEdgeIndexList _edgeIndices;
-		private Dictionary<int, HashSet<int>> _outgoingEdges;
-		private Dictionary<int, HashSet<int>> _incomingEdges;
-		private Dictionary<int, Tuple<int, int>> _edges;
+		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _outgoingEdges;
+		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _incomingEdges;
+		private Dictionary<EdgeIndex, Tuple<NodeIndex, NodeIndex>> _edges;
 	}
 }

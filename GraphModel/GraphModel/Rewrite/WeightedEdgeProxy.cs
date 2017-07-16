@@ -6,7 +6,7 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	public class WeightedEdgeProxy<TNode, TEdge> {
 
-		public WeightedEdgeProxy(WeightedGraph<TNode, TEdge> graph, int index) {
+		public WeightedEdgeProxy(WeightedGraph<TNode, TEdge> graph, EdgeIndex index) {
 			this._graph = graph;
 			this._index = index;
 		}
@@ -18,7 +18,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public int Index {
+		public EdgeIndex Index {
 			get {
 				if (IsValid) {
 					return _index;
@@ -55,22 +55,22 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, int nodeFromIndex, int nodeToIndex, TEdge weight) {
-			int edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex, TEdge weight) {
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
 			return new WeightedEdgeProxy<TNode, TEdge>(graph, edgeIndex);
 		}
-		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, WeightedEdgeProxy<TNode, TEdge> nodeFrom, WeightedEdgeProxy<TNode, TEdge> nodeTo, TEdge weight) {
+		public static WeightedEdgeProxy<TNode, TEdge> Create(WeightedGraph<TNode, TEdge> graph, WeightedNodeProxy<TNode, TEdge> nodeFrom, WeightedNodeProxy<TNode, TEdge> nodeTo, TEdge weight) {
 			return Create(graph, nodeFrom.Index, nodeTo.Index, weight);
 		}
 
 		public void Delete() {
 			_graph.DeleteEdge(_index);
-			_index = -1;
+			_index = EdgeIndex.NaN;
 			_graph = null;
 		}
 
 		private WeightedGraph<TNode, TEdge> _graph;
-		private int _index;
+		private EdgeIndex _index;
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {

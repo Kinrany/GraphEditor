@@ -8,7 +8,7 @@ namespace UnitTestProject {
 		[TestMethod]
 		public void DeletingNode1() {
 			Graph graph = new Graph();
-			int index = graph.CreateNode();
+			NodeIndex index = graph.CreateNode();
 
 			graph.DeleteNode(index);
 
@@ -19,13 +19,13 @@ namespace UnitTestProject {
 		public void DeletingNode2() {
 			Graph graph = new Graph();
 
-			int index0 = graph.CreateNode();
-			int index1 = graph.CreateNode();
+			NodeIndex index0 = graph.CreateNode();
+			NodeIndex index1 = graph.CreateNode();
 			graph.DeleteNode(index0);
-			int index2 = graph.CreateNode();
-			int index3 = graph.CreateNode();
+			NodeIndex index2 = graph.CreateNode();
+			NodeIndex index3 = graph.CreateNode();
 			graph.DeleteNode(index2);
-			int index4 = graph.CreateNode();
+			NodeIndex index4 = graph.CreateNode();
 			graph.DeleteNode(index1);
 
 			Assert.IsTrue(graph.NodeCount == 2);
@@ -36,12 +36,12 @@ namespace UnitTestProject {
 		[TestMethod]
 		public void DeletingNode3() {
 			Graph graph = new Graph();
-			int nodeIndex0 = graph.CreateNode();
-			int nodeIndex1 = graph.CreateNode();
-			int edgeIndex0 = graph.CreateEdge(nodeIndex0, nodeIndex1);
-			int edgeIndex1 = graph.CreateEdge(nodeIndex0, nodeIndex0);
-			int edgeIndex2 = graph.CreateEdge(nodeIndex1, nodeIndex1);
-			int edgeIndex3 = graph.CreateEdge(nodeIndex1, nodeIndex0);
+			NodeIndex nodeIndex0 = graph.CreateNode();
+			NodeIndex nodeIndex1 = graph.CreateNode();
+			EdgeIndex edgeIndex0 = graph.CreateEdge(nodeIndex0, nodeIndex1);
+			EdgeIndex edgeIndex1 = graph.CreateEdge(nodeIndex0, nodeIndex0);
+			EdgeIndex edgeIndex2 = graph.CreateEdge(nodeIndex1, nodeIndex1);
+			EdgeIndex edgeIndex3 = graph.CreateEdge(nodeIndex1, nodeIndex0);
 
 			graph.DeleteNode(nodeIndex0);
 

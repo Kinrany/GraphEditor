@@ -6,11 +6,9 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	public class WeightedNodeProxy<TNode, TEdge> {
 
-		public WeightedNodeProxy(WeightedGraph<TNode, TEdge> graph, int index) {
+		public WeightedNodeProxy(WeightedGraph<TNode, TEdge> graph, NodeIndex index) {
 			this._graph = graph;
 			this._index = index;
-
-			_graph.NodeReindexEvent += NodeReindexHandler;
 		}
 
 		public WeightedGraph<TNode, TEdge> Graph {
@@ -19,7 +17,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public int Index {
+		public NodeIndex Index {
 			get {
 				if (IsValid) {
 					return _index;
@@ -81,7 +79,7 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<WeightedEdgeProxy<TNode, TEdge>> OutgoingEnumerator {
 			get {
-				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
+				foreach (EdgeIndex edgeIndex in _graph.OutgoingEnumerator(_index)) {
 					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
 				}
 			}
@@ -89,14 +87,14 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<WeightedEdgeProxy<TNode, TEdge>> IncomingEnumerator {
 			get {
-				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
+				foreach (EdgeIndex edgeIndex in _graph.IncomingEnumerator(_index)) {
 					yield return new WeightedEdgeProxy<TNode, TEdge>(_graph, edgeIndex);
 				}
 			}
 		}
 
 		public static IEnumerable<WeightedNodeProxy<TNode, TEdge>> Enumerate(WeightedGraph<TNode, TEdge> graph) {
-			foreach (int nodeIndex in graph.NodeEnumerator) {
+			foreach (NodeIndex nodeIndex in graph.NodeEnumerator) {
 				yield return new WeightedNodeProxy<TNode, TEdge>(graph, nodeIndex);
 			}
 		}
@@ -104,24 +102,17 @@ namespace GraphModelLibrary.Rewrite {
 		public void Delete() {
 			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
-			_graph.NodeReindexEvent -= NodeReindexHandler;
-			_index = -1;
+			_index = NodeIndex.NaN;
 			_graph = null;
 		}
 
 
 		private WeightedGraph<TNode, TEdge> _graph;
-		private int _index;
+		private NodeIndex _index;
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {
 				throw new InvalidOperationException("This is not a valid node object.");
-			}
-		}
-
-		private void NodeReindexHandler(int oldIndex, int newIndex) {
-			if (_index == oldIndex) {
-				_index = newIndex;
 			}
 		}
 	}
