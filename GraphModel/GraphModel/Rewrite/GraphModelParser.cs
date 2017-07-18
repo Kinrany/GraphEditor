@@ -36,18 +36,22 @@ namespace GraphModelLibrary.Rewrite {
 				int n = int.Parse(queue.Dequeue());
 
 				// создадим точки
+				NodeIndex[] nodeIndices = new NodeIndex[n];
 				for (int i = 0; i < n; ++i) {
-					graph.CreateNode(new GraphModel.NodeWeight());
+					nodeIndices[i] = graph.CreateNode(new GraphModel.NodeWeight());
 				}
 
 				// создадим рёбра с заданными весами
+				EdgeIndex[,] edgeIndices = new EdgeIndex[n, n];
 				for (int i = 0; i < n; ++i) {
 					string line = queue.Dequeue();
-					int[] numbers = Helper.StringToIntArray(line);
+					int[] weightValues = Helper.StringToIntArray(line);
 
 					for (int j = 0; j < n; ++j) {
-						int weight = numbers[j];
-						graph.CreateEdge(i, j, new GraphModel.EdgeWeight(weight.ToString()));
+						int weightValue = weightValues[j];
+						var weight = new GraphModel.EdgeWeight(weightValue.ToString());
+						EdgeIndex index = graph.CreateEdge(nodeIndices[i], nodeIndices[j], weight);
+						edgeIndices[i, j] = index;
 					}
 				}
 
@@ -57,45 +61,47 @@ namespace GraphModelLibrary.Rewrite {
 
 					switch (line) {
 
-						// строка с цветами вершин
-						case "Node colors:":
-							int[] colorNumbers = Helper.StringToIntArray(queue.Dequeue());
-							Color[] colors = colorNumbers.Map(number => Helper.IntToColor[number]);
-							for (int nodeIndex = 0; nodeIndex < colors.Length; ++nodeIndex) {
-								graph.GetNodeWeight(nodeIndex).Color = colors[nodeIndex];
-							}
+					// строка с цветами вершин
+					case "Node colors:":
+						int[] colorNumbers = Helper.StringToIntArray(queue.Dequeue());
+						Color[] colors = colorNumbers.Map(number => Helper.IntToColor[number]);
 
-							break;
+						for (int i = 0; i < colors.Length; ++i) {
+							NodeIndex nodeIndex = nodeIndices[i];
+							graph.GetNodeWeight(nodeIndex).Color = colors[i];
+						}
 
-						// строки с номерами вершин и цветами рёбер между ними
-						case "Edge colors:":
+						break;
+
+					// строки с номерами вершин и цветами рёбер между ними
+					case "Edge colors:":
+						line = queue.Dequeue();
+						while (line != "-1") {
+							int[] numbers = Helper.StringToIntArray(line);
+							int nodeFromIndex = numbers[0];
+							int nodeToIndex = numbers[1];
+							int colorNumber = numbers[2];
+
+							Color color = Helper.IntToColor[colorNumber];
+
+							EdgeIndex edgeIndex = edgeIndices[nodeFromIndex, nodeToIndex];
+							graph.GetEdgeWeight(edgeIndex).Color = color;
+
 							line = queue.Dequeue();
-							while (line != "-1") {
-								int[] numbers = Helper.StringToIntArray(line);
-								int nodeFromIndex = numbers[0];
-								int nodeToIndex = numbers[1];
-								int colorNumber = numbers[2];
+						}
 
-								Color color = Helper.IntToColor[colorNumber];
+						break;
 
-								int? edgeIndex = graph.GetEdgeBetween(nodeFromIndex, nodeToIndex);
-								graph.GetEdgeWeight((int)edgeIndex).Color = color;
+					// текст в конце файла
+					case "Text:":
+						StringBuilder sb = new StringBuilder();
+						while (queue.Count > 0) {
+							sb.AppendLine(queue.Dequeue());
+						}
+						string text = sb.ToString();
+						graph.Text = text;
 
-								line = queue.Dequeue();
-							}
-
-							break;
-
-						// текст в конце файла
-						case "Text:":
-							StringBuilder sb = new StringBuilder();
-							while (queue.Count > 0) {
-								sb.AppendLine(queue.Dequeue());
-							}
-							string text = sb.ToString();
-							graph.Text = text;
-
-							break;
+						break;
 					}
 				}
 
@@ -125,10 +131,10 @@ namespace GraphModelLibrary.Rewrite {
 				string[] edgeValues = new string[N];
 
 				for (int j = 0; j < N; ++j) {
-					int? edgeIndex = graph.GetEdgeBetween(i, j);
+					EdgeIndex? edgeIndex = graph.GetEdgeBetween(new NodeIndex(i), new NodeIndex(j));
 
 					if (edgeIndex != null) {
-						edgeValues[j] = graph.GetEdgeWeight((int)edgeIndex).Value;
+						edgeValues[j] = graph.GetEdgeWeight((EdgeIndex)edgeIndex).Value;
 					}
 					else {
 						edgeValues[j] = "0";
@@ -142,14 +148,14 @@ namespace GraphModelLibrary.Rewrite {
 			text.Add("Node colors:");
 			string[] colorNumbers = new string[N];
 			for (int i = 0; i < N; ++i) {
-				Color color = graph.GetNodeWeight(i).Color;
+				Color color = graph.GetNodeWeight(new NodeIndex(i)).Color;
 				colorNumbers[i] = Helper.ColorToInt[color].ToString();
 			}
 			text.Add(string.Join(" ", colorNumbers));
 
 			// цвета рёбер, по одному ребру на строке
 			text.Add("Edge colors:");
-			foreach (int edgeIndex in graph.EdgeEnumerator) {
+			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
 				int nodeFromIndex = graph.GetNodeFrom(edgeIndex);
 				int nodeToIndex = graph.GetNodeTo(edgeIndex);
 				Color edgeColor = graph.GetEdgeWeight(edgeIndex).Color;

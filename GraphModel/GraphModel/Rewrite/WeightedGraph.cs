@@ -7,13 +7,9 @@ namespace GraphModelLibrary.Rewrite {
 	public class WeightedGraph<TNode, TEdge> {
 
 		public WeightedGraph() {
-			_nodeWeights = new Dictionary<int, TNode>();
-			_edgeWeights = new Dictionary<int, TEdge>();
+			_nodeWeights = new Dictionary<NodeIndex, TNode>();
+			_edgeWeights = new Dictionary<EdgeIndex, TEdge>();
 			_graph = new Graph();
-
-			_graph.NodeReindexEvent += (int oldIndex, int newIndex) => {
-				this.NodeReindexEvent(oldIndex, newIndex);
-			};
 		}
 		
 		public int NodeCount {
@@ -28,26 +24,8 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		/// <summary>
-		/// Index of the last node in this graph.
-		/// </summary>
-		public int LastNode {
-			get {
-				return _graph.LastNode;
-			}
-		}
-
-		/// <summary>
-		/// Index of the last edge in this graph.
-		/// </summary>
-		public int LastEdge {
-			get {
-				return _graph.LastEdge;
-			}
-		}
-
-		public int CreateNode(TNode weight) {
-			int index = _graph.CreateNode();
+		public NodeIndex CreateNode(TNode weight) {
+			NodeIndex index = _graph.CreateNode();
 			_nodeWeights[index] = weight;
 
 			this.ChangedEvent();
@@ -55,8 +33,8 @@ namespace GraphModelLibrary.Rewrite {
 			return index;
 		}
 		
-		public int CreateEdge(int nodeFromIndex, int nodeToIndex, TEdge weight) {
-			int edgeIndex = _graph.CreateEdge(nodeFromIndex, nodeToIndex);
+		public EdgeIndex CreateEdge(NodeIndex nodeFromIndex, NodeIndex nodeToIndex, TEdge weight) {
+			EdgeIndex edgeIndex = _graph.CreateEdge(nodeFromIndex, nodeToIndex);
 			_edgeWeights[edgeIndex] = weight;
 
 			this.ChangedEvent();
@@ -64,50 +42,50 @@ namespace GraphModelLibrary.Rewrite {
 			return edgeIndex;
 		}
 
-		public void DeleteNode(int nodeIndex) {
+		public void DeleteNode(NodeIndex nodeIndex) {
 			_graph.DeleteNode(nodeIndex);
 			_nodeWeights.Remove(nodeIndex);
 
 			this.ChangedEvent();
 		}
 
-		public void DeleteEdge(int edgeIndex) {
+		public void DeleteEdge(EdgeIndex edgeIndex) {
 			_graph.DeleteEdge(edgeIndex);
 			_edgeWeights.Remove(edgeIndex);
 
 			this.ChangedEvent();
 		}
 
-		public int GetNodeFrom(int edgeIndex) {
+		public NodeIndex GetNodeFrom(EdgeIndex edgeIndex) {
 			return _graph.GetNodeFrom(edgeIndex);
 		}
 
-		public int GetNodeTo(int edgeIndex) {
+		public NodeIndex GetNodeTo(EdgeIndex edgeIndex) {
 			return _graph.GetNodeTo(edgeIndex);
 		}
 
-		public TNode GetNodeWeight(int nodeIndex) {
+		public TNode GetNodeWeight(NodeIndex nodeIndex) {
 			return _nodeWeights[nodeIndex];
 		}
 
-		public TEdge GetEdgeWeight(int edgeIndex) {
+		public TEdge GetEdgeWeight(EdgeIndex edgeIndex) {
 			return _edgeWeights[edgeIndex];
 		}
 
-		public void SetNodeWeight(int nodeIndex, TNode weight) {
+		public void SetNodeWeight(NodeIndex nodeIndex, TNode weight) {
 			_nodeWeights[nodeIndex] = weight;
 
 			this.ChangedEvent();
 		}
 
-		public void SetEdgeWeight(int edgeIndex, TEdge weight) {
+		public void SetEdgeWeight(EdgeIndex edgeIndex, TEdge weight) {
 			_edgeWeights[edgeIndex] = weight;
 
 			this.ChangedEvent();
 		}
 
-		public int? GetEdgeBetween(int nodeFromIndex, int nodeToIndex) {
-			int[] indices = _graph.GetEdgesBetween(nodeFromIndex, nodeToIndex);
+		public EdgeIndex? GetEdgeBetween(NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
+			EdgeIndex[] indices = _graph.GetEdgesBetween(nodeFromIndex, nodeToIndex);
 			if (indices.Length > 0) {
 				return indices.First();
 			}
@@ -116,45 +94,39 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public bool ContainsNode(int nodeIndex) {
+		public bool ContainsNode(NodeIndex nodeIndex) {
 			return _graph.ContainsNode(nodeIndex);
 		}
 
-		public bool ContainsEdge(int edgeIndex) {
+		public bool ContainsEdge(EdgeIndex edgeIndex) {
 			return _graph.ContainsEdge(edgeIndex);
 		}
 
-		public IEnumerable<int> NodeEnumerator {
+		public IEnumerable<NodeIndex> NodeEnumerator {
 			get {
 				return _graph.NodeEnumerator;
 			}
 		}
 
-		public IEnumerable<int> EdgeEnumerator {
+		public IEnumerable<EdgeIndex> EdgeEnumerator {
 			get {
 				return _graph.EdgeEnumerator;
 			}
 		}
 
-		public IEnumerable<int> OutgoingEnumerator(int nodeIndex) {
+		public IEnumerable<EdgeIndex> OutgoingEnumerator(NodeIndex nodeIndex) {
 			return _graph.OutgoingEnumerator(nodeIndex);
 		}
 
-		public IEnumerable<int> IncomingEnumerator(int nodeIndex) {
+		public IEnumerable<EdgeIndex> IncomingEnumerator(NodeIndex nodeIndex) {
 			return _graph.IncomingEnumerator(nodeIndex);
 		}
-
-		public void Reindex() {
-			_graph.Reindex();
-		}
-
-		public event Action<int, int> NodeReindexEvent = (int _, int __) => { };
-
+		
 		public event Action ChangedEvent = () => { };
 
 
 		private Graph _graph;
-		private Dictionary<int, TNode> _nodeWeights;
-		private Dictionary<int, TEdge> _edgeWeights;
+		private Dictionary<NodeIndex, TNode> _nodeWeights;
+		private Dictionary<EdgeIndex, TEdge> _edgeWeights;
 	}
 }

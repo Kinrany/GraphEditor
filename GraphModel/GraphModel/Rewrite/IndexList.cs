@@ -7,27 +7,33 @@ using ExtensionMethods;
 namespace GraphModelLibrary.Rewrite {
 	interface INodeIndexList {
 		int Count { get; }
-		int Last { get; }
-		int NewIndex();
-		bool Contains(int index);
-		void Remove(int index);
-		IEnumerator<int> GetEnumerator();
-		IEnumerable<Tuple<int, int>> Reindex { get; }
+		NodeIndex NewIndex();
+		bool Contains(NodeIndex index);
+		void Remove(NodeIndex index);
+		IEnumerator<NodeIndex> GetEnumerator();
 	}
 
-	interface IEdgeIndexList {
-		int Count { get; }
-		int Last { get; }
-		int NewIndex();
-		bool Contains(int index);
-		void Remove(int index);
-		IEnumerator<int> GetEnumerator();
-		IEnumerable<Tuple<int, int>> Reindex { get; }
+	public struct NodeIndex {
+		public NodeIndex(int value) {
+			this.Value = value;
+		}
+
+		public static readonly NodeIndex NaN = new NodeIndex(-1);
+
+		public readonly int Value;
+
+		public static implicit operator int(NodeIndex nodeIndex) {
+			return nodeIndex.Value;
+		}
+
+		public override string ToString() {
+			return this.Value.ToString();
+		}
 	}
 
-	class IndexList : INodeIndexList, IEdgeIndexList {
-		public IndexList() {
-			_list = new List<int>();
+	class NodeIndexList : INodeIndexList {
+		public NodeIndexList() {
+			_list = new List<NodeIndex>();
 		}
 
 		public int Count {
@@ -36,70 +42,108 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public int Last {
-			get {
-				if (_list.Count == 0) {
-					return -1;
-				}
-				else {
-					return _list.Last();
-				}
-			}
-		}
-
-		public int NewIndex() {
-			int newIndex = this.Last + 1;
+		public NodeIndex NewIndex() {
+			NodeIndex newIndex = this.GetNextIndex();
 			_list.Add(newIndex);
 			return newIndex;
 		}
 
-		public bool Contains(int index) {
+		public bool Contains(NodeIndex index) {
 			return _list.Contains(index);
 		}
 
-		public void Remove(int index) {
+		public void Remove(NodeIndex index) {
 			_list.Remove(index);
 		}
 
-		public IEnumerator<int> GetEnumerator() {
+		public IEnumerator<NodeIndex> GetEnumerator() {
 			return _list.GetEnumerator();
 		}
 
-		public IEnumerable<Tuple<int, int>> Reindex {
+
+		private static readonly NodeIndex START_INDEX = new NodeIndex(0);
+
+		private List<NodeIndex> _list;
+
+		private NodeIndex GetNextIndex() {
+			if (_list.Count == 0) {
+				return START_INDEX;
+			}
+			else {
+				return new NodeIndex(_list.Last() + 1);
+			}
+		}
+	}
+
+
+
+	interface IEdgeIndexList {
+		int Count { get; }
+		EdgeIndex NewIndex();
+		bool Contains(EdgeIndex index);
+		void Remove(EdgeIndex index);
+		IEnumerator<EdgeIndex> GetEnumerator();
+	}
+
+	public struct EdgeIndex {
+		public EdgeIndex(int value) {
+			this.Value = value;
+		}
+
+		public static readonly EdgeIndex NaN = new EdgeIndex(-1);
+
+		public readonly int Value;
+
+		public static implicit operator int(EdgeIndex edgeIndex) {
+			return edgeIndex.Value;
+		}
+
+		public override string ToString() {
+			return this.Value.ToString();
+		}
+	}
+
+	class EdgeIndexList : IEdgeIndexList {
+		public EdgeIndexList() {
+			_list = new List<EdgeIndex>();
+		}
+
+		public int Count {
 			get {
-				if (this.Count == this.Last + 1) {
-					yield break;
-				}
-
-				int n = _list.Count;
-
-				// only values >= n should be moved
-				int moveFrom = 0;
-				while (_list[moveFrom] < n) {
-					moveFrom++;
-				}
-				
-				int moveTo = 0;
-				while (moveFrom < _list.Count) {
-					while (_list[moveTo] == moveTo) {
-						moveTo++;
-					}
-
-					int old_index = _list[moveFrom];
-					int new_index = moveTo;
-					_list.RemoveAt(moveFrom);
-					_list.Insert(moveTo, moveTo);
-					yield return new Tuple<int, int>(old_index, new_index);
-
-					// editing _list on the fly doesn't break indices here
-					// because one element is removed and one added
-
-					moveFrom++;
-				}
+				return _list.Count;
 			}
 		}
 
+		public EdgeIndex NewIndex() {
+			EdgeIndex newIndex = this.GetNextIndex();
+			_list.Add(newIndex);
+			return newIndex;
+		}
 
-		private List<int> _list;
+		public bool Contains(EdgeIndex index) {
+			return _list.Contains(index);
+		}
+
+		public void Remove(EdgeIndex index) {
+			_list.Remove(index);
+		}
+
+		public IEnumerator<EdgeIndex> GetEnumerator() {
+			return _list.GetEnumerator();
+		}
+
+
+		private static readonly EdgeIndex START_INDEX = new EdgeIndex(0);
+
+		private List<EdgeIndex> _list;
+
+		private EdgeIndex GetNextIndex() {
+			if (_list.Count == 0) {
+				return START_INDEX;
+			}
+			else {
+				return new EdgeIndex(_list.Last() + 1);
+			}
+		}
 	}
 }

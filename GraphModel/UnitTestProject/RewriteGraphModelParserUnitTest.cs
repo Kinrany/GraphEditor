@@ -98,8 +98,8 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 		[TestMethod]
 		public void Serializing3_SingleEdge() {
 			GraphModel graph = new GraphModel();
-			graph.CreateNode(new GraphModel.NodeWeight());
-			graph.CreateEdge(0, 0, new GraphModel.EdgeWeight("1"));
+			NodeIndex node = graph.CreateNode(new GraphModel.NodeWeight());
+			graph.CreateEdge(node, node, new GraphModel.EdgeWeight("1"));
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 			

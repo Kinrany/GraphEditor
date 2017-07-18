@@ -5,11 +5,9 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	public class NodeProxy {
-		public NodeProxy(Graph graph, int index) {
+		public NodeProxy(Graph graph, NodeIndex index) {
 			this._graph = graph;
 			this._index = index;
-
-			_graph.NodeReindexEvent += NodeReindexHandler;
 		}
 
 		public Graph Graph {
@@ -19,7 +17,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public int Index {
+		public NodeIndex Index {
 			get {
 				ThrowUnlessValid();
 				return _index;
@@ -67,7 +65,7 @@ namespace GraphModelLibrary.Rewrite {
 		public IEnumerable<EdgeProxy> OutgoingEnumerator {
 			get {
 				ThrowUnlessValid();
-				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
+				foreach (EdgeIndex edgeIndex in _graph.OutgoingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
 			}
@@ -76,14 +74,14 @@ namespace GraphModelLibrary.Rewrite {
 		public IEnumerable<EdgeProxy> IncomingEnumerator {
 			get {
 				ThrowUnlessValid();
-				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
+				foreach (EdgeIndex edgeIndex in _graph.IncomingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
 			}
 		}
 
 		public static IEnumerable<NodeProxy> Enumerate(Graph graph) {
-			foreach (int nodeIndex in graph.NodeEnumerator) {
+			foreach (NodeIndex nodeIndex in graph.NodeEnumerator) {
 				yield return new NodeProxy(graph, nodeIndex);
 			}
 		}
@@ -91,24 +89,17 @@ namespace GraphModelLibrary.Rewrite {
 		public void Delete() {
 			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
-			_graph.NodeReindexEvent -= NodeReindexHandler;
-			_index = -1;
+			_index = NodeIndex.NaN;
 			_graph = null;
 		}
 
 
 		private Graph _graph;
-		private int _index;
+		private NodeIndex _index;
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {
 				throw new InvalidOperationException("This is not a valid node object.");
-			}
-		}
-
-		private void NodeReindexHandler(int oldIndex, int newIndex) {
-			if (_index == oldIndex) {
-				_index = newIndex;
 			}
 		}
 	}

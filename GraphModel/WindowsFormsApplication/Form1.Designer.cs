@@ -31,9 +31,9 @@
 			this.toolStripOpenGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSaveGraph = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripImportCode = new System.Windows.Forms.ToolStripMenuItem();
-			this.ToolStripSaveImage = new System.Windows.Forms.ToolStripMenuItem();
-			this.rearrangeNodesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.regularPolygonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSaveImage = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripRearrangeMenu = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripRearrangeCircle = new System.Windows.Forms.ToolStripMenuItem();
 			this.TextBox = new System.Windows.Forms.RichTextBox();
 			this.coloringModeRadioButton = new System.Windows.Forms.RadioButton();
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
@@ -53,6 +53,7 @@
 			this.graphBox.Size = new System.Drawing.Size(623, 415);
 			this.graphBox.TabIndex = 2;
 			this.graphBox.TabStop = false;
+			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
 			// 
 			// debugLabel
 			// 
@@ -88,6 +89,7 @@
 			this.DataGridMatrix.RowTemplate.Height = 24;
 			this.DataGridMatrix.Size = new System.Drawing.Size(330, 273);
 			this.DataGridMatrix.TabIndex = 8;
+			this.DataGridMatrix.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridMatrix_CellEndEdit);
 			// 
 			// menuStrip1
 			// 
@@ -96,8 +98,8 @@
             this.toolStripOpenGraph,
             this.toolStripSaveGraph,
             this.toolStripImportCode,
-            this.ToolStripSaveImage,
-            this.rearrangeNodesToolStripMenuItem});
+            this.toolStripSaveImage,
+            this.toolStripRearrangeMenu});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
 			this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -126,27 +128,27 @@
 			this.toolStripImportCode.Text = "Импорт кода";
 			this.toolStripImportCode.Click += new System.EventHandler(this.toolStripImportCode_Click);
 			// 
-			// ToolStripSaveImage
+			// toolStripSaveImage
 			// 
-			this.ToolStripSaveImage.Name = "ToolStripSaveImage";
-			this.ToolStripSaveImage.Size = new System.Drawing.Size(154, 20);
-			this.ToolStripSaveImage.Text = "Сохранить изображение";
-			this.ToolStripSaveImage.Click += new System.EventHandler(this.ToolStripSaveImage_Click);
+			this.toolStripSaveImage.Name = "toolStripSaveImage";
+			this.toolStripSaveImage.Size = new System.Drawing.Size(154, 20);
+			this.toolStripSaveImage.Text = "Сохранить изображение";
+			this.toolStripSaveImage.Click += new System.EventHandler(this.toolStripSaveImage_Click);
 			// 
-			// rearrangeNodesToolStripMenuItem
+			// toolStripRearrangeMenu
 			// 
-			this.rearrangeNodesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.regularPolygonToolStripMenuItem});
-			this.rearrangeNodesToolStripMenuItem.Name = "rearrangeNodesToolStripMenuItem";
-			this.rearrangeNodesToolStripMenuItem.Size = new System.Drawing.Size(147, 20);
-			this.rearrangeNodesToolStripMenuItem.Text = "Упорядочить вершины";
+			this.toolStripRearrangeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripRearrangeCircle});
+			this.toolStripRearrangeMenu.Name = "toolStripRearrangeMenu";
+			this.toolStripRearrangeMenu.Size = new System.Drawing.Size(147, 20);
+			this.toolStripRearrangeMenu.Text = "Упорядочить вершины";
 			// 
-			// regularPolygonToolStripMenuItem
+			// toolStripRearrangeCircle
 			// 
-			this.regularPolygonToolStripMenuItem.Name = "regularPolygonToolStripMenuItem";
-			this.regularPolygonToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
-			this.regularPolygonToolStripMenuItem.Text = "Правильный многоугольник";
-			this.regularPolygonToolStripMenuItem.Click += new System.EventHandler(this.RegularRectangle_Click);
+			this.toolStripRearrangeCircle.Name = "toolStripRearrangeCircle";
+			this.toolStripRearrangeCircle.Size = new System.Drawing.Size(152, 22);
+			this.toolStripRearrangeCircle.Text = "Окружность";
+			this.toolStripRearrangeCircle.Click += new System.EventHandler(this.toolStripRearrangeCircle_Click);
 			// 
 			// TextBox
 			// 
@@ -241,9 +243,9 @@
 		private System.Windows.Forms.RadioButton defaultModeButton;
 		private System.Windows.Forms.Button colorPickerButton;
 		private System.Windows.Forms.ColorDialog colorDialog;
-		private System.Windows.Forms.ToolStripMenuItem ToolStripSaveImage;
-		private System.Windows.Forms.ToolStripMenuItem rearrangeNodesToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem regularPolygonToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolStripSaveImage;
+		private System.Windows.Forms.ToolStripMenuItem toolStripRearrangeMenu;
+		private System.Windows.Forms.ToolStripMenuItem toolStripRearrangeCircle;
 	}
 }
 

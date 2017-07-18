@@ -8,7 +8,7 @@ namespace GraphModelLibrary.Rewrite {
 	using EdgeWeight = GraphModel.EdgeWeight;
 
 	public class NodeModel : WeightedNodeProxy<NodeWeight, EdgeWeight> {
-		public NodeModel(GraphModel graph, int index) : base(graph, index) { }
+		public NodeModel(GraphModel graph, NodeIndex index) : base(graph, index) { }
 
 		public new GraphModel Graph {
 			get {
@@ -17,7 +17,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public static NodeModel Create(GraphModel graph, NodeWeight weight) {
-			int nodeIndex = graph.CreateNode(weight);
+			NodeIndex nodeIndex = graph.CreateNode(weight);
 			return new NodeModel(graph, nodeIndex);
 		}
 
@@ -26,7 +26,7 @@ namespace GraphModelLibrary.Rewrite {
 				weight = new EdgeWeight();
 			}
 
-			int edgeIndex = this.Graph.CreateEdge(this.Index, otherNode.Index, weight);
+			EdgeIndex edgeIndex = this.Graph.CreateEdge(this.Index, otherNode.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
 		}
 
@@ -35,13 +35,13 @@ namespace GraphModelLibrary.Rewrite {
 				weight = new EdgeWeight();
 			}
 
-			int edgeIndex = this.Graph.CreateEdge(otherNode.Index, this.Index, weight);
+			EdgeIndex edgeIndex = this.Graph.CreateEdge(otherNode.Index, this.Index, weight);
 			return new EdgeModel(this.Graph, edgeIndex);
 		}
 
 		public new IEnumerable<EdgeModel> OutgoingEnumerator {
 			get {
-				foreach (int edgeIndex in this.Graph.OutgoingEnumerator(this.Index)) {
+				foreach (EdgeIndex edgeIndex in this.Graph.OutgoingEnumerator(this.Index)) {
 					yield return new EdgeModel(this.Graph, edgeIndex);
 				}
 			}
@@ -49,14 +49,14 @@ namespace GraphModelLibrary.Rewrite {
 
 		public new IEnumerable<EdgeModel> IncomingEnumerator {
 			get {
-				foreach (int edgeIndex in this.Graph.IncomingEnumerator(this.Index)) {
+				foreach (EdgeIndex edgeIndex in this.Graph.IncomingEnumerator(this.Index)) {
 					yield return new EdgeModel(this.Graph, edgeIndex);
 				}
 			}
 		}
 
 		public static IEnumerable<NodeModel> Enumerate(GraphModel graph) {
-			foreach (int nodeIndex in graph.NodeEnumerator) {
+			foreach (NodeIndex nodeIndex in graph.NodeEnumerator) {
 				yield return new NodeModel(graph, nodeIndex);
 			}
 		}

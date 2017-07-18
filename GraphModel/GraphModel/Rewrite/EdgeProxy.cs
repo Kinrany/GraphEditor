@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	public class EdgeProxy {
-		public EdgeProxy(Graph graph, int index) {
+		public EdgeProxy(Graph graph, EdgeIndex index) {
 			this._graph = graph;
 			this._index = index;
 		}
@@ -67,9 +67,9 @@ namespace GraphModelLibrary.Rewrite {
 			return hash;
 		}
 
-		public static EdgeProxy Create(Graph graph, int nodeToIndex, int nodeFromIndex) {
-			int index = graph.CreateEdge(nodeToIndex, nodeFromIndex);
-			return new EdgeProxy(graph, index);
+		public static EdgeProxy Create(Graph graph, NodeIndex nodeToIndex, NodeIndex nodeFromIndex) {
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeToIndex, nodeFromIndex);
+			return new EdgeProxy(graph, edgeIndex);
 		}
 		public static EdgeProxy Create(Graph graph, NodeProxy nodeTo, NodeProxy nodeFrom) {
 			return Create(graph, nodeTo.Index, nodeFrom.Index);
@@ -78,12 +78,12 @@ namespace GraphModelLibrary.Rewrite {
 		public void Delete() {
 			ThrowUnlessValid();
 			_graph.DeleteEdge(_index);
-			_index = -1;
+			_index = EdgeIndex.NaN;
 			_graph = null;
 		}
 
 		private Graph _graph;
-		private int _index;
+		private EdgeIndex _index;
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {

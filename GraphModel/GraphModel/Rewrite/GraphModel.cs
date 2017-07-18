@@ -22,43 +22,48 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public new int CreateNode(NodeWeight weight) {
-			int nodeIndex = base.CreateNode(weight);
+		public new NodeIndex CreateNode(NodeWeight weight) {
+			NodeIndex nodeIndex = base.CreateNode(weight);
 			this.ChangedEvent += weight.FireChangedEvent;
 			return nodeIndex;
 		}
 
-		public new int CreateEdge(int nodeFromIndex, int nodeToIndex, EdgeWeight weight) {
-			int edgeIndex = base.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+		public new EdgeIndex CreateEdge(NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight) {
+			EdgeIndex edgeIndex = base.CreateEdge(nodeFromIndex, nodeToIndex, weight);
 			this.ChangedEvent += weight.FireChangedEvent;
 			return edgeIndex;
 		}
 
-		public new void DeleteNode(int nodeIndex) {
+		public new void DeleteNode(NodeIndex nodeIndex) {
 			NodeWeight weight = this.GetNodeWeight(nodeIndex);
 			base.DeleteNode(nodeIndex);
 			this.ChangedEvent -= weight.FireChangedEvent;
 		}
 
-		public new void DeleteEdge(int edgeIndex) {
+		public new void DeleteEdge(EdgeIndex edgeIndex) {
 			EdgeWeight weight = this.GetEdgeWeight(edgeIndex);
 			base.DeleteEdge(edgeIndex);
 			this.ChangedEvent -= weight.FireChangedEvent;
 		}
 
-		public new void SetNodeWeight(int nodeIndex, NodeWeight weight) {
+		public new void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
 			NodeWeight oldWeight = this.GetNodeWeight(nodeIndex);
 			this.ChangedEvent -= oldWeight.FireChangedEvent;
 			this.ChangedEvent += weight.FireChangedEvent;
 			base.SetNodeWeight(nodeIndex, weight);
 		}
 
-		public new void SetEdgeWeight(int edgeIndex, EdgeWeight weight) {
+		public new void SetEdgeWeight(EdgeIndex edgeIndex, EdgeWeight weight) {
 			EdgeWeight oldWeight = this.GetEdgeWeight(edgeIndex);
 			this.ChangedEvent -= oldWeight.FireChangedEvent;
 			this.ChangedEvent += weight.FireChangedEvent;
 			base.SetEdgeWeight(edgeIndex, weight);
 		}
+
+		public void Reindex() {
+			throw new NotImplementedException();
+		}
+
 
 		private string _text = "";
 	}
