@@ -111,12 +111,6 @@ namespace GraphModelLibrary.Rewrite {
 			return _edges[edgeIndex].Item2;
 		}
 
-		public EdgeIndex[] GetEdgesBetween(NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
-			return _outgoingEdges[nodeFromIndex]
-				.Where(edgeIndex => _edges[edgeIndex].Item2 == nodeToIndex)
-				.ToArray();
-		}
-
 		public bool ContainsNode(NodeIndex nodeIndex) {
 			return _nodeIndices.Contains(nodeIndex);
 		}
