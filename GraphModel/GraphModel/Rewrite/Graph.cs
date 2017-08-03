@@ -149,8 +149,8 @@ namespace GraphModelLibrary.Rewrite {
 		
 		public event Action ChangedEvent = () => { };
 
-		private INodeIndexList _nodeIndices;
-		private IEdgeIndexList _edgeIndices;
+		private IIndexList<NodeIndex> _nodeIndices;
+		private IIndexList<EdgeIndex> _edgeIndices;
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _outgoingEdges;
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _incomingEdges;
 		private Dictionary<EdgeIndex, Tuple<NodeIndex, NodeIndex>> _edges;

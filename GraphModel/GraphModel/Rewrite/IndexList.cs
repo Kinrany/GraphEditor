@@ -5,15 +5,15 @@ using System.Text;
 using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
-	interface INodeIndexList {
+	interface IIndexList<TIndex> {
 		int Count { get; }
-		NodeIndex NewIndex();
-		bool Contains(NodeIndex index);
-		void Remove(NodeIndex index);
-		IEnumerator<NodeIndex> GetEnumerator();
+		TIndex NewIndex();
+		bool Contains(TIndex index);
+		void Remove(TIndex index);
+		IEnumerator<TIndex> GetEnumerator();
 	}
 
-	class NodeIndexList : INodeIndexList {
+	class NodeIndexList : IIndexList<NodeIndex> {
 		public NodeIndexList() {
 			_list = new List<NodeIndex>();
 		}
@@ -57,17 +57,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 	}
 
-
-
-	interface IEdgeIndexList {
-		int Count { get; }
-		EdgeIndex NewIndex();
-		bool Contains(EdgeIndex index);
-		void Remove(EdgeIndex index);
-		IEnumerator<EdgeIndex> GetEnumerator();
-	}
-
-	class EdgeIndexList : IEdgeIndexList {
+	class EdgeIndexList : IIndexList<EdgeIndex> {
 		public EdgeIndexList() {
 			_list = new List<EdgeIndex>();
 		}
