@@ -7,23 +7,48 @@ namespace GraphModelLibrary.Rewrite {
 	using NodeWeight = GraphModel.NodeWeight;
 	using EdgeWeight = GraphModel.EdgeWeight;
 
-	public class EdgeModel : WeightedEdgeProxy<NodeWeight, EdgeWeight> {
-		public EdgeModel(GraphModel graph, EdgeIndex index) : base(graph, index) { }
+	public class EdgeModel {
+		public EdgeModel(GraphModel graph, EdgeIndex index) {
+			_graph = graph;
+			_index = index;
+		}
 
-		public new GraphModel Graph {
+		public GraphModel Graph {
 			get {
-				return (GraphModel)base.Graph;
+				return _graph;
 			}
 		}
 
-		public new NodeModel NodeFrom {
+		public EdgeIndex Index {
 			get {
-				return new NodeModel(this.Graph, this.Graph.GetNodeFrom(this.Index));
+				ThrowUnlessValid();
+				return _index;
 			}
 		}
-		public new NodeModel NodeTo {
+
+		public bool IsValid {
 			get {
-				return new NodeModel(this.Graph, this.Graph.GetNodeTo(this.Index));
+				return _graph != null && _graph.ContainsEdge(_index);
+			}
+		}
+
+		public NodeModel NodeFrom {
+			get {
+				return new NodeModel(_graph, _graph.GetNodeFrom(_index));
+			}
+		}
+		public NodeModel NodeTo {
+			get {
+				return new NodeModel(_graph, _graph.GetNodeTo(_index));
+			}
+		}
+
+		public EdgeWeight Weight {
+			get {
+				return _graph.GetEdgeWeight(_index);
+			}
+			set {
+				_graph.SetEdgeWeight(_index, value);
 			}
 		}
 
@@ -49,6 +74,22 @@ namespace GraphModelLibrary.Rewrite {
 			}
 			else {
 				return new EdgeModel(graph, (EdgeIndex)edgeIndex);
+			}
+		}
+
+		public void Delete() {
+			_graph.DeleteEdge(_index);
+			_index = EdgeIndex.NaN;
+			_graph = null;
+		}
+
+
+		private GraphModel _graph;
+		private EdgeIndex _index;
+
+		private void ThrowUnlessValid() {
+			if (!this.IsValid) {
+				throw new InvalidOperationException("This is not a valid node object.");
 			}
 		}
 	}
