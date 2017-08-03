@@ -67,6 +67,7 @@
     <Compile Include="Rewrite\GraphModel.NodeWeight.cs" />
     <Compile Include="Rewrite\GraphModelExtensions.cs" />
     <Compile Include="Rewrite\GraphModelParser.cs" />
+    <Compile Include="Rewrite\NodeIndex.cs" />
     <Compile Include="Rewrite\NodeModel.cs" />
     <Compile Include="Rewrite\EdgeProxy.cs" />
     <Compile Include="Rewrite\Graph.cs" />

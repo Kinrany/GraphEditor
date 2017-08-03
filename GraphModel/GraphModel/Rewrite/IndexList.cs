@@ -13,24 +13,6 @@ namespace GraphModelLibrary.Rewrite {
 		IEnumerator<NodeIndex> GetEnumerator();
 	}
 
-	public struct NodeIndex {
-		public NodeIndex(int value) {
-			this.Value = value;
-		}
-
-		public static readonly NodeIndex NaN = new NodeIndex(-1);
-
-		public readonly int Value;
-
-		public static implicit operator int(NodeIndex nodeIndex) {
-			return nodeIndex.Value;
-		}
-
-		public override string ToString() {
-			return this.Value.ToString();
-		}
-	}
-
 	class NodeIndexList : INodeIndexList {
 		public NodeIndexList() {
 			_list = new List<NodeIndex>();
@@ -83,24 +65,6 @@ namespace GraphModelLibrary.Rewrite {
 		bool Contains(EdgeIndex index);
 		void Remove(EdgeIndex index);
 		IEnumerator<EdgeIndex> GetEnumerator();
-	}
-
-	public struct EdgeIndex {
-		public EdgeIndex(int value) {
-			this.Value = value;
-		}
-
-		public static readonly EdgeIndex NaN = new EdgeIndex(-1);
-
-		public readonly int Value;
-
-		public static implicit operator int(EdgeIndex edgeIndex) {
-			return edgeIndex.Value;
-		}
-
-		public override string ToString() {
-			return this.Value.ToString();
-		}
 	}
 
 	class EdgeIndexList : IEdgeIndexList {
