@@ -5,33 +5,15 @@ using System.Text;
 using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
-	interface INodeIndexList {
+	interface IIndexList<TIndex> {
 		int Count { get; }
-		NodeIndex NewIndex();
-		bool Contains(NodeIndex index);
-		void Remove(NodeIndex index);
-		IEnumerator<NodeIndex> GetEnumerator();
+		TIndex NewIndex();
+		bool Contains(TIndex index);
+		void Remove(TIndex index);
+		IEnumerator<TIndex> GetEnumerator();
 	}
 
-	public struct NodeIndex {
-		public NodeIndex(int value) {
-			this.Value = value;
-		}
-
-		public static readonly NodeIndex NaN = new NodeIndex(-1);
-
-		public readonly int Value;
-
-		public static implicit operator int(NodeIndex nodeIndex) {
-			return nodeIndex.Value;
-		}
-
-		public override string ToString() {
-			return this.Value.ToString();
-		}
-	}
-
-	class NodeIndexList : INodeIndexList {
+	class NodeIndexList : IIndexList<NodeIndex> {
 		public NodeIndexList() {
 			_list = new List<NodeIndex>();
 		}
@@ -75,35 +57,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 	}
 
-
-
-	interface IEdgeIndexList {
-		int Count { get; }
-		EdgeIndex NewIndex();
-		bool Contains(EdgeIndex index);
-		void Remove(EdgeIndex index);
-		IEnumerator<EdgeIndex> GetEnumerator();
-	}
-
-	public struct EdgeIndex {
-		public EdgeIndex(int value) {
-			this.Value = value;
-		}
-
-		public static readonly EdgeIndex NaN = new EdgeIndex(-1);
-
-		public readonly int Value;
-
-		public static implicit operator int(EdgeIndex edgeIndex) {
-			return edgeIndex.Value;
-		}
-
-		public override string ToString() {
-			return this.Value.ToString();
-		}
-	}
-
-	class EdgeIndexList : IEdgeIndexList {
+	class EdgeIndexList : IIndexList<EdgeIndex> {
 		public EdgeIndexList() {
 			_list = new List<EdgeIndex>();
 		}
