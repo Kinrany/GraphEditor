@@ -34,8 +34,7 @@ namespace GraphModelLibrary.Rewrite {
 			_nodeWeights[nodeIndex] = weight;
 
 			FireChangedEvent();
-
-			ChangedEvent += weight.FireChangedEvent;
+			
 			return nodeIndex;
 		}
 
@@ -58,8 +57,6 @@ namespace GraphModelLibrary.Rewrite {
 			_nodeWeights.Remove(nodeIndex);
 
 			FireChangedEvent();
-			
-			ChangedEvent -= weight.FireChangedEvent;
 		}
 
 		public new void DeleteEdge(EdgeIndex edgeIndex) {
@@ -81,8 +78,6 @@ namespace GraphModelLibrary.Rewrite {
 
 		public void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
 			NodeWeight oldWeight = GetNodeWeight(nodeIndex);
-			ChangedEvent -= oldWeight.FireChangedEvent;
-			ChangedEvent += weight.FireChangedEvent;
 
 			_nodeWeights[nodeIndex] = weight;
 
