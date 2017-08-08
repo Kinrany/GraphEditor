@@ -20,7 +20,6 @@ namespace GraphModelLibrary.Rewrite {
 				}
 				set {
 					_color = value;
-					this.FireChangedEvent();
 				}
 			}
 			public string Value {
@@ -29,13 +28,7 @@ namespace GraphModelLibrary.Rewrite {
 				}
 				set {
 					_value = value;
-					this.FireChangedEvent();
 				}
-			}
-
-			public event Action ChangedEvent = () => { };
-			public void FireChangedEvent() {
-				this.ChangedEvent();
 			}
 
 
