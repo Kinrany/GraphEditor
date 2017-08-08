@@ -17,7 +17,7 @@ namespace UILogicLibrary {
 				double angle = 2 * Math.PI * (node.Index * 1.0 / n);
 				int dx = (int)Math.Round(radius * Math.Sin(angle));
 				int dy = (int)Math.Round(radius * Math.Cos(angle));
-				node.Weight.Location = middle + new Size(dx, dy);
+				node.Location = middle + new Size(dx, dy);
 			}
 		}
 	}

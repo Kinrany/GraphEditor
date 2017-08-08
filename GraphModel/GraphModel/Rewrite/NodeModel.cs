@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -40,6 +41,28 @@ namespace GraphModelLibrary.Rewrite {
 			set {
 				ThrowUnlessValid();
 				_graph.SetNodeWeight(_index, value);
+			}
+		}
+
+		public Color Color {
+			get {
+				return Weight.Color;
+			}
+			set {
+				var weight = Weight;
+				weight.Color = value;
+				Weight = weight;
+			}
+		}
+
+		public Point Location {
+			get {
+				return Weight.Location;
+			}
+			set {
+				var weight = Weight;
+				weight.Location = value;
+				Weight = weight;
 			}
 		}
 

@@ -67,8 +67,8 @@ namespace GraphModelLibrary.Rewrite {
 						Color[] colors = colorNumbers.Map(number => Helper.IntToColor[number]);
 
 						for (int i = 0; i < colors.Length; ++i) {
-							NodeIndex nodeIndex = nodeIndices[i];
-							graph.GetNodeWeight(nodeIndex).Color = colors[i];
+							NodeModel node = new NodeModel(graph, nodeIndices[i]);
+							node.Color = colors[i];
 						}
 
 						break;

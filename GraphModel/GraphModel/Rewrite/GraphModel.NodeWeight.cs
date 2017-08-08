@@ -6,12 +6,12 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	public partial class GraphModel {
-		public class NodeWeight {
+		public struct NodeWeight {
 			public NodeWeight(string value = DEFAULT_VALUE) : this(DEFAULT_COLOR) { }
 			public NodeWeight(Color color, string value = DEFAULT_VALUE) {
-				this.Color = color;
-				this.Value = value;
-				this.Location = new Point(0, 0);
+				_color = color;
+				_value = value;
+				_location = new Point(0, 0);
 			}
 
 			public Color Color {
