@@ -11,7 +11,7 @@ namespace GraphModelLibrary.Rewrite {
 			public NodeWeight(Color color, string value = DEFAULT_VALUE) {
 				_color = color;
 				_value = value;
-				_location = new Point(0, 0);
+				_location = new Point();
 			}
 
 			public Color Color {

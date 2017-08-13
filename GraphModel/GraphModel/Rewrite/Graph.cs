@@ -38,7 +38,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public event Action ChangedEvent;
+		public event Action GraphChanged;
+
+		public event Action NodeCreated;
+		public event Action NodeDeleted;
+		public event Action EdgeCreated;
+		public event Action EdgeDeleted;
 
 		/// <summary>
 		/// Create a new node.
@@ -49,7 +54,7 @@ namespace GraphModelLibrary.Rewrite {
 			_outgoingEdges[nodeIndex] = new HashSet<EdgeIndex>();
 			_incomingEdges[nodeIndex] = new HashSet<EdgeIndex>();
 
-			FireChangedEvent();
+			FireNodeCreated();
 
 			return nodeIndex;
 		}
@@ -66,7 +71,7 @@ namespace GraphModelLibrary.Rewrite {
 			_incomingEdges[nodeToIndex].Add(edgeIndex);
 			_edges[edgeIndex] = new Tuple<NodeIndex, NodeIndex>(nodeFromIndex, nodeToIndex);
 
-			FireChangedEvent();
+			FireEdgeCreated();
 
 			return edgeIndex;
 		}
@@ -83,7 +88,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_edgeIndices.Remove(edgeIndex);
 
-			FireChangedEvent();
+			FireEdgeDeleted();
 		}
 
 		/// <summary>
@@ -102,7 +107,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_nodeIndices.Remove(nodeIndex);
 
-			FireChangedEvent();
+			FireNodeDeleted();
 		}
 
 		public NodeIndex GetNodeFrom(EdgeIndex edgeIndex) {
@@ -150,8 +155,8 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 
-		protected void FireChangedEvent() {
-			ChangedEvent?.Invoke();
+		protected void FireGraphChanged() {
+			GraphChanged?.Invoke();
 		}
 
 
@@ -160,5 +165,22 @@ namespace GraphModelLibrary.Rewrite {
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _outgoingEdges;
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _incomingEdges;
 		private Dictionary<EdgeIndex, Tuple<NodeIndex, NodeIndex>> _edges;
+
+		private void FireNodeCreated() {
+			NodeCreated?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireNodeDeleted() {
+			NodeDeleted?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireEdgeCreated() {
+			EdgeCreated?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireEdgeDeleted() {
+			EdgeDeleted?.Invoke();
+			FireGraphChanged();
+		}
 	}
 }

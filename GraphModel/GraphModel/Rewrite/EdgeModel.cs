@@ -58,11 +58,10 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight = null) {
-			if (weight == null) {
-				weight = new EdgeWeight();
-			}
-
+		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
+			return Create(graph, nodeFromIndex, nodeToIndex, new EdgeWeight());
+		}
+		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight) {
 			EdgeIndex edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
 			return new EdgeModel(graph, edgeIndex);
 		}

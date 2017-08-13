@@ -95,20 +95,18 @@ namespace GraphModelLibrary.Rewrite {
 			return new NodeModel(graph, nodeIndex);
 		}
 
-		public EdgeModel AddOutgoingEdge(NodeModel otherNode, EdgeWeight weight = null) {
-			if (weight == null) {
-				weight = new EdgeWeight();
-			}
-
+		public EdgeModel AddOutgoingEdge(NodeModel otherNode) {
+			return AddOutgoingEdge(otherNode, new EdgeWeight());
+		}
+		public EdgeModel AddOutgoingEdge(NodeModel otherNode, EdgeWeight weight) {
 			EdgeIndex edgeIndex = _graph.CreateEdge(_index, otherNode.Index, weight);
 			return new EdgeModel(_graph, edgeIndex);
 		}
 
-		public EdgeModel AddIncomingEdge(NodeModel otherNode, EdgeWeight weight = null) {
-			if (weight == null) {
-				weight = new EdgeWeight();
-			}
-
+		public EdgeModel AddIncomingEdge(NodeModel otherNode) {
+			return AddIncomingEdge(otherNode, new EdgeWeight());
+		}
+		public EdgeModel AddIncomingEdge(NodeModel otherNode, EdgeWeight weight) {
 			EdgeIndex edgeIndex = _graph.CreateEdge(otherNode.Index, _index, weight);
 			return new EdgeModel(_graph, edgeIndex);
 		}

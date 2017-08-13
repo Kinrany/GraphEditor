@@ -85,7 +85,10 @@ namespace GraphModelLibrary.Rewrite {
 							Color color = Helper.IntToColor[colorNumber];
 
 							EdgeIndex edgeIndex = edgeIndices[nodeFromIndex, nodeToIndex];
-							graph.GetEdgeWeight(edgeIndex).Color = color;
+
+							var weight = graph.GetEdgeWeight(edgeIndex);
+							weight.Color = color;
+							graph.SetEdgeWeight(edgeIndex, weight);
 
 							line = queue.Dequeue();
 						}

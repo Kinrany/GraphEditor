@@ -25,55 +25,47 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public event Action NodeWeightChanged;
+		public event Action EdgeWeightChanged;
 
-		public new NodeIndex CreateNode() {
-			return CreateNode(default(NodeWeight));
-		}
 		public NodeIndex CreateNode(NodeWeight weight) {
 			NodeIndex nodeIndex = base.CreateNode();
-			_nodeWeights[nodeIndex] = weight;
-
-			FireChangedEvent();
-			
+			SetNodeWeight(nodeIndex, weight);
 			return nodeIndex;
 		}
-
-		public new EdgeIndex CreateEdge(NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
-			return CreateEdge(nodeFromIndex, nodeToIndex, default(EdgeWeight));
-		}
+		
 		public EdgeIndex CreateEdge(NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight) {
 			EdgeIndex edgeIndex = base.CreateEdge(nodeFromIndex, nodeToIndex);
-			_edgeWeights[edgeIndex] = weight;
-
-			FireChangedEvent();
-			
+			SetEdgeWeight(edgeIndex, weight);
 			return edgeIndex;
 		}
 
-		public new void DeleteNode(NodeIndex nodeIndex) {
-			NodeWeight weight = GetNodeWeight(nodeIndex);
-
-			base.DeleteNode(nodeIndex);
-			_nodeWeights.Remove(nodeIndex);
-
-			FireChangedEvent();
-		}
-
-		public new void DeleteEdge(EdgeIndex edgeIndex) {
-			EdgeWeight weight = GetEdgeWeight(edgeIndex);
-
-			base.DeleteEdge(edgeIndex);
-			_edgeWeights.Remove(edgeIndex);
-
-			FireChangedEvent();
-		}
-
 		public NodeWeight GetNodeWeight(NodeIndex nodeIndex) {
-			return _nodeWeights[nodeIndex];
+			if (!ContainsNode(nodeIndex)) {
+				throw new ArgumentException("Invalid node index.");
+			}
+
+			NodeWeight weight;
+			if (_nodeWeights.TryGetValue(nodeIndex, out weight)) {
+				return weight;
+			}
+			else {
+				return default(NodeWeight);
+			}
 		}
 
 		public EdgeWeight GetEdgeWeight(EdgeIndex edgeIndex) {
-			return _edgeWeights[edgeIndex];
+			if (!ContainsEdge(edgeIndex)) {
+				throw new ArgumentException("Invalid edge index.");
+			}
+
+			EdgeWeight weight;
+			if (_edgeWeights.TryGetValue(edgeIndex, out weight)) {
+				return weight;
+			}
+			else {
+				return default(EdgeWeight);
+			}
 		}
 
 		public void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
@@ -81,7 +73,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_nodeWeights[nodeIndex] = weight;
 
-			FireChangedEvent();
+			FireNodeWeightChanged();
 		}
 
 		public void SetEdgeWeight(EdgeIndex edgeIndex, EdgeWeight weight) {
@@ -89,7 +81,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_edgeWeights[edgeIndex] = weight;
 
-			FireChangedEvent();
+			FireEdgeWeightChanged();
 		}
 
 		public void Reindex() {
@@ -101,5 +93,14 @@ namespace GraphModelLibrary.Rewrite {
 		private Dictionary<EdgeIndex, EdgeWeight> _edgeWeights;
 
 		private string _text = "";
+
+		private void FireNodeWeightChanged() {
+			NodeWeightChanged?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireEdgeWeightChanged() {
+			EdgeWeightChanged?.Invoke();
+			FireGraphChanged();
+		}
 	}
 }
