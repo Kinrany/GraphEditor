@@ -96,11 +96,11 @@ namespace WindowsFormsApplication {
 		}
 
 		private void SetGraphModel(GraphModel graph) {
-			this.GraphModel.ChangedEvent -= OnGraphModelChanged;
+			GraphModel.GraphChanged -= OnGraphModelChanged;
 
 			_editTool.Graph = graph;
 
-			graph.ChangedEvent += OnGraphModelChanged;
+			graph.GraphChanged += OnGraphModelChanged;
 			OnGraphModelChanged();
 
 			saveButtonLabel.Text = "";
@@ -171,7 +171,9 @@ namespace WindowsFormsApplication {
 				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);
 			}
 
-			edge.Weight.Value = value;
+			var weight = edge.Weight;
+			weight.Value = value;
+			edge.Weight = weight;
 		}
 	}
 }

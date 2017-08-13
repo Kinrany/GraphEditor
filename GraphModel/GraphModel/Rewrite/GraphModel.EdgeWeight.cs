@@ -6,12 +6,12 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	public partial class GraphModel {
-		public class EdgeWeight {
+		public struct EdgeWeight {
 			public EdgeWeight(string value = DEFAULT_VALUE)
 				: this(DEFAULT_COLOR, value) { }
 			public EdgeWeight(Color color, string value = DEFAULT_VALUE) {
-				this.Color = color;
-				this.Value = value;
+				_color = color;
+				_value = value;
 			}
 
 			public Color Color {
@@ -20,7 +20,6 @@ namespace GraphModelLibrary.Rewrite {
 				}
 				set {
 					_color = value;
-					this.FireChangedEvent();
 				}
 			}
 			public string Value {
@@ -29,13 +28,7 @@ namespace GraphModelLibrary.Rewrite {
 				}
 				set {
 					_value = value;
-					this.FireChangedEvent();
 				}
-			}
-
-			public event Action ChangedEvent = () => { };
-			public void FireChangedEvent() {
-				this.ChangedEvent();
 			}
 
 

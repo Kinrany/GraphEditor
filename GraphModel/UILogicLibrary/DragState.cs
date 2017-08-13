@@ -12,7 +12,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseMoved(Point location) {
-			_node.Weight.Location = location;
+			_node.Location = location;
 		}
 
 		public override void MouseLeftDepressed(NodeModel node) {

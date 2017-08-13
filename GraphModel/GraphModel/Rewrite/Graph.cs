@@ -38,6 +38,13 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public event Action GraphChanged;
+
+		public event Action NodeCreated;
+		public event Action NodeDeleted;
+		public event Action EdgeCreated;
+		public event Action EdgeDeleted;
+
 		/// <summary>
 		/// Create a new node.
 		/// </summary>
@@ -47,7 +54,7 @@ namespace GraphModelLibrary.Rewrite {
 			_outgoingEdges[nodeIndex] = new HashSet<EdgeIndex>();
 			_incomingEdges[nodeIndex] = new HashSet<EdgeIndex>();
 
-			this.ChangedEvent();
+			FireNodeCreated();
 
 			return nodeIndex;
 		}
@@ -64,7 +71,7 @@ namespace GraphModelLibrary.Rewrite {
 			_incomingEdges[nodeToIndex].Add(edgeIndex);
 			_edges[edgeIndex] = new Tuple<NodeIndex, NodeIndex>(nodeFromIndex, nodeToIndex);
 
-			this.ChangedEvent();
+			FireEdgeCreated();
 
 			return edgeIndex;
 		}
@@ -81,7 +88,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_edgeIndices.Remove(edgeIndex);
 
-			this.ChangedEvent();
+			FireEdgeDeleted();
 		}
 
 		/// <summary>
@@ -100,7 +107,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			_nodeIndices.Remove(nodeIndex);
 
-			this.ChangedEvent();
+			FireNodeDeleted();
 		}
 
 		public NodeIndex GetNodeFrom(EdgeIndex edgeIndex) {
@@ -146,13 +153,34 @@ namespace GraphModelLibrary.Rewrite {
 				yield return edgeIndex;
 			}
 		}
-		
-		public event Action ChangedEvent = () => { };
+
+
+		protected void FireGraphChanged() {
+			GraphChanged?.Invoke();
+		}
+
 
 		private IIndexList<NodeIndex> _nodeIndices;
 		private IIndexList<EdgeIndex> _edgeIndices;
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _outgoingEdges;
 		private Dictionary<NodeIndex, HashSet<EdgeIndex>> _incomingEdges;
 		private Dictionary<EdgeIndex, Tuple<NodeIndex, NodeIndex>> _edges;
+
+		private void FireNodeCreated() {
+			NodeCreated?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireNodeDeleted() {
+			NodeDeleted?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireEdgeCreated() {
+			EdgeCreated?.Invoke();
+			FireGraphChanged();
+		}
+		private void FireEdgeDeleted() {
+			EdgeDeleted?.Invoke();
+			FireGraphChanged();
+		}
 	}
 }

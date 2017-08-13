@@ -67,8 +67,8 @@ namespace GraphModelLibrary.Rewrite {
 						Color[] colors = colorNumbers.Map(number => Helper.IntToColor[number]);
 
 						for (int i = 0; i < colors.Length; ++i) {
-							NodeIndex nodeIndex = nodeIndices[i];
-							graph.GetNodeWeight(nodeIndex).Color = colors[i];
+							NodeModel node = new NodeModel(graph, nodeIndices[i]);
+							node.Color = colors[i];
 						}
 
 						break;
@@ -85,7 +85,10 @@ namespace GraphModelLibrary.Rewrite {
 							Color color = Helper.IntToColor[colorNumber];
 
 							EdgeIndex edgeIndex = edgeIndices[nodeFromIndex, nodeToIndex];
-							graph.GetEdgeWeight(edgeIndex).Color = color;
+
+							var weight = graph.GetEdgeWeight(edgeIndex);
+							weight.Color = color;
+							graph.SetEdgeWeight(edgeIndex, weight);
 
 							line = queue.Dequeue();
 						}
