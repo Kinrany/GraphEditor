@@ -13,11 +13,13 @@ namespace UILogicLibrary {
 			int radius = Math.Min(bounds.Height, bounds.Width) * 4 / 5;
 
 			int n = graph.NodeCount;
+			int number = 0;
 			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
-				double angle = 2 * Math.PI * (node.Index * 1.0 / n);
+				double angle = 2 * Math.PI * (number * 1.0 / n);
 				int dx = (int)Math.Round(radius * Math.Sin(angle));
-				int dy = (int)Math.Round(radius * Math.Cos(angle));
+				int dy = -(int)Math.Round(radius * Math.Cos(angle));
 				node.Location = middle + new Size(dx, dy);
+				number += 1;
 			}
 		}
 	}
