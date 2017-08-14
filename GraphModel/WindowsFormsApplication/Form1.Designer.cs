@@ -89,7 +89,6 @@
 			this.DataGridMatrix.RowTemplate.Height = 24;
 			this.DataGridMatrix.Size = new System.Drawing.Size(330, 273);
 			this.DataGridMatrix.TabIndex = 8;
-			this.DataGridMatrix.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridMatrix_CellEndEdit);
 			// 
 			// menuStrip1
 			// 
@@ -146,7 +145,7 @@
 			// toolStripRearrangeCircle
 			// 
 			this.toolStripRearrangeCircle.Name = "toolStripRearrangeCircle";
-			this.toolStripRearrangeCircle.Size = new System.Drawing.Size(152, 22);
+			this.toolStripRearrangeCircle.Size = new System.Drawing.Size(142, 22);
 			this.toolStripRearrangeCircle.Text = "Окружность";
 			this.toolStripRearrangeCircle.Click += new System.EventHandler(this.toolStripRearrangeCircle_Click);
 			// 

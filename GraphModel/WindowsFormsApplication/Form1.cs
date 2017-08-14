@@ -35,19 +35,22 @@ namespace WindowsFormsApplication {
 
 		private EditTool _editTool = null;
 		private Timer _timer;
+		private DataGridContainer _dataGridContainer;
 
 		private string PathToFile;
 
 
 		// loading
 		private void Form1_Load(object sender, EventArgs e) {
+			_dataGridContainer = new DataGridContainer(DataGridMatrix);
+
 			Mouse mouse = LoadMouse();
 			ConcreteKeyboard keyboard = LoadKeyboard();
 			_editTool = new EditTool(mouse, keyboard);
 
-			this._timer = LoadTimer();
+			_timer = LoadTimer();
 
-			this.SetGraphModel(this.GraphModel);
+			SetGraphModel(this.GraphModel);
 		}
 
 		private Mouse LoadMouse() {
@@ -106,7 +109,7 @@ namespace WindowsFormsApplication {
 			saveButtonLabel.Text = "";
 		}
 		private void OnGraphModelChanged() {
-			MatrixUpdater.UpdateMatrix(this.GraphModel, DataGridMatrix);
+			_dataGridContainer.Update(this.GraphModel);
 			TextBox.Text = this.GraphModel.Text;
 		}
 
@@ -153,27 +156,6 @@ namespace WindowsFormsApplication {
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
-		}
-		private void DataGridMatrix_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-			// HACK
-			// e.RowIndex and e.ColumnIndex do not match to real node indices
-
-			NodeIndex nodeFromIndex = new NodeIndex(e.RowIndex);
-			NodeIndex nodeToIndex = new NodeIndex(e.ColumnIndex);
-			EdgeIndex? edgeIndex = GraphModel.GetEdgeBetween(nodeFromIndex, nodeToIndex);
-			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
-
-			EdgeModel edge;
-			if (edgeIndex != null) {
-				edge = new EdgeModel(GraphModel, (EdgeIndex)edgeIndex);
-			}
-			else {
-				edge = EdgeModel.Create(GraphModel, nodeFromIndex, nodeToIndex);
-			}
-
-			var weight = edge.Weight;
-			weight.Value = value;
-			edge.Weight = weight;
 		}
 	}
 }

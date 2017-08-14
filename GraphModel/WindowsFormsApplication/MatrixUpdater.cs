@@ -7,6 +7,7 @@ using GraphModelLibrary.Rewrite;
 
 
 namespace WindowsFormsApplication {
+	[Obsolete]
 	class MatrixUpdater {
 		public static void UpdateMatrix(GraphModel graph, DataGridView dataGridMatrix) {
 			dataGridMatrix.Columns.Clear();

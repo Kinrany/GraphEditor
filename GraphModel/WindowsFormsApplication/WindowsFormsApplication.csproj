@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConcreteKeyboard.cs" />
+    <Compile Include="DataGridContainer.cs" />
     <Compile Include="Dynaloader.cs" />
     <Compile Include="Form1ToolStrip.cs">
       <SubType>Form</SubType>
