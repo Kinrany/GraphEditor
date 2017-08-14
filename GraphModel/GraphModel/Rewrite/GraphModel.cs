@@ -46,12 +46,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			NodeWeight weight;
-			if (_nodeWeights.TryGetValue(nodeIndex, out weight)) {
-				return weight;
+			if (!_nodeWeights.TryGetValue(nodeIndex, out weight)) {
+				weight = new NodeWeight(nodeIndex);
+				_nodeWeights[nodeIndex] = weight;
 			}
-			else {
-				return default(NodeWeight);
-			}
+
+			return weight;
 		}
 
 		public EdgeWeight GetEdgeWeight(EdgeIndex edgeIndex) {
@@ -60,32 +60,32 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			EdgeWeight weight;
-			if (_edgeWeights.TryGetValue(edgeIndex, out weight)) {
-				return weight;
+			if (!_edgeWeights.TryGetValue(edgeIndex, out weight)) {
+				weight = EdgeWeight.DEFAULT;
+				_edgeWeights[edgeIndex] = weight;
 			}
-			else {
-				return default(EdgeWeight);
-			}
+
+			return weight;
 		}
 
 		public void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
-			NodeWeight oldWeight = GetNodeWeight(nodeIndex);
-
 			_nodeWeights[nodeIndex] = weight;
-
 			FireNodeWeightChanged();
 		}
 
 		public void SetEdgeWeight(EdgeIndex edgeIndex, EdgeWeight weight) {
-			EdgeWeight oldWeight = GetEdgeWeight(edgeIndex);
-
 			_edgeWeights[edgeIndex] = weight;
-
 			FireEdgeWeightChanged();
 		}
 
 		public void Reindex() {
-			throw new NotImplementedException();
+			int index = 0;
+			foreach (NodeIndex nodeIndex in this.NodeEnumerator) {
+				var weight = GetNodeWeight(nodeIndex);
+				weight.Name = index.ToString();
+				SetNodeWeight(nodeIndex, weight);
+				index += 1;
+			}
 		}
 
 		

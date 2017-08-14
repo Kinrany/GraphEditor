@@ -21,5 +21,9 @@ namespace GraphModelLibrary.Rewrite {
 				return null;
 			}
 		}
+
+		public static NodeModel GetNodeByName(this GraphModel graph, string name) {
+			return NodeModel.Enumerate(graph).First(node => node.Name == name);
+		}
 	}
 }

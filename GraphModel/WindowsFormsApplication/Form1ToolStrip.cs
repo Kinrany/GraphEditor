@@ -11,7 +11,6 @@ namespace WindowsFormsApplication {
 		// tool strip buttons
 		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
-			MatrixUpdater File = new MatrixUpdater();
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;

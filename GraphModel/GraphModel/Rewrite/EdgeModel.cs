@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -52,21 +53,38 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public string Value {
+			get {
+				return Weight.Value;
+			}
+			set {
+				var weight = Weight;
+				weight.Value = value;
+				Weight = weight;
+			}
+		}
+
 		public static IEnumerable<EdgeModel> Enumerate (GraphModel graph) {
 			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
 				yield return new EdgeModel(graph, edgeIndex);
 			}
 		}
 
-		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
-			return Create(graph, nodeFromIndex, nodeToIndex, new EdgeWeight());
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo) {
+			return Create(nodeFrom, nodeTo, EdgeWeight.DEFAULT);
 		}
-		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight) {
-			EdgeIndex edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo, EdgeWeight weight) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			var graph = nodeFrom.Graph;
+
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeFrom.Index, nodeTo.Index, weight);
 			return new EdgeModel(graph, edgeIndex);
 		}
 
-		public static EdgeModel Between(GraphModel graph, NodeModel nodeFrom, NodeModel nodeTo) {
+		public static EdgeModel Between(NodeModel nodeFrom, NodeModel nodeTo) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			GraphModel graph = nodeFrom.Graph;
+
 			EdgeIndex? edgeIndex = graph.GetEdgeBetween(nodeFrom.Index, nodeTo.Index);
 			if (edgeIndex == null) {
 				return null;

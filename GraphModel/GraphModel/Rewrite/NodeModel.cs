@@ -44,6 +44,17 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public string Name {
+			get {
+				return Weight.Name;
+			}
+			set {
+				var weight = Weight;
+				weight.Name = value;
+				Weight = weight;
+			}
+		}
+
 		public Color Color {
 			get {
 				return Weight.Color;
@@ -90,6 +101,10 @@ namespace GraphModelLibrary.Rewrite {
 			return hash;
 		}
 
+		public static NodeModel Create(GraphModel graph) {
+			NodeIndex nodeIndex = graph.CreateNode();
+			return new NodeModel(graph, nodeIndex);
+		}
 		public static NodeModel Create(GraphModel graph, NodeWeight weight) {
 			NodeIndex nodeIndex = graph.CreateNode(weight);
 			return new NodeModel(graph, nodeIndex);

@@ -36,22 +36,26 @@ namespace UILogicLibrary {
 		}
 
 		private void CreateNode(Point location) {
-			var nodeWeight = new GraphModel.NodeWeight();
+			NodeModel node = NodeModel.Create(EditTool.Graph);
+			var nodeWeight = new GraphModel.NodeWeight(node.Index);
 			nodeWeight.Location = location;
 			nodeWeight.Color = EditTool.PickedColor;
-
-			NodeModel node = NodeModel.Create(EditTool.Graph, nodeWeight);
+			node.Weight = nodeWeight;
 
 			foreach (NodeModel other in NodeModel.Enumerate(EditTool.Graph)) {
 				if (node.Equals(other)) {
 					continue;
 				}
 
-				var outgoingEdgeWeight = new GraphModel.EdgeWeight("0");
-				node.AddOutgoingEdge(other, outgoingEdgeWeight);
+				EdgeModel outgoingEdge = node.AddOutgoingEdge(other);
+				var outgoingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
+				outgoingEdgeWeight.Value = "0";
+				outgoingEdge.Weight = outgoingEdgeWeight;
 
-				var incomingEdgeWeight = new GraphModel.EdgeWeight("0");
-				node.AddIncomingEdge(other, incomingEdgeWeight);
+				EdgeModel incomingEdge = node.AddIncomingEdge(other);
+				var incomingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
+				incomingEdgeWeight.Value = "0";
+				incomingEdge.Weight = incomingEdgeWeight;
 			}
 		}
 	}

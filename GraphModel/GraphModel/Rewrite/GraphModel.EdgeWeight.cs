@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -7,13 +8,11 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	public partial class GraphModel {
 		public struct EdgeWeight {
-			public EdgeWeight(string value = DEFAULT_VALUE)
-				: this(DEFAULT_COLOR, value) { }
-			public EdgeWeight(Color color, string value = DEFAULT_VALUE) {
+			public EdgeWeight(Color color, string value) {
 				_color = color;
 				_value = value;
 			}
-
+			
 			public Color Color {
 				get {
 					return _color;
@@ -31,10 +30,8 @@ namespace GraphModelLibrary.Rewrite {
 				}
 			}
 
-
-			private static Color DEFAULT_COLOR = Color.Gray;
-			private const string DEFAULT_VALUE = "";
-
+			public static readonly EdgeWeight DEFAULT = new EdgeWeight(Color.Black, "");
+			
 			private Color _color;
 			private string _value;
 		}

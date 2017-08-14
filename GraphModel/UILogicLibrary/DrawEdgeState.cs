@@ -20,11 +20,14 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
-			EdgeModel oldEdge = EdgeModel.Between(EditTool.Graph, _start, node);
+			EdgeModel oldEdge = EdgeModel.Between(_start, node);
 			oldEdge?.Delete();
 
-			var edgeWeight = new GraphModel.EdgeWeight(EditTool.PickedColor, "1");
-			EdgeModel edge = _start.AddOutgoingEdge(node, edgeWeight);
+			EdgeModel edge = _start.AddOutgoingEdge(node);
+			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
+			edgeWeight.Color = EditTool.PickedColor;
+			edgeWeight.Value = "1";
+			edge.Weight = edgeWeight;
 
 			CurrentState = new DefaultState(EditTool);
 		}
