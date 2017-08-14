@@ -69,18 +69,12 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
-			NodeWeight oldWeight = GetNodeWeight(nodeIndex);
-
 			_nodeWeights[nodeIndex] = weight;
-
 			FireNodeWeightChanged();
 		}
 
 		public void SetEdgeWeight(EdgeIndex edgeIndex, EdgeWeight weight) {
-			EdgeWeight oldWeight = GetEdgeWeight(edgeIndex);
-
 			_edgeWeights[edgeIndex] = weight;
-
 			FireEdgeWeightChanged();
 		}
 
