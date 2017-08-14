@@ -54,7 +54,7 @@ namespace GraphModelLibrary.Rewrite {
 						int weightValue = weightValues[j];
 
 						EdgeIndex index = graph.CreateEdge(nodeIndices[i], nodeIndices[j]);
-						var weight = new GraphModel.EdgeWeight(index);
+						var weight = GraphModel.EdgeWeight.DEFAULT;
 						weight.Value = weightValue.ToString();
 						graph.SetEdgeWeight(index, weight);
 

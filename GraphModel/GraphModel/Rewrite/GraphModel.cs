@@ -61,7 +61,7 @@ namespace GraphModelLibrary.Rewrite {
 
 			EdgeWeight weight;
 			if (!_edgeWeights.TryGetValue(edgeIndex, out weight)) {
-				weight = new EdgeWeight(edgeIndex);
+				weight = EdgeWeight.DEFAULT;
 				_edgeWeights[edgeIndex] = weight;
 			}
 

@@ -48,12 +48,12 @@ namespace UILogicLibrary {
 				}
 
 				EdgeModel outgoingEdge = node.AddOutgoingEdge(other);
-				var outgoingEdgeWeight = new GraphModel.EdgeWeight(outgoingEdge.Index);
+				var outgoingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
 				outgoingEdgeWeight.Value = "0";
 				outgoingEdge.Weight = outgoingEdgeWeight;
 
 				EdgeModel incomingEdge = node.AddIncomingEdge(other);
-				var incomingEdgeWeight = new GraphModel.EdgeWeight(incomingEdge.Index);
+				var incomingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
 				incomingEdgeWeight.Value = "0";
 				incomingEdge.Weight = incomingEdgeWeight;
 			}

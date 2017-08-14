@@ -8,22 +8,11 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	public partial class GraphModel {
 		public struct EdgeWeight {
-			public EdgeWeight(Object name) {
-				_name = name.ToString();
-				_color = DEFAULT_COLOR;
-				_value = "";
+			public EdgeWeight(Color color, string value) {
+				_color = color;
+				_value = value;
 			}
-
-			public string Name {
-				get {
-					Debug.Assert(!string.IsNullOrWhiteSpace(_name));
-					return _name;
-				}
-				set {
-					Debug.Assert(!string.IsNullOrWhiteSpace(value));
-					_name = value;
-				}
-			}
+			
 			public Color Color {
 				get {
 					return _color;
@@ -41,9 +30,8 @@ namespace GraphModelLibrary.Rewrite {
 				}
 			}
 
-			private static Color DEFAULT_COLOR = Color.Black;
-
-			private string _name;
+			public static readonly EdgeWeight DEFAULT = new EdgeWeight(Color.Black, "");
+			
 			private Color _color;
 			private string _value;
 		}

@@ -52,17 +52,6 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public string Name {
-			get {
-				return Weight.Name;
-			}
-			set {
-				var weight = Weight;
-				weight.Name = value;
-				Weight = weight;
-			}
-		}
-
 		public static IEnumerable<EdgeModel> Enumerate (GraphModel graph) {
 			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
 				yield return new EdgeModel(graph, edgeIndex);

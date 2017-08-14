@@ -104,7 +104,7 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 			graph.SetNodeWeight(nodeIndex, nodeWeight);
 
 			EdgeIndex edgeIndex = graph.CreateEdge(nodeIndex, nodeIndex);
-			var edgeWeight = new GraphModel.EdgeWeight(edgeIndex);
+			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
 			edgeWeight.Value = "1";
 			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 

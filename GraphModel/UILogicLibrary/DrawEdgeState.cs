@@ -24,7 +24,7 @@ namespace UILogicLibrary {
 			oldEdge?.Delete();
 
 			EdgeModel edge = _start.AddOutgoingEdge(node);
-			var edgeWeight = new GraphModel.EdgeWeight(edge.Index);
+			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
 			edgeWeight.Color = EditTool.PickedColor;
 			edgeWeight.Value = "1";
 			edge.Weight = edgeWeight;
