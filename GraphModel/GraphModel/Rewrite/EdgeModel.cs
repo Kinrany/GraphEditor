@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -66,7 +67,10 @@ namespace GraphModelLibrary.Rewrite {
 			return new EdgeModel(graph, edgeIndex);
 		}
 
-		public static EdgeModel Between(GraphModel graph, NodeModel nodeFrom, NodeModel nodeTo) {
+		public static EdgeModel Between(NodeModel nodeFrom, NodeModel nodeTo) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			GraphModel graph = nodeFrom.Graph;
+
 			EdgeIndex? edgeIndex = graph.GetEdgeBetween(nodeFrom.Index, nodeTo.Index);
 			if (edgeIndex == null) {
 				return null;
