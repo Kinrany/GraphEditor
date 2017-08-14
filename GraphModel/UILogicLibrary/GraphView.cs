@@ -85,7 +85,7 @@ namespace UILogicLibrary {
 		}
 		void DrawNodeNumbers(GraphModel graph, DrawingContext context) {
 			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
-				context.DrawText(node.Index.ToString(), node.Weight.Location, Brushes.Black);
+				context.DrawText(node.Name, node.Weight.Location, Brushes.Black);
 			}
 		}
 		void DrawEdgeValues(GraphModel graph, DrawingContext context) {
