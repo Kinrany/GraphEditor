@@ -105,6 +105,7 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 
 			EdgeIndex edgeIndex = graph.CreateEdge(nodeIndex, nodeIndex);
 			var edgeWeight = new GraphModel.EdgeWeight(edgeIndex);
+			edgeWeight.Value = "1";
 			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
