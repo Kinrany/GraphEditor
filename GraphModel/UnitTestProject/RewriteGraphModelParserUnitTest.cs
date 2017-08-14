@@ -88,7 +88,7 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 		[TestMethod]
 		public void Serializing2_SingleNode() {
 			GraphModel graph = new GraphModel();
-			graph.CreateNode(new GraphModel.NodeWeight());
+			NodeIndex nodeIndex = graph.CreateNode();
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 
@@ -99,11 +99,13 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 		public void Serializing3_SingleEdge() {
 			GraphModel graph = new GraphModel();
 
-			NodeIndex nodeIndex = graph.CreateNode(new GraphModel.NodeWeight());
+			NodeIndex nodeIndex = graph.CreateNode();
+			var nodeWeight = new GraphModel.NodeWeight(nodeIndex);
+			graph.SetNodeWeight(nodeIndex, nodeWeight);
 
 			EdgeIndex edgeIndex = graph.CreateEdge(nodeIndex, nodeIndex);
-			var weight = new GraphModel.EdgeWeight(edgeIndex);
-			graph.SetEdgeWeight(edgeIndex, weight);
+			var edgeWeight = new GraphModel.EdgeWeight(edgeIndex);
+			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 			

@@ -90,6 +90,10 @@ namespace GraphModelLibrary.Rewrite {
 			return hash;
 		}
 
+		public static NodeModel Create(GraphModel graph) {
+			NodeIndex nodeIndex = graph.CreateNode();
+			return new NodeModel(graph, nodeIndex);
+		}
 		public static NodeModel Create(GraphModel graph, NodeWeight weight) {
 			NodeIndex nodeIndex = graph.CreateNode(weight);
 			return new NodeModel(graph, nodeIndex);

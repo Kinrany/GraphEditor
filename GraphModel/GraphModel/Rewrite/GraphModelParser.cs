@@ -38,7 +38,10 @@ namespace GraphModelLibrary.Rewrite {
 				// создадим точки
 				NodeIndex[] nodeIndices = new NodeIndex[n];
 				for (int i = 0; i < n; ++i) {
-					nodeIndices[i] = graph.CreateNode(new GraphModel.NodeWeight());
+					NodeIndex nodeIndex = graph.CreateNode();
+					var weight = new GraphModel.NodeWeight(nodeIndex);
+					graph.SetNodeWeight(nodeIndex, weight);
+					nodeIndices[i] = nodeIndex;
 				}
 
 				// создадим рёбра с заданными весами

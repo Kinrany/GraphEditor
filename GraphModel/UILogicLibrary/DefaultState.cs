@@ -36,11 +36,11 @@ namespace UILogicLibrary {
 		}
 
 		private void CreateNode(Point location) {
-			var nodeWeight = new GraphModel.NodeWeight();
+			NodeModel node = NodeModel.Create(EditTool.Graph);
+			var nodeWeight = new GraphModel.NodeWeight(node.Index);
 			nodeWeight.Location = location;
 			nodeWeight.Color = EditTool.PickedColor;
-
-			NodeModel node = NodeModel.Create(EditTool.Graph, nodeWeight);
+			node.Weight = nodeWeight;
 
 			foreach (NodeModel other in NodeModel.Enumerate(EditTool.Graph)) {
 				if (node.Equals(other)) {

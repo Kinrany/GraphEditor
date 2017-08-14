@@ -46,12 +46,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			NodeWeight weight;
-			if (_nodeWeights.TryGetValue(nodeIndex, out weight)) {
-				return weight;
+			if (!_nodeWeights.TryGetValue(nodeIndex, out weight)) {
+				weight = new NodeWeight(nodeIndex);
+				_nodeWeights[nodeIndex] = weight;
 			}
-			else {
-				return default(NodeWeight);
-			}
+
+			return weight;
 		}
 
 		public EdgeWeight GetEdgeWeight(EdgeIndex edgeIndex) {
@@ -60,12 +60,12 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			EdgeWeight weight;
-			if (_edgeWeights.TryGetValue(edgeIndex, out weight)) {
-				return weight;
+			if (!_edgeWeights.TryGetValue(edgeIndex, out weight)) {
+				weight = new EdgeWeight(edgeIndex);
+				_edgeWeights[edgeIndex] = weight;
 			}
-			else {
-				return default(EdgeWeight);
-			}
+
+			return weight;
 		}
 
 		public void SetNodeWeight(NodeIndex nodeIndex, NodeWeight weight) {
