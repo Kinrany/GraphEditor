@@ -49,8 +49,12 @@ namespace GraphModelLibrary.Rewrite {
 
 					for (int j = 0; j < n; ++j) {
 						int weightValue = weightValues[j];
-						var weight = new GraphModel.EdgeWeight(weightValue.ToString());
-						EdgeIndex index = graph.CreateEdge(nodeIndices[i], nodeIndices[j], weight);
+
+						EdgeIndex index = graph.CreateEdge(nodeIndices[i], nodeIndices[j]);
+						var weight = new GraphModel.EdgeWeight(index);
+						weight.Value = weightValue.ToString();
+						graph.SetEdgeWeight(index, weight);
+
 						edgeIndices[i, j] = index;
 					}
 				}

@@ -23,8 +23,11 @@ namespace UILogicLibrary {
 			EdgeModel oldEdge = EdgeModel.Between(EditTool.Graph, _start, node);
 			oldEdge?.Delete();
 
-			var edgeWeight = new GraphModel.EdgeWeight(EditTool.PickedColor, "1");
-			EdgeModel edge = _start.AddOutgoingEdge(node, edgeWeight);
+			EdgeModel edge = _start.AddOutgoingEdge(node);
+			var edgeWeight = new GraphModel.EdgeWeight(edge.Index);
+			edgeWeight.Color = EditTool.PickedColor;
+			edgeWeight.Value = "1";
+			edge.Weight = edgeWeight;
 
 			CurrentState = new DefaultState(EditTool);
 		}

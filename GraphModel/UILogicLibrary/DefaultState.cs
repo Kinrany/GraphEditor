@@ -47,11 +47,15 @@ namespace UILogicLibrary {
 					continue;
 				}
 
-				var outgoingEdgeWeight = new GraphModel.EdgeWeight("0");
-				node.AddOutgoingEdge(other, outgoingEdgeWeight);
+				EdgeModel outgoingEdge = node.AddOutgoingEdge(other);
+				var outgoingEdgeWeight = new GraphModel.EdgeWeight(outgoingEdge.Index);
+				outgoingEdgeWeight.Value = "0";
+				outgoingEdge.Weight = outgoingEdgeWeight;
 
-				var incomingEdgeWeight = new GraphModel.EdgeWeight("0");
-				node.AddIncomingEdge(other, incomingEdgeWeight);
+				EdgeModel incomingEdge = node.AddIncomingEdge(other);
+				var incomingEdgeWeight = new GraphModel.EdgeWeight(incomingEdge.Index);
+				incomingEdgeWeight.Value = "0";
+				incomingEdge.Weight = incomingEdgeWeight;
 			}
 		}
 	}
