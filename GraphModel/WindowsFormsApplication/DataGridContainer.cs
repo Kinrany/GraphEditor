@@ -15,42 +15,17 @@ namespace WindowsFormsApplication {
 			_graph = null;
 
 			_dataGrid.CellEndEdit += OnCellEndEdit;
+			_dataGrid.Paint += OnPaint;
 		}
 
 		public void Dispose() {
 			_dataGrid.CellEndEdit -= OnCellEndEdit;
+			_dataGrid.Paint -= OnPaint;
 		}
 
 		public void Update(GraphModel graph) {
 			_graph = graph;
-
-			_dataGrid.Columns.Clear();
-
-			_dataGrid.TopLeftHeaderCell.Value = @"ИЗ \ В";
-			_dataGrid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader);
-
-			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
-				var column = new DataGridViewTextBoxColumn();
-				column.Name = node.Name;
-				_dataGrid.Columns.Add(column);
-			}
-
-			foreach (NodeModel nodeFrom in NodeModel.Enumerate(graph)) {
-				var row = new DataGridViewRow();
-				row.HeaderCell.Value = nodeFrom.Name;
-
-				foreach (NodeModel nodeTo in NodeModel.Enumerate(graph)) {
-					EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
-
-					row.Cells.Add(new DataGridViewTextBoxCell() {
-						Value = (edge == null) ? "" : edge.Weight.Value
-					});
-				}
-
-				_dataGrid.Rows.Add(row);
-			}
-
-			_dataGrid.Refresh();
+			_dataGrid.Invalidate();
 		}
 
 
@@ -74,6 +49,40 @@ namespace WindowsFormsApplication {
 			var weight = edge.Weight;
 			weight.Value = value;
 			edge.Weight = weight;
+		}
+
+		private void OnPaint(object sender, PaintEventArgs e) {
+			Rebuild();
+		}
+
+		private void Rebuild() {
+			_dataGrid.Columns.Clear();
+
+			_dataGrid.TopLeftHeaderCell.Value = @"ИЗ \ В";
+			_dataGrid.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToFirstHeader);
+
+			foreach (NodeModel node in NodeModel.Enumerate(_graph)) {
+				var column = new DataGridViewTextBoxColumn();
+				column.Name = node.Name;
+				_dataGrid.Columns.Add(column);
+			}
+
+			foreach (NodeModel nodeFrom in NodeModel.Enumerate(_graph)) {
+				var row = new DataGridViewRow();
+				row.HeaderCell.Value = nodeFrom.Name;
+
+				foreach (NodeModel nodeTo in NodeModel.Enumerate(_graph)) {
+					EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
+
+					row.Cells.Add(new DataGridViewTextBoxCell() {
+						Value = (edge == null) ? "" : edge.Weight.Value
+					});
+				}
+
+				_dataGrid.Rows.Add(row);
+			}
+
+			_dataGrid.Refresh();
 		}
 	}
 }
