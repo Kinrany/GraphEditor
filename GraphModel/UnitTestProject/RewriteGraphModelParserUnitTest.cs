@@ -142,6 +142,31 @@ I'm fine too!";
 		}
 
 		[TestMethod]
+		public void Serializing5_MissingNodeNames() {
+			GraphModel graph = new GraphModel();
+
+			NodeModel node1 = NodeModel.Create(graph);
+			NodeModel node2 = NodeModel.Create(graph);
+			node1.Delete();
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			string[] expected = new string[] {
+				"1",
+				"0",
+				"Node colors:",
+				"4",
+				"Edge colors:",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
+		}
+
+		[TestMethod]
 		public void Saving1() {
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 			GraphModel model = GraphModelParser.Load(path);

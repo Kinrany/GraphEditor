@@ -129,7 +129,7 @@ namespace GraphModelLibrary.Rewrite {
 		public static string[] SerializeA1(GraphModel graph) {
 			List<string> text = new List<string>();
 
-			// номера вершин должны быть от 0 до n-1
+			// названия вершин должны быть от 0 до n-1
 			graph.Reindex();
 
 			// количество вершин
@@ -138,13 +138,17 @@ namespace GraphModelLibrary.Rewrite {
 
 			// матрица весов рёбер
 			for (int i = 0; i < N; ++i) {
+				NodeModel nodeFrom = graph.GetNodeByName(i.ToString());
+
 				string[] edgeValues = new string[N];
 
 				for (int j = 0; j < N; ++j) {
-					EdgeIndex? edgeIndex = graph.GetEdgeBetween(new NodeIndex(i), new NodeIndex(j));
+					NodeModel nodeTo = graph.GetNodeByName(j.ToString());
 
-					if (edgeIndex != null) {
-						edgeValues[j] = graph.GetEdgeWeight((EdgeIndex)edgeIndex).Value;
+					EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
+
+					if (!string.IsNullOrWhiteSpace(edge?.Value)) {
+						edgeValues[j] = edge.Value;
 					}
 					else {
 						edgeValues[j] = "0";
@@ -158,8 +162,8 @@ namespace GraphModelLibrary.Rewrite {
 			text.Add("Node colors:");
 			string[] colorNumbers = new string[N];
 			for (int i = 0; i < N; ++i) {
-				Color color = graph.GetNodeWeight(new NodeIndex(i)).Color;
-				colorNumbers[i] = Helper.ColorToInt[color].ToString();
+				NodeModel node = graph.GetNodeByName(i.ToString());
+				colorNumbers[i] = Helper.ColorToInt[node.Color].ToString();
 			}
 			text.Add(string.Join(" ", colorNumbers));
 
@@ -175,7 +179,7 @@ namespace GraphModelLibrary.Rewrite {
 			text.Add("-1");
 
 			// текст, если есть
-			if (graph.Text != null && graph.Text != "") {
+			if (!string.IsNullOrEmpty(graph.Text)) {
 				text.Add("Text:");
 				text.AddRange(graph.Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None));
 			}
