@@ -79,7 +79,13 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public void Reindex() {
-			throw new NotImplementedException();
+			int index = 0;
+			foreach (NodeIndex nodeIndex in this.NodeEnumerator) {
+				var weight = GetNodeWeight(nodeIndex);
+				weight.Name = index.ToString();
+				SetNodeWeight(nodeIndex, weight);
+				index += 1;
+			}
 		}
 
 		
