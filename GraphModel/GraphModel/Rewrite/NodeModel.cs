@@ -111,7 +111,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public EdgeModel AddOutgoingEdge(NodeModel otherNode) {
-			return AddOutgoingEdge(otherNode, new EdgeWeight());
+			return AddOutgoingEdge(otherNode, EdgeWeight.DEFAULT);
 		}
 		public EdgeModel AddOutgoingEdge(NodeModel otherNode, EdgeWeight weight) {
 			EdgeIndex edgeIndex = _graph.CreateEdge(_index, otherNode.Index, weight);
@@ -119,7 +119,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public EdgeModel AddIncomingEdge(NodeModel otherNode) {
-			return AddIncomingEdge(otherNode, new EdgeWeight());
+			return AddIncomingEdge(otherNode, EdgeWeight.DEFAULT);
 		}
 		public EdgeModel AddIncomingEdge(NodeModel otherNode, EdgeWeight weight) {
 			EdgeIndex edgeIndex = _graph.CreateEdge(otherNode.Index, _index, weight);

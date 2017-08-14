@@ -37,25 +37,33 @@ namespace UILogicLibrary {
 
 		private void CreateNode(Point location) {
 			NodeModel node = NodeModel.Create(EditTool.Graph);
-			var nodeWeight = new GraphModel.NodeWeight(node.Index);
-			nodeWeight.Location = location;
-			nodeWeight.Color = EditTool.PickedColor;
-			node.Weight = nodeWeight;
+
+			var weight = node.Weight;
+			weight.Location = location;
+			weight.Color = EditTool.PickedColor;
+			node.Weight = weight;
 
 			foreach (NodeModel other in NodeModel.Enumerate(EditTool.Graph)) {
 				if (node.Equals(other)) {
-					continue;
+					EdgeModel edge = EdgeModel.Create(node, node);
+
+					var edgeWeight = edge.Weight;
+					edgeWeight.Value = "0";
+					edge.Weight = edgeWeight;
 				}
+				else {
+					EdgeModel outgoingEdge = node.AddOutgoingEdge(other);
 
-				EdgeModel outgoingEdge = node.AddOutgoingEdge(other);
-				var outgoingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
-				outgoingEdgeWeight.Value = "0";
-				outgoingEdge.Weight = outgoingEdgeWeight;
+					var outgoingEdgeWeight = outgoingEdge.Weight;
+					outgoingEdgeWeight.Value = "0";
+					outgoingEdge.Weight = outgoingEdgeWeight;
 
-				EdgeModel incomingEdge = node.AddIncomingEdge(other);
-				var incomingEdgeWeight = GraphModel.EdgeWeight.DEFAULT;
-				incomingEdgeWeight.Value = "0";
-				incomingEdge.Weight = incomingEdgeWeight;
+					EdgeModel incomingEdge = node.AddIncomingEdge(other);
+
+					var incomingEdgeWeight = incomingEdge.Weight;
+					incomingEdgeWeight.Value = "0";
+					incomingEdge.Weight = incomingEdgeWeight;
+				}
 			}
 		}
 	}
