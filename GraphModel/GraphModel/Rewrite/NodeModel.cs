@@ -44,6 +44,17 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public string Name {
+			get {
+				return Weight.Name;
+			}
+			set {
+				var weight = Weight;
+				weight.Name = value;
+				Weight = weight;
+			}
+		}
+
 		public Color Color {
 			get {
 				return Weight.Color;
