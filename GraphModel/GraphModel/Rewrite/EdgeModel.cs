@@ -59,11 +59,14 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex) {
-			return Create(graph, nodeFromIndex, nodeToIndex, new EdgeWeight());
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo) {
+			return Create(nodeFrom, nodeTo, new EdgeWeight());
 		}
-		public static EdgeModel Create(GraphModel graph, NodeIndex nodeFromIndex, NodeIndex nodeToIndex, EdgeWeight weight) {
-			EdgeIndex edgeIndex = graph.CreateEdge(nodeFromIndex, nodeToIndex, weight);
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo, EdgeWeight weight) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			var graph = nodeFrom.Graph;
+
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeFrom.Index, nodeTo.Index, weight);
 			return new EdgeModel(graph, edgeIndex);
 		}
 

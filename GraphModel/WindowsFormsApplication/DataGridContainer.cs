@@ -31,16 +31,16 @@ namespace WindowsFormsApplication {
 
 			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
 				var column = new DataGridViewTextBoxColumn();
-				column.Name = node.Index.ToString();
+				column.Name = node.Name;
 				_dataGrid.Columns.Add(column);
 			}
 
 			foreach (NodeModel nodeFrom in NodeModel.Enumerate(graph)) {
 				var row = new DataGridViewRow();
-				row.HeaderCell.Value = nodeFrom.Index.ToString();
+				row.HeaderCell.Value = nodeFrom.Name;
 
 				foreach (NodeModel nodeTo in NodeModel.Enumerate(graph)) {
-					EdgeModel edge = EdgeModel.Between(graph, nodeFrom, nodeTo);
+					EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
 
 					row.Cells.Add(new DataGridViewTextBoxCell() {
 						Value = (edge == null) ? "" : edge.Weight.Value
@@ -58,20 +58,17 @@ namespace WindowsFormsApplication {
 		private GraphModel _graph;
 
 		private void OnCellEndEdit(object sender, DataGridViewCellEventArgs e) {
-			// HACK
-			// e.RowIndex and e.ColumnIndex do not match to real node indices
+			string rowName = _dataGrid.Rows[e.RowIndex].HeaderCell.Value.ToString();
+			NodeModel nodeFrom = NodeModel.Enumerate(_graph).First(node => node.Name == rowName);
 
-			NodeIndex nodeFromIndex = new NodeIndex(e.RowIndex);
-			NodeIndex nodeToIndex = new NodeIndex(e.ColumnIndex);
-			EdgeIndex? edgeIndex = _graph.GetEdgeBetween(nodeFromIndex, nodeToIndex);
-			string value = (sender as DataGridView)[e.ColumnIndex, e.RowIndex].Value.ToString();
+			string columnName = _dataGrid.Columns[e.ColumnIndex].HeaderCell.Value.ToString();
+			NodeModel nodeTo = NodeModel.Enumerate(_graph).First(node => node.Name == columnName);
 
-			EdgeModel edge;
-			if (edgeIndex != null) {
-				edge = new EdgeModel(_graph, (EdgeIndex)edgeIndex);
-			}
-			else {
-				edge = EdgeModel.Create(_graph, nodeFromIndex, nodeToIndex);
+			EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
+			string value = _dataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
+
+			if (edge == null) {
+				edge = EdgeModel.Create(nodeFrom, nodeTo);
 			}
 
 			var weight = edge.Weight;

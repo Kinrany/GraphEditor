@@ -20,7 +20,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
-			EdgeModel oldEdge = EdgeModel.Between(EditTool.Graph, _start, node);
+			EdgeModel oldEdge = EdgeModel.Between(_start, node);
 			oldEdge?.Delete();
 
 			EdgeModel edge = _start.AddOutgoingEdge(node);

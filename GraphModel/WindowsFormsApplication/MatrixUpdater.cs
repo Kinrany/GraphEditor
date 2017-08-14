@@ -26,7 +26,7 @@ namespace WindowsFormsApplication {
 				row.HeaderCell.Value = nodeFrom.Index.ToString();
 
 				foreach (NodeModel nodeTo in NodeModel.Enumerate(graph)) {
-					EdgeModel edge = EdgeModel.Between(graph, nodeFrom, nodeTo);
+					EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
 
 					row.Cells.Add(new DataGridViewTextBoxCell() {
 						Value = (edge == null) ? "" : edge.Weight.Value
