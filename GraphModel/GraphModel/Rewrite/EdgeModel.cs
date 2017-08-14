@@ -71,7 +71,7 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo) {
-			return Create(nodeFrom, nodeTo, new EdgeWeight());
+			return Create(nodeFrom, nodeTo, EdgeWeight.DEFAULT);
 		}
 		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo, EdgeWeight weight) {
 			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
