@@ -59,10 +59,10 @@ namespace WindowsFormsApplication {
 
 		private void OnCellEndEdit(object sender, DataGridViewCellEventArgs e) {
 			string rowName = _dataGrid.Rows[e.RowIndex].HeaderCell.Value.ToString();
-			NodeModel nodeFrom = NodeModel.Enumerate(_graph).First(node => node.Name == rowName);
+			NodeModel nodeFrom = _graph.GetNodeByName(rowName);
 
 			string columnName = _dataGrid.Columns[e.ColumnIndex].HeaderCell.Value.ToString();
-			NodeModel nodeTo = NodeModel.Enumerate(_graph).First(node => node.Name == columnName);
+			NodeModel nodeTo = _graph.GetNodeByName(columnName);
 
 			EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
 			string value = _dataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
