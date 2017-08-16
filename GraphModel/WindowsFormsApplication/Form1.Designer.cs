@@ -23,7 +23,6 @@
 		/// содержимое этого метода с помощью редактора кода.
 		/// </summary>
 		private void InitializeComponent() {
-			this.graphBox = new System.Windows.Forms.GroupBox();
 			this.debugLabel = new System.Windows.Forms.Label();
 			this.saveButtonLabel = new System.Windows.Forms.Label();
 			this.DataGridMatrix = new System.Windows.Forms.DataGridView();
@@ -39,21 +38,11 @@
 			this.defaultModeButton = new System.Windows.Forms.RadioButton();
 			this.colorPickerButton = new System.Windows.Forms.Button();
 			this.colorDialog = new System.Windows.Forms.ColorDialog();
+			this.graphBox = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
 			this.menuStrip1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.graphBox)).BeginInit();
 			this.SuspendLayout();
-			// 
-			// graphBox
-			// 
-			this.graphBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.graphBox.Location = new System.Drawing.Point(12, 96);
-			this.graphBox.Name = "graphBox";
-			this.graphBox.Size = new System.Drawing.Size(623, 415);
-			this.graphBox.TabIndex = 2;
-			this.graphBox.TabStop = false;
-			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
 			// 
 			// debugLabel
 			// 
@@ -202,11 +191,24 @@
 			this.colorDialog.AllowFullOpen = false;
 			this.colorDialog.SolidColorOnly = true;
 			// 
+			// graphBox
+			// 
+			this.graphBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.graphBox.Location = new System.Drawing.Point(12, 96);
+			this.graphBox.Name = "graphBox";
+			this.graphBox.Size = new System.Drawing.Size(623, 415);
+			this.graphBox.TabIndex = 15;
+			this.graphBox.TabStop = false;
+			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(981, 523);
+			this.Controls.Add(this.graphBox);
 			this.Controls.Add(this.colorPickerButton);
 			this.Controls.Add(this.defaultModeButton);
 			this.Controls.Add(this.coloringModeRadioButton);
@@ -215,7 +217,6 @@
 			this.Controls.Add(this.DataGridMatrix);
 			this.Controls.Add(this.saveButtonLabel);
 			this.Controls.Add(this.debugLabel);
-			this.Controls.Add(this.graphBox);
 			this.DoubleBuffered = true;
 			this.Name = "Form1";
 			this.Text = "Шкатулка графов";
@@ -223,13 +224,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).EndInit();
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.graphBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private System.Windows.Forms.GroupBox graphBox;
 		private System.Windows.Forms.Label debugLabel;
 		private System.Windows.Forms.Label saveButtonLabel;
         private System.Windows.Forms.DataGridView DataGridMatrix;
@@ -245,6 +246,7 @@
 		private System.Windows.Forms.ToolStripMenuItem toolStripSaveImage;
 		private System.Windows.Forms.ToolStripMenuItem toolStripRearrangeMenu;
 		private System.Windows.Forms.ToolStripMenuItem toolStripRearrangeCircle;
+		private System.Windows.Forms.PictureBox graphBox;
 	}
 }
 
