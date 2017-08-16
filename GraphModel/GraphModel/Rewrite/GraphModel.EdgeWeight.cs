@@ -32,6 +32,11 @@ namespace GraphModelLibrary.Rewrite {
 
 			public static readonly EdgeWeight DEFAULT = new EdgeWeight(Color.Black, "");
 			
+			public EdgeWeight Update(Color? color = null, string value = null) {
+				return new EdgeWeight(color ?? _color, value ?? _value);
+			}
+
+
 			private Color _color;
 			private string _value;
 		}

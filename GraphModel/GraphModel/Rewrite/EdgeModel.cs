@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -64,6 +65,17 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public Color Color {
+			get {
+				return Weight.Color;
+			}
+			set {
+				var weight = Weight;
+				weight.Color = value;
+				Weight = weight;
+			}
+		}
+
 		public static IEnumerable<EdgeModel> Enumerate (GraphModel graph) {
 			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
 				yield return new EdgeModel(graph, edgeIndex);
@@ -92,6 +104,10 @@ namespace GraphModelLibrary.Rewrite {
 			else {
 				return new EdgeModel(graph, (EdgeIndex)edgeIndex);
 			}
+		}
+
+		public void UpdateWeight(Color? color = null, string value = null) {
+			Weight = Weight.Update(color, value);
 		}
 
 		public void Delete() {

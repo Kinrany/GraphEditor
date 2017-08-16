@@ -126,6 +126,10 @@ namespace GraphModelLibrary.Rewrite {
 			return new EdgeModel(_graph, edgeIndex);
 		}
 
+		public void UpdateWeight(string name, Color? color, Point? location) {
+			Weight = Weight.Update(name, color, location);
+		}
+
 		public void Delete() {
 			ThrowUnlessValid();
 			_graph.DeleteNode(_index);

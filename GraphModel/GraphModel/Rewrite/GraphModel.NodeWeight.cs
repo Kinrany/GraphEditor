@@ -41,6 +41,13 @@ namespace GraphModelLibrary.Rewrite {
 				}
 			}
 
+			public NodeWeight Update(string name, Color? color, Point? location) {
+				var weight = new NodeWeight(name ?? _name);
+				weight._color = color ?? _color;
+				weight._location = location ?? _location;
+				return weight;
+			}
+
 
 			private static Color DEFAULT_COLOR = Color.Black;
 
