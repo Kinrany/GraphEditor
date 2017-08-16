@@ -15,7 +15,9 @@ namespace WindowsFormsApplication {
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
 				PathToFile = path;
-				SetGraphModel(GraphModelParser.Load(path));
+				GraphModel graph = GraphModelParser.Load(path);
+				SetGraphModel(graph);
+				NodeRearrangementAlgorithms.Circle(graph);
 			}
 		}
 		private void toolStripSaveGraph_Click(object sender, EventArgs e) {
