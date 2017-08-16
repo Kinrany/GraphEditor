@@ -34,7 +34,6 @@ namespace WindowsFormsApplication {
 		}
 
 		private EditTool _editTool = null;
-		private Timer _timer;
 		private DataGridContainer _dataGridContainer;
 
 		private string PathToFile;
@@ -47,8 +46,6 @@ namespace WindowsFormsApplication {
 			Mouse mouse = LoadMouse();
 			ConcreteKeyboard keyboard = LoadKeyboard();
 			_editTool = new EditTool(mouse, keyboard);
-
-			_timer = LoadTimer();
 
 			SetGraphModel(this.GraphModel);
 		}
@@ -111,6 +108,7 @@ namespace WindowsFormsApplication {
 		private void OnGraphModelChanged() {
 			_dataGridContainer.Update(this.GraphModel);
 			TextBox.Text = this.GraphModel.Text;
+			graphBox.Invalidate();
 		}
 
 		
