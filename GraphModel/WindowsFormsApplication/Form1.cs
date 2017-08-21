@@ -142,7 +142,7 @@ namespace WindowsFormsApplication {
 			Point mouse = graphBox.PointToClient(Cursor.Position);
 
 			DrawingContext context = new DrawingContext(g, mouse);
-			g.FillRegion(Brushes.Beige, g.Clip);
+			g.FillRegion(Brushes.WhiteSmoke, g.Clip);
 			_editTool.Draw(context);
 
 			debugLabel.Text = _editTool.State.ToString();
