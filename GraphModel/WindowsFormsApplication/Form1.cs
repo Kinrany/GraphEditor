@@ -151,12 +151,15 @@ namespace WindowsFormsApplication {
 
 			var pickedColorBrush = new SolidBrush(_editTool.PickedColor);
 			var pickedColorBoxSize = new SizeF(15, 15);
-			var pickedColorBoxLocation = new PointF(bounds.Right - pickedColorBoxSize.Width, 1);
+			var pickedColorBoxLocation = new PointF(bounds.Right - pickedColorBoxSize.Width, 0);
 			var pickedColorBounds = new RectangleF(pickedColorBoxLocation, pickedColorBoxSize);
 			g.FillRectangle(pickedColorBrush, pickedColorBounds);
 
-			var borderColorPen = new Pen(Color.Black, 1.5f);
-			g.DrawRectangle(borderColorPen, RectangleF.Inflate(bounds, -1, -1));
+			var borderPen = new Pen(Color.Black, 1.5f);
+			var borderLocation = bounds.Location;
+			var borderSize = bounds.Size - new SizeF(1, 1);
+			var borderRect = new RectangleF(borderLocation, borderSize);
+			g.DrawRectangle(borderPen, borderRect);
 		}
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
