@@ -13,6 +13,7 @@ namespace WindowsFormsApplication {
 
 			_dataGrid = dataGrid;
 			_graph = null;
+			_changed = false;
 
 			_dataGrid.CellEndEdit += OnCellEndEdit;
 			_dataGrid.Paint += OnPaint;
@@ -25,12 +26,14 @@ namespace WindowsFormsApplication {
 
 		public void Update(GraphModel graph) {
 			_graph = graph;
+			_changed = true;
 			_dataGrid.Invalidate();
 		}
 
 
 		private DataGridView _dataGrid;
 		private GraphModel _graph;
+		private bool _changed;
 
 		private void OnCellEndEdit(object sender, DataGridViewCellEventArgs e) {
 			string rowName = _dataGrid.Rows[e.RowIndex].HeaderCell.Value.ToString();
@@ -52,7 +55,10 @@ namespace WindowsFormsApplication {
 		}
 
 		private void OnPaint(object sender, PaintEventArgs e) {
-			Rebuild();
+			if (_changed) {
+				Rebuild();
+				_changed = false;
+			}
 		}
 
 		private void Rebuild() {
