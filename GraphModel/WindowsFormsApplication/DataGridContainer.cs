@@ -43,15 +43,12 @@ namespace WindowsFormsApplication {
 			NodeModel nodeTo = _graph.GetNodeByName(columnName);
 
 			EdgeModel edge = EdgeModel.Between(nodeFrom, nodeTo);
-			string value = _dataGrid[e.ColumnIndex, e.RowIndex].Value.ToString();
+			edge = edge ?? EdgeModel.Create(nodeFrom, nodeTo);
 
-			if (edge == null) {
-				edge = EdgeModel.Create(nodeFrom, nodeTo);
-			}
+			string value = _dataGrid[e.ColumnIndex, e.RowIndex].Value?.ToString();
+			value = (string.IsNullOrWhiteSpace(value)) ? "0" : value;
 
-			var weight = edge.Weight;
-			weight.Value = value;
-			edge.Weight = weight;
+			edge.Value = value;
 		}
 
 		private void OnPaint(object sender, PaintEventArgs e) {
