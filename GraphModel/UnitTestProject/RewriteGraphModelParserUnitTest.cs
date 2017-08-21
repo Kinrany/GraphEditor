@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -56,6 +57,68 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 
 			GraphModel model = GraphModelParser.ParseA1(text);
+		}
+
+		[TestMethod]
+		public void Parsing4_EmptyGraph() {
+			string text =
+@"0
+";
+
+			GraphModel graph = GraphModelParser.ParseA1(text);
+
+			Assert.IsTrue(graph.NodeCount == 0);
+			Assert.IsTrue(graph.EdgeCount == 0);
+		}
+
+		[TestMethod]
+		public void Parsing4_TextOnly() {
+			string text =
+@"0
+Text:
+Hello world!
+What's up?";
+
+			GraphModel graph = GraphModelParser.ParseA1(text);
+
+			string expectedText =
+@"Hello world!
+What's up?
+";
+
+			Assert.IsTrue(graph.Text == expectedText);
+		}
+
+		[TestMethod]
+		public void Parsing5_ColoredNode() {
+			string text =
+@"1
+0
+Node colors:
+5";
+
+			GraphModel graph = GraphModelParser.ParseA1(text);
+			NodeModel node = new NodeModel(graph, graph.NodeEnumerator.First());
+
+			Assert.IsTrue(node.Color == Color.White);
+		}
+
+		[TestMethod]
+		public void Parsing6_ColoredEdge() {
+			string text =
+@"2
+0 1
+0 0
+Edge colors:
+0 1 5
+-1";
+
+			GraphModel graph = GraphModelParser.ParseA1(text);
+			NodeModel node1 = new NodeModel(graph, graph.NodeEnumerator.First());
+			NodeModel node2 = new NodeModel(graph, graph.NodeEnumerator.Skip(1).First());
+			EdgeModel edge = EdgeModel.Between(node1, node2);
+
+			Assert.IsTrue(edge.Color == Color.White);
 		}
 
 		[TestMethod]
@@ -157,6 +220,57 @@ I'm fine too!";
 				"Node colors:",
 				"4",
 				"Edge colors:",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
+		}
+
+		[TestMethod]
+		public void Serializing6_ColoredNode() {
+			GraphModel graph = new GraphModel();
+			NodeModel node = NodeModel.Create(graph);
+			node.Color = Color.White;
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			string[] expected = new string[] {
+				"1",
+				"0",
+				"Node colors:",
+				"5",
+				"Edge colors:",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
+		}
+
+		[TestMethod]
+		public void Serializing7_ColoredEdge() {
+			GraphModel graph = new GraphModel();
+			NodeModel node1 = NodeModel.Create(graph);
+			NodeModel node2 = NodeModel.Create(graph);
+			EdgeModel edge = EdgeModel.Create(node1, node2);
+			edge.Value = "1";
+			edge.Color = Color.White;
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			string[] expected = new string[] {
+				"2",
+				"0 1",
+				"0 0",
+				"Node colors:",
+				"4 4",
+				"Edge colors:",
+				"0 1 5",
 				"-1"
 			};
 

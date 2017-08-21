@@ -175,6 +175,7 @@ namespace GraphModelLibrary.Rewrite {
 				Color edgeColor = graph.GetEdgeWeight(edgeIndex).Color;
 				int colorNumber = Helper.ColorToInt[edgeColor];
 				string str = string.Format("{0} {1} {2}", nodeFromIndex, nodeToIndex, colorNumber);
+				text.Add(str);
 			}
 			text.Add("-1");
 
