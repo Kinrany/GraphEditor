@@ -12,7 +12,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void Draw(DrawingContext context) {
-			context.DrawArrow(_start.Weight.Location, context.MousePosition);
+			context.DrawArrow(_start.Weight.Location, context.MousePosition, EditTool.PickedColor);
 		}
 
 		public override void MouseLeftClick(Point location) {
