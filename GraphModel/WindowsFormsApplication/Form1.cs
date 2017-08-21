@@ -148,8 +148,15 @@ namespace WindowsFormsApplication {
 			debugLabel.Text = _editTool.State.ToString();
 
 			var bounds = g.VisibleClipBounds;
-			var brush = new SolidBrush(_editTool.PickedColor);
-			g.FillRectangle(brush, bounds.Right - 15, 0, 15, 15);
+
+			var pickedColorBrush = new SolidBrush(_editTool.PickedColor);
+			var pickedColorBoxSize = new SizeF(15, 15);
+			var pickedColorBoxLocation = new PointF(bounds.Right - pickedColorBoxSize.Width, 1);
+			var pickedColorBounds = new RectangleF(pickedColorBoxLocation, pickedColorBoxSize);
+			g.FillRectangle(pickedColorBrush, pickedColorBounds);
+
+			var borderColorPen = new Pen(Color.Black, 1.5f);
+			g.DrawRectangle(borderColorPen, RectangleF.Inflate(bounds, -1, -1));
 		}
 		private void TextBox_TextChanged(object sender, EventArgs e) {
 			RichTextBox textBox = (RichTextBox)sender;
