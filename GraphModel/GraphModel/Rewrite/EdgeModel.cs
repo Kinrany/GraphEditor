@@ -1,26 +1,128 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
-	public class EdgeModel : WeightedEdgeProxy<GraphModel.NodeWeight, GraphModel.EdgeWeight> {
-		public EdgeModel(GraphModel graph, int index) : base(graph, index) { }
+	using NodeWeight = GraphModel.NodeWeight;
+	using EdgeWeight = GraphModel.EdgeWeight;
 
-		public new GraphModel Graph {
+	public class EdgeModel {
+		public EdgeModel(GraphModel graph, EdgeIndex index) {
+			_graph = graph;
+			_index = index;
+		}
+
+		public GraphModel Graph {
 			get {
-				return (GraphModel)base.Graph;
+				return _graph;
 			}
 		}
 
-		public new NodeModel NodeFrom {
+		public EdgeIndex Index {
 			get {
-				return new NodeModel(this.Graph, this.Graph.GetNodeFrom(this.Index));
+				ThrowUnlessValid();
+				return _index;
 			}
 		}
-		public new NodeModel NodeTo {
+
+		public bool IsValid {
 			get {
-				return new NodeModel(this.Graph, this.Graph.GetNodeTo(this.Index));
+				return _graph != null && _graph.ContainsEdge(_index);
+			}
+		}
+
+		public NodeModel NodeFrom {
+			get {
+				return new NodeModel(_graph, _graph.GetNodeFrom(_index));
+			}
+		}
+		public NodeModel NodeTo {
+			get {
+				return new NodeModel(_graph, _graph.GetNodeTo(_index));
+			}
+		}
+
+		public EdgeWeight Weight {
+			get {
+				return _graph.GetEdgeWeight(_index);
+			}
+			set {
+				_graph.SetEdgeWeight(_index, value);
+			}
+		}
+
+		public string Value {
+			get {
+				return Weight.Value;
+			}
+			set {
+				var weight = Weight;
+				weight.Value = value;
+				Weight = weight;
+			}
+		}
+
+		public Color Color {
+			get {
+				return Weight.Color;
+			}
+			set {
+				var weight = Weight;
+				weight.Color = value;
+				Weight = weight;
+			}
+		}
+
+		public static IEnumerable<EdgeModel> Enumerate (GraphModel graph) {
+			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
+				yield return new EdgeModel(graph, edgeIndex);
+			}
+		}
+
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo) {
+			return Create(nodeFrom, nodeTo, EdgeWeight.DEFAULT);
+		}
+		public static EdgeModel Create(NodeModel nodeFrom, NodeModel nodeTo, EdgeWeight weight) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			var graph = nodeFrom.Graph;
+
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeFrom.Index, nodeTo.Index, weight);
+			return new EdgeModel(graph, edgeIndex);
+		}
+
+		public static EdgeModel Between(NodeModel nodeFrom, NodeModel nodeTo) {
+			Debug.Assert(nodeFrom.Graph == nodeTo.Graph);
+			GraphModel graph = nodeFrom.Graph;
+
+			EdgeIndex? edgeIndex = graph.GetEdgeBetween(nodeFrom.Index, nodeTo.Index);
+			if (edgeIndex == null) {
+				return null;
+			}
+			else {
+				return new EdgeModel(graph, (EdgeIndex)edgeIndex);
+			}
+		}
+
+		public void UpdateWeight(Color? color = null, string value = null) {
+			Weight = Weight.Update(color, value);
+		}
+
+		public void Delete() {
+			_graph.DeleteEdge(_index);
+			_index = EdgeIndex.NaN;
+			_graph = null;
+		}
+
+
+		private GraphModel _graph;
+		private EdgeIndex _index;
+
+		private void ThrowUnlessValid() {
+			if (!this.IsValid) {
+				throw new InvalidOperationException("This is not a valid node object.");
 			}
 		}
 	}

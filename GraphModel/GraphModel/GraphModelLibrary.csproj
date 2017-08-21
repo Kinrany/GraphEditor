@@ -58,25 +58,22 @@
   <ItemGroup>
     <Compile Include="ArrayExtension.cs" />
     <Compile Include="BiDictionary.cs" />
-    <Compile Include="EdgeModel.cs" />
-    <Compile Include="Edge.cs" />
-    <Compile Include="Graph.cs" />
-    <Compile Include="GraphModel.cs" />
     <Compile Include="IKeyValueCollectionExtension.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="NodeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rewrite\EdgeIndex.cs" />
     <Compile Include="Rewrite\EdgeModel.cs" />
+    <Compile Include="Rewrite\GraphExtensions.cs" />
     <Compile Include="Rewrite\GraphModel.cs" />
+    <Compile Include="Rewrite\GraphModel.EdgeWeight.cs" />
+    <Compile Include="Rewrite\GraphModel.NodeWeight.cs" />
+    <Compile Include="Rewrite\GraphModelExtensions.cs" />
     <Compile Include="Rewrite\GraphModelParser.cs" />
+    <Compile Include="Rewrite\NodeIndex.cs" />
     <Compile Include="Rewrite\NodeModel.cs" />
-    <Compile Include="Rewrite\WeightedEdgeProxy.cs" />
-    <Compile Include="Rewrite\WeightedGraph.cs" />
     <Compile Include="Rewrite\EdgeProxy.cs" />
     <Compile Include="Rewrite\Graph.cs" />
     <Compile Include="Rewrite\IndexList.cs" />
     <Compile Include="Rewrite\NodeProxy.cs" />
-    <Compile Include="Rewrite\WeightedNodeProxy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

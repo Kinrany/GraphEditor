@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -47,14 +48,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConcreteKeyboard.cs" />
+    <Compile Include="DataGridContainer.cs" />
+    <Compile Include="Dynaloader.cs" />
+    <Compile Include="Form1ToolStrip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphicsExtension.cs" />
+    <Compile Include="MatrixUpdater.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.Drawing.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

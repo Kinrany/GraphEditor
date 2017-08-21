@@ -36,10 +36,12 @@ namespace UILogicLibrary {
 			_selectedNodes.Clear();
 		}
 		public void Delete() {
-			foreach (NodeModel node in _selectedNodes) {
+			var oldSelection = _selectedNodes.ToArray();
+			_selectedNodes.Clear();
+
+			foreach (NodeModel node in oldSelection) {
 				node.Delete();
 			}
-			_selectedNodes.Clear();
 		}
 		public void Set(ICollection<NodeModel> collection) {
 			Clear();
@@ -62,7 +64,7 @@ namespace UILogicLibrary {
 		private readonly HashSet<NodeModel> _selectedNodes;
 		private readonly EditTool _editTool;
 
-		private GraphModel Graph { get { return _editTool.GraphView.Graph; } }
+		private GraphModel Graph { get { return _editTool.Graph; } }
 
 		IEnumerator<NodeModel> IEnumerable<NodeModel>.GetEnumerator() {
 			return _selectedNodes.GetEnumerator();

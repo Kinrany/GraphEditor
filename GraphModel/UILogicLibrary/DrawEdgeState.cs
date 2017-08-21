@@ -12,7 +12,7 @@ namespace UILogicLibrary {
 		}
 
 		public override void Draw(DrawingContext context) {
-			context.DrawArrow(_start.Weight.Location, context.MousePosition);
+			context.DrawArrow(_start.Weight.Location, context.MousePosition, EditTool.PickedColor);
 		}
 
 		public override void MouseLeftClick(Point location) {
@@ -20,8 +20,14 @@ namespace UILogicLibrary {
 		}
 
 		public override void MouseLeftClick(NodeModel node) {
+			EdgeModel oldEdge = EdgeModel.Between(_start, node);
+			oldEdge?.Delete();
+
 			EdgeModel edge = _start.AddOutgoingEdge(node);
-			edge.Weight.Color = _defaultNodeColor;
+			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
+			edgeWeight.Color = EditTool.PickedColor;
+			edgeWeight.Value = "1";
+			edge.Weight = edgeWeight;
 
 			CurrentState = new DefaultState(EditTool);
 		}
@@ -35,7 +41,5 @@ namespace UILogicLibrary {
 		}
 
 		readonly NodeModel _start;
-
-		static readonly Color _defaultNodeColor = Color.DarkRed;
 	}
 }

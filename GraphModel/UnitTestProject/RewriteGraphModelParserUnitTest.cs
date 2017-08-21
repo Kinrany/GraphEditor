@@ -7,7 +7,7 @@ using GraphModelLibrary.Rewrite;
 
 namespace UnitTestProject {
 	[TestClass]
-	public class GraphModelRewriteUnitTest {
+	public class RewriteGraphModelParserUnitTest {
 		[TestMethod]
 		public void Parsing1() {
 			string text =
@@ -88,7 +88,7 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 		[TestMethod]
 		public void Serializing2_SingleNode() {
 			GraphModel graph = new GraphModel();
-			graph.CreateNode(new GraphModel.NodeWeight());
+			NodeIndex nodeIndex = graph.CreateNode();
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 
@@ -98,8 +98,15 @@ Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.";
 		[TestMethod]
 		public void Serializing3_SingleEdge() {
 			GraphModel graph = new GraphModel();
-			graph.CreateNode(new GraphModel.NodeWeight());
-			graph.CreateEdge(0, 0, new GraphModel.EdgeWeight("1"));
+
+			NodeIndex nodeIndex = graph.CreateNode();
+			var nodeWeight = new GraphModel.NodeWeight(nodeIndex);
+			graph.SetNodeWeight(nodeIndex, nodeWeight);
+
+			EdgeIndex edgeIndex = graph.CreateEdge(nodeIndex, nodeIndex);
+			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
+			edgeWeight.Value = "1";
+			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 			
@@ -131,6 +138,31 @@ I'm fine too!";
 			Assert.IsTrue(serialized.Length == textLines.Length);
 			for (int i = 0; i < serialized.Length; ++i) {
 				Assert.IsTrue(serialized[i] == textLines[i]);
+			}
+		}
+
+		[TestMethod]
+		public void Serializing5_MissingNodeNames() {
+			GraphModel graph = new GraphModel();
+
+			NodeModel node1 = NodeModel.Create(graph);
+			NodeModel node2 = NodeModel.Create(graph);
+			node1.Delete();
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			string[] expected = new string[] {
+				"1",
+				"0",
+				"Node colors:",
+				"4",
+				"Edge colors:",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
 			}
 		}
 

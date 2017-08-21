@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GraphModelLibrary.Rewrite {
 	public class NodeProxy {
-		public NodeProxy(Graph graph, int index) {
+		public NodeProxy(Graph graph, NodeIndex index) {
 			this._graph = graph;
 			this._index = index;
 		}
@@ -17,7 +17,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public int Index {
+		public NodeIndex Index {
 			get {
 				ThrowUnlessValid();
 				return _index;
@@ -31,6 +31,13 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		public static bool operator==(NodeProxy node1, NodeProxy node2) {
+			if (object.ReferenceEquals(node1, node2)) {
+				return true;
+			}
+			if (object.ReferenceEquals(node1, null) || object.ReferenceEquals(node2, null)) {
+				return false;
+			}
+
 			return node1._graph == node2._graph && node1._index == node2._index;
 		}
 		public static bool operator!=(NodeProxy node1, NodeProxy node2) {
@@ -57,7 +64,8 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<EdgeProxy> OutgoingEnumerator {
 			get {
-				foreach (int edgeIndex in _graph.OutgoingEnumerator(_index)) {
+				ThrowUnlessValid();
+				foreach (EdgeIndex edgeIndex in _graph.OutgoingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
 			}
@@ -65,26 +73,29 @@ namespace GraphModelLibrary.Rewrite {
 
 		public IEnumerable<EdgeProxy> IncomingEnumerator {
 			get {
-				foreach (int edgeIndex in _graph.IncomingEnumerator(_index)) {
+				ThrowUnlessValid();
+				foreach (EdgeIndex edgeIndex in _graph.IncomingEnumerator(_index)) {
 					yield return new EdgeProxy(_graph, edgeIndex);
 				}
 			}
 		}
 
 		public static IEnumerable<NodeProxy> Enumerate(Graph graph) {
-			foreach (int nodeIndex in graph.NodeEnumerator) {
+			foreach (NodeIndex nodeIndex in graph.NodeEnumerator) {
 				yield return new NodeProxy(graph, nodeIndex);
 			}
 		}
 
 		public void Delete() {
+			ThrowUnlessValid();
 			_graph.DeleteNode(_index);
-			_index = -1;
+			_index = NodeIndex.NaN;
 			_graph = null;
 		}
 
+
 		private Graph _graph;
-		private int _index;
+		private NodeIndex _index;
 
 		private void ThrowUnlessValid() {
 			if (!this.IsValid) {

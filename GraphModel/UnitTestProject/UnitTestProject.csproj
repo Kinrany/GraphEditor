@@ -57,9 +57,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BiDictionaryUnitTest.cs" />
-    <Compile Include="GraphModelUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GraphModelRewriteUnitTest.cs" />
+    <Compile Include="RewriteGraphModelParserUnitTest.cs" />
+    <Compile Include="RewriteGraphUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphModel\GraphModelLibrary.csproj">

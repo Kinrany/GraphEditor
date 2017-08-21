@@ -27,13 +27,14 @@ namespace UILogicLibrary {
 		Point _start;
 
 		void Depressed(Point point) {
+			// remove old selection if Shift is not pressed
+			if (!EditTool.Keyboard.IsKeyDown(Keyboard.Key.Shift)) {
+				EditTool.Selection.Clear();
+			}
+
 			Rectangle rect = SelectionRectangle(point);
-			if (EditTool.Keyboard.IsKeyDown(Keyboard.Key.Shift)) {
-				EditTool.Selection.Add(rect);
-			}
-			else {
-				EditTool.Selection.Add(rect);
-			}
+			EditTool.Selection.Add(rect);
+
 			CurrentState = new DefaultState(EditTool);
 		}
 
