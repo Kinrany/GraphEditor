@@ -155,5 +155,9 @@ namespace WindowsFormsApplication {
 			RichTextBox textBox = (RichTextBox)sender;
 			GraphModel.Text = textBox.Text;
 		}
+
+		private void graphBox_MouseMove(object sender, MouseEventArgs e) {
+			graphBox.Invalidate();
+		}
 	}
 }

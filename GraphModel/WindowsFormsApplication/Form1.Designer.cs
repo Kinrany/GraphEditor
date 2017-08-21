@@ -202,6 +202,7 @@
 			this.graphBox.TabIndex = 15;
 			this.graphBox.TabStop = false;
 			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
+			this.graphBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphBox_MouseMove);
 			// 
 			// Form1
 			// 
