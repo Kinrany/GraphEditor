@@ -70,12 +70,11 @@ namespace GraphModelLibrary.Rewrite {
 
 					// строка с цветами вершин
 					case "Node colors:":
-						int[] colorNumbers = Helper.StringToIntArray(queue.Dequeue());
-						Color[] colors = colorNumbers.Map(number => Helper.IntToColor[number]);
+						int[] colorIds = Helper.StringToIntArray(queue.Dequeue());
 
-						for (int i = 0; i < colors.Length; ++i) {
+						for (int i = 0; i < colorIds.Length; ++i) {
 							NodeModel node = new NodeModel(graph, nodeIndices[i]);
-							node.Color = colors[i];
+							node.ColorId = new ColorId(colorIds[i]);
 						}
 
 						break;
@@ -89,12 +88,12 @@ namespace GraphModelLibrary.Rewrite {
 							int nodeToIndex = numbers[1];
 							int colorNumber = numbers[2];
 
-							Color color = Helper.IntToColor[colorNumber];
+							ColorId colorId = new ColorId(colorNumber);
 
 							EdgeIndex edgeIndex = edgeIndices[nodeFromIndex, nodeToIndex];
 
 							var weight = graph.GetEdgeWeight(edgeIndex);
-							weight.Color = color;
+							weight.ColorId = colorId;
 							graph.SetEdgeWeight(edgeIndex, weight);
 
 							line = queue.Dequeue();
@@ -163,7 +162,7 @@ namespace GraphModelLibrary.Rewrite {
 			string[] colorNumbers = new string[N];
 			for (int i = 0; i < N; ++i) {
 				NodeModel node = graph.GetNodeByName(i.ToString());
-				colorNumbers[i] = Helper.ColorToInt[node.Color].ToString();
+				colorNumbers[i] = node.ColorId.ToString();
 			}
 			text.Add(string.Join(" ", colorNumbers));
 
@@ -172,9 +171,8 @@ namespace GraphModelLibrary.Rewrite {
 			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
 				int nodeFromIndex = graph.GetNodeFrom(edgeIndex);
 				int nodeToIndex = graph.GetNodeTo(edgeIndex);
-				Color edgeColor = graph.GetEdgeWeight(edgeIndex).Color;
-				int colorNumber = Helper.ColorToInt[edgeColor];
-				string str = string.Format("{0} {1} {2}", nodeFromIndex, nodeToIndex, colorNumber);
+				ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
+				string str = string.Format("{0} {1} {2}", nodeFromIndex, nodeToIndex, edgeColorId);
 				text.Add(str);
 			}
 			text.Add("-1");
@@ -190,38 +188,6 @@ namespace GraphModelLibrary.Rewrite {
 	}
 
 	public static class Helper {
-
-		static Helper() {
-			// заполняем ColorToInt в соответствии с IntToColor
-			ColorToInt = new Dictionary<Color, int>();
-			for (int i = 0; i < IntToColor.Length; ++i) {
-				Color color = IntToColor[i];
-				if (color != null) {
-					ColorToInt[color] = i;
-				}
-			}
-		}
-
-		// Статическая таблица цветов
-		public static Dictionary<Color, int> ColorToInt;
-		public static Color[] IntToColor = {
-			Color.Magenta,
-			Color.Blue,
-			Color.Red,
-			Color.Green,
-			Color.Black,
-			Color.White,
-			Color.Purple,
-			Color.Orange,
-			Color.Yellow,
-			Color.Pink,
-			Color.Turquoise,
-			Color.Gray,
-			Color.Teal,
-			Color.DarkBlue,
-			Color.Violet,
-			Color.Brown
-		};
 
 		/// <summary>
 		/// Разбивает строку на числа.

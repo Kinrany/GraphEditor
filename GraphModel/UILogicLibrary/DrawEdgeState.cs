@@ -6,6 +6,9 @@ using System.Text;
 using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
+	using NodeWeight = GraphModel.NodeWeight;
+	using EdgeWeight = GraphModel.EdgeWeight;
+
 	class DrawEdgeState : EditToolState {
 		public DrawEdgeState(EditTool editTool, NodeModel start) : base(editTool) {
 			this._start = start;
@@ -24,10 +27,7 @@ namespace UILogicLibrary {
 			oldEdge?.Delete();
 
 			EdgeModel edge = _start.AddOutgoingEdge(node);
-			var edgeWeight = GraphModel.EdgeWeight.DEFAULT;
-			edgeWeight.Color = EditTool.PickedColor;
-			edgeWeight.Value = "1";
-			edge.Weight = edgeWeight;
+			edge.Weight = EdgeWeight.DEFAULT.Update(color: EditTool.PickedColorId, value: "1");
 
 			CurrentState = new DefaultState(EditTool);
 		}

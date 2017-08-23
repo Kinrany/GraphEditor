@@ -42,17 +42,25 @@ namespace UILogicLibrary
 				return _graphView;
 			}
 		}
-		public EditToolState State {
-			get {
-				return _state;
-			}
-			set {
-				_state = value;
-			}
-		}
 		public Keyboard Keyboard {
 			get {
 				return _keyboard;
+			}
+		}
+		public Color PickedColor {
+			get {
+				return _graphView.Stylesheet.IdToColor(_pickedColorId);
+			}
+			set {
+				_pickedColorId = _graphView.Stylesheet.ColorToId(value);
+			}
+		}
+		public ColorId PickedColorId {
+			get {
+				return _pickedColorId;
+			}
+			set {
+				_pickedColorId = value;
 			}
 		}
 		public Selection Selection {
@@ -60,12 +68,12 @@ namespace UILogicLibrary
 				return _selectionManager;
 			}
 		}
-		public Color PickedColor {
+		public EditToolState State {
 			get {
-				return _pickedColor;
+				return _state;
 			}
 			set {
-				_pickedColor = value;
+				_state = value;
 			}
 		}
 
@@ -75,15 +83,17 @@ namespace UILogicLibrary
 			DrawSelected(context);
 		}
 
-		readonly Mouse _mouse;
-		readonly Keyboard _keyboard;
-		readonly Selection _selectionManager;
 		GraphModel _graph = new GraphModel();
 		GraphView _graphView = new GraphView();
+		readonly Keyboard _keyboard;
+		readonly Mouse _mouse;
+		ColorId _pickedColorId = new ColorId(2);
+		readonly Selection _selectionManager;
 		EditToolState _state;
 
-		Color _pickedColor = Color.Red;
-
+		void KeyPressed(Keyboard.Key key) {
+			State.KeyPressed(key);
+		}
 		void MouseLeftClick(Point p) {
 			Object o = GraphView?.FindClicked(this.Graph, p);
 
@@ -94,28 +104,6 @@ namespace UILogicLibrary
 			}
 
 			State.MouseLeftClick(p);
-		}
-		void MouseRightClick(Point p) {
-			Object o = GraphView?.FindClicked(this.Graph, p);
-
-			NodeModel node = o as NodeModel;
-			if (node != null) {
-				State.MouseRightClick(node);
-				return;
-			}
-
-			State.MouseRightClick(p);
-		}
-		void MouseLeftPressed(Point p) {
-			Object o = GraphView?.FindClicked(this.Graph, p);
-
-			NodeModel node = o as NodeModel;
-			if (node != null) {
-				State.MouseLeftPressed(node);
-				return;
-			}
-
-			State.MouseLeftPressed(p);
 		}
 		void MouseLeftDepressed(Point p) {
 			Object o = GraphView?.FindClicked(this.Graph, p);
@@ -128,8 +116,27 @@ namespace UILogicLibrary
 
 			State.MouseLeftDepressed(p);
 		}
-		void KeyPressed(Keyboard.Key key) {
-			State.KeyPressed(key);
+		void MouseLeftPressed(Point p) {
+			Object o = GraphView?.FindClicked(this.Graph, p);
+
+			NodeModel node = o as NodeModel;
+			if (node != null) {
+				State.MouseLeftPressed(node);
+				return;
+			}
+
+			State.MouseLeftPressed(p);
+		}
+		void MouseRightClick(Point p) {
+			Object o = GraphView?.FindClicked(this.Graph, p);
+
+			NodeModel node = o as NodeModel;
+			if (node != null) {
+				State.MouseRightClick(node);
+				return;
+			}
+
+			State.MouseRightClick(p);
 		}
 
 		void DrawSelected(DrawingContext context) {

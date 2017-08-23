@@ -49,20 +49,16 @@ namespace GraphModelLibrary.Rewrite {
 				return Weight.Name;
 			}
 			set {
-				var weight = Weight;
-				weight.Name = value;
-				Weight = weight;
+				Weight = Weight.Update(name: value);
 			}
 		}
 
-		public Color Color {
+		public ColorId ColorId {
 			get {
-				return Weight.Color;
+				return Weight.ColorId;
 			}
 			set {
-				var weight = Weight;
-				weight.Color = value;
-				Weight = weight;
+				Weight = Weight.Update(color: value);
 			}
 		}
 
@@ -71,9 +67,7 @@ namespace GraphModelLibrary.Rewrite {
 				return Weight.Location;
 			}
 			set {
-				var weight = Weight;
-				weight.Location = value;
-				Weight = weight;
+				Weight = Weight.Update(location: value);
 			}
 		}
 
@@ -126,7 +120,7 @@ namespace GraphModelLibrary.Rewrite {
 			return new EdgeModel(_graph, edgeIndex);
 		}
 
-		public void UpdateWeight(string name, Color? color, Point? location) {
+		public void UpdateWeight(string name, ColorId? color, Point? location) {
 			Weight = Weight.Update(name, color, location);
 		}
 

@@ -127,7 +127,7 @@ namespace WindowsFormsApplication {
 		}
 
 		private void colorPickerButton_Click(object sender, EventArgs e) {
-			colorDialog.CustomColors = Helper.IntToColor
+			colorDialog.CustomColors = _editTool.GraphView.Stylesheet.Colors
 				.Take(16)
 				.Select((x) => Color.FromArgb(0,x.B,x.G,x.R).ToArgb())
 				.ToArray();
