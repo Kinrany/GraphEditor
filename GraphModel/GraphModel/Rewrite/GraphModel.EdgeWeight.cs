@@ -8,17 +8,17 @@ using System.Text;
 namespace GraphModelLibrary.Rewrite {
 	public partial class GraphModel {
 		public struct EdgeWeight {
-			public EdgeWeight(Color color, string value) {
-				_color = color;
+			public EdgeWeight(ColorId colorId, string value) {
+				_colorId = colorId;
 				_value = value;
 			}
 			
-			public Color Color {
+			public ColorId ColorId {
 				get {
-					return _color;
+					return _colorId;
 				}
 				set {
-					_color = value;
+					_colorId = value;
 				}
 			}
 			public string Value {
@@ -30,14 +30,14 @@ namespace GraphModelLibrary.Rewrite {
 				}
 			}
 
-			public static readonly EdgeWeight DEFAULT = new EdgeWeight(Color.Black, "");
+			public static readonly EdgeWeight DEFAULT = new EdgeWeight(new ColorId(0), "");
 			
-			public EdgeWeight Update(Color? color = null, string value = null) {
-				return new EdgeWeight(color ?? _color, value ?? _value);
+			public EdgeWeight Update(ColorId? color = null, string value = null) {
+				return new EdgeWeight(color ?? _colorId, value ?? _value);
 			}
 
 
-			private Color _color;
+			private ColorId _colorId;
 			private string _value;
 		}
 	}

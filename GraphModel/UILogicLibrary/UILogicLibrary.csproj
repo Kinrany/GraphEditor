@@ -51,6 +51,7 @@
     <Compile Include="IEnumerableExtension.cs" />
     <Compile Include="Keyboard.cs" />
     <Compile Include="Mouse.cs" />
+    <Compile Include="NodeColorStylesheet.cs" />
     <Compile Include="NodeRearrangementAlgorithms.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Selection.cs" />

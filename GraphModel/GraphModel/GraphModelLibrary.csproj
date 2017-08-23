@@ -60,6 +60,7 @@
     <Compile Include="BiDictionary.cs" />
     <Compile Include="IKeyValueCollectionExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rewrite\ColorIndex.cs" />
     <Compile Include="Rewrite\EdgeIndex.cs" />
     <Compile Include="Rewrite\EdgeModel.cs" />
     <Compile Include="Rewrite\GraphExtensions.cs" />
