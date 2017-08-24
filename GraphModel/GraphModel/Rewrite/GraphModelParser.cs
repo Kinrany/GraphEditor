@@ -169,10 +169,10 @@ namespace GraphModelLibrary.Rewrite {
 			// цвета рёбер, по одному ребру на строке
 			text.Add("Edge colors:");
 			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
-				int nodeFromIndex = graph.GetNodeFrom(edgeIndex);
-				int nodeToIndex = graph.GetNodeTo(edgeIndex);
+				NodeModel nodeFrom = new NodeModel(graph, graph.GetNodeFrom(edgeIndex));
+				NodeModel nodeTo = new NodeModel(graph, graph.GetNodeTo(edgeIndex));
 				ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
-				string str = string.Format("{0} {1} {2}", nodeFromIndex, nodeToIndex, edgeColorId);
+				string str = string.Format("{0} {1} {2}", nodeFrom.Name, nodeTo.Name, edgeColorId);
 				text.Add(str);
 			}
 			text.Add("-1");

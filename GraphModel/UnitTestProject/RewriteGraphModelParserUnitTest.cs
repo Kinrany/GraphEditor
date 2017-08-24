@@ -281,6 +281,35 @@ I'm fine too!";
 		}
 
 		[TestMethod]
+		public void Serializing8_MissingNodesWithEdges() {
+			GraphModel graph = new GraphModel();
+
+			NodeModel node1 = NodeModel.Create(graph);
+			NodeModel node2 = NodeModel.Create(graph);
+			NodeModel node3 = NodeModel.Create(graph);
+			EdgeModel edge = EdgeModel.Create(node2, node3);
+			node1.Delete();
+
+			string[] serialized = GraphModelParser.SerializeA1(graph);
+
+			string[] expected = new string[] {
+				"2",
+				"0 0",
+				"0 0",
+				"Node colors:",
+				"0 0",
+				"Edge colors:",
+				"0 1 0",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
+		}
+
+		[TestMethod]
 		public void Saving1() {
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 			GraphModel model = GraphModelParser.Load(path);
