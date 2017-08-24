@@ -100,7 +100,7 @@ Node colors:
 			GraphModel graph = GraphModelParser.ParseA1(text);
 			NodeModel node = new NodeModel(graph, graph.NodeEnumerator.First());
 
-			Assert.IsTrue(node.Color == Color.White);
+			Assert.IsTrue(node.ColorId == 5);
 		}
 
 		[TestMethod]
@@ -118,7 +118,7 @@ Edge colors:
 			NodeModel node2 = new NodeModel(graph, graph.NodeEnumerator.Skip(1).First());
 			EdgeModel edge = EdgeModel.Between(node1, node2);
 
-			Assert.IsTrue(edge.Color == Color.White);
+			Assert.IsTrue(edge.ColorId == 5);
 		}
 
 		[TestMethod]
@@ -218,7 +218,7 @@ I'm fine too!";
 				"1",
 				"0",
 				"Node colors:",
-				"4",
+				"0",
 				"Edge colors:",
 				"-1"
 			};
@@ -233,7 +233,7 @@ I'm fine too!";
 		public void Serializing6_ColoredNode() {
 			GraphModel graph = new GraphModel();
 			NodeModel node = NodeModel.Create(graph);
-			node.Color = Color.White;
+			node.ColorId = new ColorId(5);
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 
@@ -259,7 +259,7 @@ I'm fine too!";
 			NodeModel node2 = NodeModel.Create(graph);
 			EdgeModel edge = EdgeModel.Create(node1, node2);
 			edge.Value = "1";
-			edge.Color = Color.White;
+			edge.ColorId = new ColorId(5);
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 
@@ -268,7 +268,7 @@ I'm fine too!";
 				"0 1",
 				"0 0",
 				"Node colors:",
-				"4 4",
+				"0 0",
 				"Edge colors:",
 				"0 1 5",
 				"-1"

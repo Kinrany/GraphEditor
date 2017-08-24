@@ -59,20 +59,16 @@ namespace GraphModelLibrary.Rewrite {
 				return Weight.Value;
 			}
 			set {
-				var weight = Weight;
-				weight.Value = value;
-				Weight = weight;
+				Weight = Weight.Update(value: value);
 			}
 		}
 
-		public Color Color {
+		public ColorId ColorId {
 			get {
-				return Weight.Color;
+				return Weight.ColorId;
 			}
 			set {
-				var weight = Weight;
-				weight.Color = value;
-				Weight = weight;
+				Weight = Weight.Update(color: value);
 			}
 		}
 
@@ -106,7 +102,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public void UpdateWeight(Color? color = null, string value = null) {
+		public void UpdateWeight(ColorId? color = null, string value = null) {
 			Weight = Weight.Update(color, value);
 		}
 

@@ -24,7 +24,7 @@ namespace GraphModelLibrary.Rewrite {
 					_name = value;
 				}
 			}
-			public Color Color {
+			public ColorId ColorId {
 				get {
 					return _color;
 				}
@@ -41,7 +41,7 @@ namespace GraphModelLibrary.Rewrite {
 				}
 			}
 
-			public NodeWeight Update(string name, Color? color, Point? location) {
+			public NodeWeight Update(string name = null, ColorId? color = null, Point? location = null) {
 				var weight = new NodeWeight(name ?? _name);
 				weight._color = color ?? _color;
 				weight._location = location ?? _location;
@@ -49,10 +49,10 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 
-			private static Color DEFAULT_COLOR = Color.Black;
+			private static ColorId DEFAULT_COLOR = new ColorId(0);
 
 			private string _name;
-			private Color _color;
+			private ColorId _color;
 			private Point _location;
 		}
 	}

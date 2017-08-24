@@ -9,7 +9,7 @@ namespace UILogicLibrary {
 	public class GraphView {
 
 		public GraphView() {
-			//NodeRearrangementAlgorithms.Circle(graph);
+			_stylesheet = new NodeColorStylesheet();
 		}
 
 		public int NodeRadius {
@@ -26,6 +26,11 @@ namespace UILogicLibrary {
 			}
 			set {
 				_edgeWidth = value;
+			}
+		}
+		public NodeColorStylesheet Stylesheet {
+			get {
+				return _stylesheet;
 			}
 		}
 
@@ -47,6 +52,7 @@ namespace UILogicLibrary {
 		
 		private int _nodeRadius = 12;
 		private int _edgeWidth = 2;
+		private NodeColorStylesheet _stylesheet;
 
 		private double distance(Point a, Point b) {
 			int dx = a.X - b.X;
@@ -62,7 +68,10 @@ namespace UILogicLibrary {
 			foreach (EdgeModel edge in EdgeModel.Enumerate(graph)) {
 				Point pointFrom = edge.NodeFrom.Weight.Location;
 				Point pointTo = edge.NodeTo.Weight.Location;
-				Color color = edge.Weight.Color;
+
+				ColorId colorId = edge.Weight.ColorId;
+				Color color = _stylesheet.IdToColor(colorId);
+
 				string value = edge.Weight.Value;
 
 				bool shouldDraw = value != "0" && value != "";
@@ -79,7 +88,10 @@ namespace UILogicLibrary {
 
 			foreach (NodeModel node in NodeModel.Enumerate(graph)) {
 				Point point = node.Weight.Location;
-				Color color = node.Weight.Color;
+
+				ColorId colorId = node.Weight.ColorId;
+				Color color = _stylesheet.IdToColor(colorId);
+
 				context.FillCircle(point, this.NodeRadius, new SolidBrush(color));
 			}
 		}

@@ -8,9 +8,13 @@ using UILogicLibrary;
 namespace WindowsFormsApplication {
 	public partial class Form1 {
 
+		private string _graphFileFilter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+
 		// tool strip buttons
 		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = _graphFileFilter;
+
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
@@ -26,6 +30,8 @@ namespace WindowsFormsApplication {
 			}
 			else {
 				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				saveFileDialog.Filter = _graphFileFilter;
+
 				DialogResult result = saveFileDialog.ShowDialog();
 				if (result == DialogResult.OK) {
 					string path = saveFileDialog.FileName;
