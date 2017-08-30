@@ -157,25 +157,28 @@ namespace GraphModelLibrary.Rewrite {
 				text.Add(string.Join(" ", edgeValues));
 			}
 
-			// цвета вершин
-			text.Add("Node colors:");
-			string[] colorNumbers = new string[N];
-			for (int i = 0; i < N; ++i) {
-				NodeModel node = graph.GetNodeByName(i.ToString());
-				colorNumbers[i] = node.ColorId.ToString();
-			}
-			text.Add(string.Join(" ", colorNumbers));
+			if (N > 0) {
+				// цвета вершин
+				text.Add("Node colors:");
+				string[] colorNumbers = new string[N];
+				for (int i = 0; i < N; ++i) {
+					NodeModel node = graph.GetNodeByName(i.ToString());
+					colorNumbers[i] = node.ColorId.ToString();
+				}
+				text.Add(string.Join(" ", colorNumbers));
 
-			// цвета рёбер, по одному ребру на строке
-			text.Add("Edge colors:");
-			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
-				NodeModel nodeFrom = new NodeModel(graph, graph.GetNodeFrom(edgeIndex));
-				NodeModel nodeTo = new NodeModel(graph, graph.GetNodeTo(edgeIndex));
-				ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
-				string str = string.Format("{0} {1} {2}", nodeFrom.Name, nodeTo.Name, edgeColorId);
-				text.Add(str);
+
+				// цвета рёбер, по одному ребру на строке
+				text.Add("Edge colors:");
+				foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
+					NodeModel nodeFrom = new NodeModel(graph, graph.GetNodeFrom(edgeIndex));
+					NodeModel nodeTo = new NodeModel(graph, graph.GetNodeTo(edgeIndex));
+					ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
+					string str = string.Format("{0} {1} {2}", nodeFrom.Name, nodeTo.Name, edgeColorId);
+					text.Add(str);
+				}
+				text.Add("-1");
 			}
-			text.Add("-1");
 
 			// текст, если есть
 			if (!string.IsNullOrEmpty(graph.Text)) {
@@ -195,6 +198,10 @@ namespace GraphModelLibrary.Rewrite {
 		/// <param name="str">Строка, содержащая числа, разбитые пробелами.</param>
 		/// <returns>Массив чисел.</returns>
 		public static int[] StringToIntArray(string str) {
+			if (string.IsNullOrWhiteSpace(str)) {
+				return new int[0];
+			}
+
 			return str.Split().Map(x => int.Parse(x));
 		}
 

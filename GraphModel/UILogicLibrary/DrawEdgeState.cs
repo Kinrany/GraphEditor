@@ -27,7 +27,7 @@ namespace UILogicLibrary {
 			oldEdge?.Delete();
 
 			EdgeModel edge = _start.AddOutgoingEdge(node);
-			edge.Weight = EdgeWeight.DEFAULT.Update(color: EditTool.PickedColorId, value: "1");
+			edge.Weight = EdgeWeight.DEFAULT.Update(colorId: EditTool.PickedColorId, value: "1");
 
 			CurrentState = new DefaultState(EditTool);
 		}

@@ -37,8 +37,7 @@ namespace UILogicLibrary {
 				return _editTool;
 			}
 		}
-
-		private Timer _timer;
+		
 		private EditTool _editTool;
 	}
 
