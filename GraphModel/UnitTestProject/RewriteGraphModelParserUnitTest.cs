@@ -145,7 +145,14 @@ Edge colors:
 
 			string[] serialized = GraphModelParser.SerializeA1(graph);
 
-			Assert.IsTrue(serialized[0] == "0");
+			string[] expected = new string[] {
+				"0"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
 		}
 
 		[TestMethod]
