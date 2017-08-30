@@ -68,7 +68,7 @@ namespace GraphModelLibrary.Rewrite {
 				return Weight.ColorId;
 			}
 			set {
-				Weight = Weight.Update(color: value);
+				Weight = Weight.Update(colorId: value);
 			}
 		}
 
