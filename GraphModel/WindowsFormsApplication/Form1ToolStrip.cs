@@ -35,7 +35,7 @@ namespace WindowsFormsApplication {
 				DialogResult result = saveFileDialog.ShowDialog();
 				if (result == DialogResult.OK) {
 					string path = saveFileDialog.FileName;
-					GraphModelParser.Save(this.GraphModel, path);
+					GraphModelParser.SaveA1(this.GraphModel, path);
 				}
 			}
 		}

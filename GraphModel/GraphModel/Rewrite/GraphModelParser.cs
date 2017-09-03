@@ -123,7 +123,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static void Save(GraphModel graph, string path) {
+		public static void SaveA1(GraphModel graph, string path) {
 			File.WriteAllLines(path, GraphModelParser.SerializeA1(graph));
 		}
 

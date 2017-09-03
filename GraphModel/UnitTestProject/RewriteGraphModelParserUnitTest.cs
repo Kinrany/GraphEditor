@@ -321,7 +321,7 @@ I'm fine too!";
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 			GraphModel model = GraphModelParser.Load(path);
 			string savePath = @"~tempfile.txt";
-			GraphModelParser.Save(model, savePath);
+			GraphModelParser.SaveA1(model, savePath);
 			try {
 				GraphModel model2 = GraphModelParser.Load(savePath);
 			}
