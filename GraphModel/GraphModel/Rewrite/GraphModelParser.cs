@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
@@ -187,6 +189,84 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			return text.ToArray();
+		}
+
+		public static string SerializeA2(GraphModel graph, bool edgeWeights = true, bool nodeColors = true, bool edgeColors = true, bool includeText = true) {
+			StringBuilder output = new StringBuilder();
+
+			// N и M
+			// Число вершин и число рёбер
+			int N = graph.NodeCount;
+			int M = graph.EdgeCount;
+			output.AppendFormat("{0} {1}", N, M);
+			output.AppendLine();
+
+			NodeModel[] nodes = NodeModel.Enumerate(graph).ToArray();
+			Debug.Assert(nodes.Length == N);
+			EdgeModel[] edges = EdgeModel.Enumerate(graph).ToArray();
+			Debug.Assert(edges.Length == M);
+
+			// Строка n1 ... nN
+			// Номера вершин
+			int[] n = nodes.Select(node => node.Index.Value).ToArray();
+			output.Append(string.Join(" ", n));
+			output.AppendLine();
+
+			// M строк с числами m, f, t
+			// m - номер ребра
+			// f - номер начальной вершины
+			// t - номер конечной вершины
+			int[] m = edges.Select(edge => edge.Index.Value).ToArray();
+			int[] f = edges.Select(e => e.NodeFrom)
+				.Select(node => node.Index.Value).ToArray();
+			int[] t = edges.Select(e => e.NodeTo)
+				.Select(node => node.Index.Value).ToArray();
+			for (int i = 0; i < M; ++i) {
+				output.AppendFormat("{0} {1} {2}", m[i], f[i], t[i]);
+				output.AppendLine();
+			}
+
+			// Строка со знаками + или -
+			bool[] flags = new bool[] { edgeWeights, nodeColors, edgeColors, includeText };
+			char[] flagChars = flags.Select(flag => flag ? '+' : '-').ToArray();
+			output.Append(string.Join(" ", flagChars));
+			output.AppendLine();
+
+			// Веса рёбер
+			if (edgeWeights) {
+				string[] w = edges.Select(edge => edge.Value).ToArray();
+				for (int i = 0; i < M; ++i) {
+					Debug.Assert(!Regex.IsMatch(w[i], @"\s"));
+					output.AppendFormat("{0} {1}", m[i], w[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Цвета вершин
+			if (nodeColors) {
+				int[] c = nodes.Select(node => node.ColorId.Value).ToArray();
+				for (int i = 0; i < N; ++i) {
+					output.AppendFormat("{0} {1}", n[i], c[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Цвета рёбер
+			if (edgeColors) {
+				int[] c = edges.Select(edge => edge.ColorId.Value).ToArray();
+				for (int i = 0; i < M; ++i) {
+					output.AppendFormat("{0} {1}", m[i], c[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Текст
+			if (includeText) {
+				string text = graph.Text;
+				output.Append(text);
+			}
+
+			return output.ToString();
 		}
 	}
 
