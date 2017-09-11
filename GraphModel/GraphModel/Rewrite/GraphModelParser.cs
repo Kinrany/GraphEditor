@@ -123,6 +123,94 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
+		public static GraphModel ParseA2(string str) {
+
+			// create new graph object
+			GraphModel graph = new GraphModel();
+
+			// create dictionaries for mapping node and
+			// edge numbers to nodes and edges in graph
+			var nodes = new Dictionary<int, NodeModel>();
+			var edges = new Dictionary<int, EdgeModel>();
+
+			// read N and M
+			int N = Helper.ReadIntFromConsole();
+			int M = Helper.ReadIntFromConsole();
+
+			// read nodes
+			{
+				int[] n = new int[N];
+				for (int i = 0; i < N; ++i) {
+					n[i] = Helper.ReadIntFromConsole();
+				}
+
+				// create new nodes
+				for (int i = 0; i < N; ++i) {
+					var node = NodeModel.Create(graph);
+					node.Name = i.ToString();
+					nodes[n[i]] = node;
+				}
+			}
+
+			// read edges
+			{
+				int[] m = new int[M];
+				int[] f = new int[M];
+				int[] t = new int[M];
+				for (int i = 0; i < M; ++i) {
+					m[i] = Helper.ReadIntFromConsole();
+					f[i] = Helper.ReadIntFromConsole();
+					t[i] = Helper.ReadIntFromConsole();
+				}
+
+				// create new edges
+				for (int i = 0; i < M; ++i) {
+					var nodeFrom = nodes[f[i]];
+					var nodeTo = nodes[t[i]];
+					var edge = EdgeModel.Create(nodeFrom, nodeTo);
+					edges[m[i]] = edge;
+				}
+			}
+
+			// read file description flags
+			bool edgeWeights = Helper.ReadCharFromConsole() == '+';
+			bool nodeColors = Helper.ReadCharFromConsole() == '+';
+			bool edgeColors = Helper.ReadCharFromConsole() == '+';
+			bool includeText = Helper.ReadCharFromConsole() == '+';
+
+			// read edge weights if present
+			if (edgeWeights) {
+				for (int i = 0; i < M; ++i) {
+					int m = Helper.ReadIntFromConsole();
+					string w = Helper.ReadWordFromConsole();
+					edges[m].Value = w;
+				}
+			}
+
+			// read node colors if present
+			if (nodeColors) {
+				for (int i = 0; i < N; ++i) {
+					int n = Helper.ReadIntFromConsole();
+					int c = Helper.ReadIntFromConsole();
+					nodes[n].ColorId = new ColorId(c);
+				}
+			}
+
+			// read edge colors if present
+			if (edgeColors) {
+				for (int i = 0; i < M; ++i) {
+					int m = Helper.ReadIntFromConsole();
+					int c = Helper.ReadIntFromConsole();
+					edges[m].ColorId = new ColorId(c);
+				}
+			}
+
+			// read text if present
+			graph.Text = Console.In.ReadToEnd();
+
+			return graph;
+		}
+
 		public static void SaveA1(GraphModel graph, string path) {
 			File.WriteAllLines(path, GraphModelParser.SerializeA1(graph));
 		}
@@ -299,6 +387,66 @@ namespace GraphModelLibrary.Rewrite {
 			float x = middle.X + (float)Math.Cos(angle) * radius;
 			float y = middle.Y + (float)Math.Sin(angle) * radius;
 			return Point.Round(new PointF(x, y));
+		}
+
+		/// <summary>
+		/// Reads the first integer number from Console.In, separated by whitespace.
+		/// </summary>
+		/// <returns>The integer.</returns>
+		public static int ReadIntFromConsole() {
+
+			SkipWhitespaceFromConsole();
+
+			StringBuilder sb = new StringBuilder();
+
+			while (!char.IsWhiteSpace((char)Console.In.Peek())) {
+				sb.Append(Console.In.Read());
+			}
+
+			int result;
+			if (int.TryParse(sb.ToString(), out result)) {
+				return result;
+			}
+			else {
+				throw new InvalidOperationException("Invalid input: not a valid integer");
+			}
+		}
+
+		/// <summary>
+		/// Reads the first string without whitespaces from Console.In.
+		/// </summary>
+		/// <returns>The word.</returns>
+		public static string ReadWordFromConsole() {
+
+			SkipWhitespaceFromConsole();
+
+			StringBuilder sb = new StringBuilder();
+
+			while (!char.IsWhiteSpace((char)Console.In.Peek())) {
+				sb.Append(Console.In.Read());
+			}
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Reads the first non-whitespace character from Console.In.
+		/// </summary>
+		/// <returns></returns>
+		public static char ReadCharFromConsole() {
+
+			SkipWhitespaceFromConsole();
+
+			return (char)Console.In.Read();
+		}
+
+		/// <summary>
+		/// Skips all whitespace characters in Console.In.
+		/// </summary>
+		public static void SkipWhitespaceFromConsole() {
+			while (char.IsWhiteSpace((char)Console.In.Peek())) {
+				Console.In.Read();
+			}
 		}
 	}
 }
