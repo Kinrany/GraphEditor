@@ -143,7 +143,7 @@ Edge colors:
 		public void Serializing1_EmptyGraph() {
 			GraphModel graph = new GraphModel();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"0"
@@ -160,7 +160,7 @@ Edge colors:
 			GraphModel graph = new GraphModel();
 			NodeIndex nodeIndex = graph.CreateNode();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			Assert.IsTrue(serialized[0] == "1");
 		}
@@ -178,7 +178,7 @@ Edge colors:
 			edgeWeight.Value = "1";
 			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 			
 			Assert.IsTrue(serialized[1] == "1");
 		}
@@ -193,7 +193,7 @@ How are you?
 I'm fine too!";
 			graph.Text = text;
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			serialized = serialized
 				.SkipWhile((str) => str != "Text:")
@@ -219,7 +219,7 @@ I'm fine too!";
 			NodeModel node2 = NodeModel.Create(graph);
 			node1.Delete();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"1",
@@ -242,7 +242,7 @@ I'm fine too!";
 			NodeModel node = NodeModel.Create(graph);
 			node.ColorId = new ColorId(5);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"1",
@@ -268,7 +268,7 @@ I'm fine too!";
 			edge.Value = "1";
 			edge.ColorId = new ColorId(5);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"2",
@@ -297,7 +297,7 @@ I'm fine too!";
 			EdgeModel edge = EdgeModel.Create(node2, node3);
 			node1.Delete();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"2",
@@ -321,7 +321,7 @@ I'm fine too!";
 			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
 			GraphModel model = GraphModelParser.Load(path);
 			string savePath = @"~tempfile.txt";
-			GraphModelParser.Save(model, savePath);
+			GraphModelParser.SaveA1(model, savePath);
 			try {
 				GraphModel model2 = GraphModelParser.Load(savePath);
 			}
