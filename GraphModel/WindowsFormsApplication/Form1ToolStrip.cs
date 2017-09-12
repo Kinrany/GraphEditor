@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using GraphModelLibrary.Rewrite;
@@ -11,20 +12,23 @@ namespace WindowsFormsApplication {
 		private string _graphFileFilter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
 		// tool strip buttons
-		private void toolStripOpenGraph_Click(object sender, EventArgs e) {
+		private void toolStripOpenA1Graph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Filter = _graphFileFilter;
 
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
+
 				PathToFile = path;
 				GraphModel graph = GraphModelParser.Load(path);
+
 				SetGraphModel(graph);
+
 				NodeRearrangementAlgorithms.Circle(graph);
 			}
 		}
-		private void toolStripSaveGraph_Click(object sender, EventArgs e) {
+		private void toolStripSaveA1Graph_Click(object sender, EventArgs e) {
 			if (GraphModel == null) {
 				saveButtonLabel.Text = "Сначала нужно открыть граф";
 			}
@@ -37,6 +41,23 @@ namespace WindowsFormsApplication {
 					string path = saveFileDialog.FileName;
 					GraphModelParser.SaveA1(this.GraphModel, path);
 				}
+			}
+		}
+		private void toolStripOpenA2Graph_Click(object sender, EventArgs e) {
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = _graphFileFilter;
+
+			DialogResult result = openFileDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				string path = openFileDialog.FileName;
+
+				PathToFile = path;
+				string text = File.ReadAllText(path);
+				GraphModel graph = GraphModelParser.ParseA2(text);
+
+				SetGraphModel(graph);
+
+				NodeRearrangementAlgorithms.Circle(graph);
 			}
 		}
 		private void toolStripImportCode_Click(object sender, EventArgs e) {

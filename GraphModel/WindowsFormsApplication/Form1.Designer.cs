@@ -42,6 +42,7 @@
 			this.colorPickerButton = new System.Windows.Forms.Button();
 			this.colorDialog = new System.Windows.Forms.ColorDialog();
 			this.graphBox = new System.Windows.Forms.PictureBox();
+			this.а2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.graphBox)).BeginInit();
@@ -109,7 +110,8 @@
 			// открытьГрафА1ToolStripMenuItem
 			// 
 			this.открытьГрафА1ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.а1ToolStripMenuItem1});
+            this.а1ToolStripMenuItem1,
+            this.а2ToolStripMenuItem});
 			this.открытьГрафА1ToolStripMenuItem.Name = "открытьГрафА1ToolStripMenuItem";
 			this.открытьГрафА1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.открытьГрафА1ToolStripMenuItem.Text = "Открыть";
@@ -119,7 +121,7 @@
 			this.а1ToolStripMenuItem1.Name = "а1ToolStripMenuItem1";
 			this.а1ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
 			this.а1ToolStripMenuItem1.Text = "А1";
-			this.а1ToolStripMenuItem1.Click += new System.EventHandler(this.toolStripOpenGraph_Click);
+			this.а1ToolStripMenuItem1.Click += new System.EventHandler(this.toolStripOpenA1Graph_Click);
 			// 
 			// сохранитьToolStripMenuItem
 			// 
@@ -134,7 +136,7 @@
 			this.а1ToolStripMenuItem.Name = "а1ToolStripMenuItem";
 			this.а1ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.а1ToolStripMenuItem.Text = "А1";
-			this.а1ToolStripMenuItem.Click += new System.EventHandler(this.toolStripSaveGraph_Click);
+			this.а1ToolStripMenuItem.Click += new System.EventHandler(this.toolStripSaveA1Graph_Click);
 			// 
 			// toolStripImportCode
 			// 
@@ -231,6 +233,13 @@
 			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
 			this.graphBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphBox_MouseMove);
 			// 
+			// а2ToolStripMenuItem
+			// 
+			this.а2ToolStripMenuItem.Name = "а2ToolStripMenuItem";
+			this.а2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.а2ToolStripMenuItem.Text = "А2";
+			this.а2ToolStripMenuItem.Click += new System.EventHandler(this.toolStripOpenA2Graph_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,6 +287,7 @@
 		private System.Windows.Forms.ToolStripMenuItem сохранитьToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem а1ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem а1ToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem а2ToolStripMenuItem;
 	}
 }
 
