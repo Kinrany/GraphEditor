@@ -125,6 +125,9 @@ namespace GraphModelLibrary.Rewrite {
 
 		public static GraphModel ParseA2(string str) {
 
+			// wrap the input string in a reader
+			StringReader reader = new StringReader(str);
+
 			// create new graph object
 			GraphModel graph = new GraphModel();
 
@@ -134,14 +137,14 @@ namespace GraphModelLibrary.Rewrite {
 			var edges = new Dictionary<int, EdgeModel>();
 
 			// read N and M
-			int N = Helper.ReadIntFromConsole();
-			int M = Helper.ReadIntFromConsole();
+			int N = Helper.ReadInt(reader);
+			int M = Helper.ReadInt(reader);
 
 			// read nodes
 			{
 				int[] n = new int[N];
 				for (int i = 0; i < N; ++i) {
-					n[i] = Helper.ReadIntFromConsole();
+					n[i] = Helper.ReadInt(reader);
 				}
 
 				// create new nodes
@@ -158,9 +161,9 @@ namespace GraphModelLibrary.Rewrite {
 				int[] f = new int[M];
 				int[] t = new int[M];
 				for (int i = 0; i < M; ++i) {
-					m[i] = Helper.ReadIntFromConsole();
-					f[i] = Helper.ReadIntFromConsole();
-					t[i] = Helper.ReadIntFromConsole();
+					m[i] = Helper.ReadInt(reader);
+					f[i] = Helper.ReadInt(reader);
+					t[i] = Helper.ReadInt(reader);
 				}
 
 				// create new edges
@@ -173,16 +176,16 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			// read file description flags
-			bool edgeWeights = Helper.ReadCharFromConsole() == '+';
-			bool nodeColors = Helper.ReadCharFromConsole() == '+';
-			bool edgeColors = Helper.ReadCharFromConsole() == '+';
-			bool includeText = Helper.ReadCharFromConsole() == '+';
+			bool edgeWeights = Helper.ReadChar(reader) == '+';
+			bool nodeColors = Helper.ReadChar(reader) == '+';
+			bool edgeColors = Helper.ReadChar(reader) == '+';
+			bool includeText = Helper.ReadChar(reader) == '+';
 
 			// read edge weights if present
 			if (edgeWeights) {
 				for (int i = 0; i < M; ++i) {
-					int m = Helper.ReadIntFromConsole();
-					string w = Helper.ReadWordFromConsole();
+					int m = Helper.ReadInt(reader);
+					string w = Helper.ReadWord(reader);
 					edges[m].Value = w;
 				}
 			}
@@ -190,8 +193,8 @@ namespace GraphModelLibrary.Rewrite {
 			// read node colors if present
 			if (nodeColors) {
 				for (int i = 0; i < N; ++i) {
-					int n = Helper.ReadIntFromConsole();
-					int c = Helper.ReadIntFromConsole();
+					int n = Helper.ReadInt(reader);
+					int c = Helper.ReadInt(reader);
 					nodes[n].ColorId = new ColorId(c);
 				}
 			}
@@ -199,14 +202,14 @@ namespace GraphModelLibrary.Rewrite {
 			// read edge colors if present
 			if (edgeColors) {
 				for (int i = 0; i < M; ++i) {
-					int m = Helper.ReadIntFromConsole();
-					int c = Helper.ReadIntFromConsole();
+					int m = Helper.ReadInt(reader);
+					int c = Helper.ReadInt(reader);
 					edges[m].ColorId = new ColorId(c);
 				}
 			}
 
 			// read text if present
-			graph.Text = Console.In.ReadToEnd();
+			graph.Text = reader.ReadToEnd();
 
 			return graph;
 		}
@@ -390,17 +393,18 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
-		/// Reads the first integer number from Console.In, separated by whitespace.
+		/// Reads the first integer from a TextReader separated by whitespaces.
 		/// </summary>
+		/// <param name="reader">TextReader to read from.</param>
 		/// <returns>The integer.</returns>
-		public static int ReadIntFromConsole() {
+		public static int ReadInt(TextReader reader) {
 
-			SkipWhitespaceFromConsole();
+			SkipWhitespaceFromConsole(reader);
 
 			StringBuilder sb = new StringBuilder();
 
-			while (!char.IsWhiteSpace((char)Console.In.Peek())) {
-				sb.Append(Console.In.Read());
+			while (!char.IsWhiteSpace((char)reader.Peek())) {
+				sb.Append(reader.Read());
 			}
 
 			int result;
@@ -413,39 +417,42 @@ namespace GraphModelLibrary.Rewrite {
 		}
 
 		/// <summary>
-		/// Reads the first string without whitespaces from Console.In.
+		/// Reads the first string without whitespaces from a TextReader.
 		/// </summary>
+		/// <param name="reader">TextReader to read from.</param>
 		/// <returns>The word.</returns>
-		public static string ReadWordFromConsole() {
+		public static string ReadWord(TextReader reader) {
 
-			SkipWhitespaceFromConsole();
+			SkipWhitespaceFromConsole(reader);
 
 			StringBuilder sb = new StringBuilder();
 
-			while (!char.IsWhiteSpace((char)Console.In.Peek())) {
-				sb.Append(Console.In.Read());
+			while (!char.IsWhiteSpace((char)reader.Peek())) {
+				sb.Append(reader.Read());
 			}
 
 			return sb.ToString();
 		}
 
 		/// <summary>
-		/// Reads the first non-whitespace character from Console.In.
+		/// Reads the first non-whitespace character from a TextReader.
 		/// </summary>
-		/// <returns></returns>
-		public static char ReadCharFromConsole() {
+		/// <param name="reader">TextReader to read from.</param>
+		/// <returns>The character.</returns>
+		public static char ReadChar(TextReader reader) {
 
-			SkipWhitespaceFromConsole();
+			SkipWhitespaceFromConsole(reader);
 
-			return (char)Console.In.Read();
+			return (char)reader.Read();
 		}
 
 		/// <summary>
-		/// Skips all whitespace characters in Console.In.
+		/// Skips all whitespace characters in the given TextReader.
 		/// </summary>
-		public static void SkipWhitespaceFromConsole() {
-			while (char.IsWhiteSpace((char)Console.In.Peek())) {
-				Console.In.Read();
+		/// <param name="reader">TextReader to skip whitespaces in.</param>
+		public static void SkipWhitespaceFromConsole(TextReader reader) {
+			while (char.IsWhiteSpace((char)reader.Peek())) {
+				reader.Read();
 			}
 		}
 	}
