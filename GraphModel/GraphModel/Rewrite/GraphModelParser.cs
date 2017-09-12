@@ -15,6 +15,7 @@ namespace GraphModelLibrary.Rewrite {
 		/// </summary>
 		/// <param name="path">Путь к файлу в файловой системе.</param>
 		/// <returns>Объект графа.</returns>
+		[Obsolete]
 		public static GraphModel Load(string path) {
 			string text = File.ReadAllText(path);
 			return GraphModelParser.ParseA1(text);
@@ -214,6 +215,7 @@ namespace GraphModelLibrary.Rewrite {
 			return graph;
 		}
 
+		[Obsolete]
 		public static void SaveA1(GraphModel graph, string path) {
 			File.WriteAllLines(path, GraphModelParser.SerializeA1(graph));
 		}
