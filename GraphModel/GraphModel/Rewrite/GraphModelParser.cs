@@ -218,10 +218,10 @@ namespace GraphModelLibrary.Rewrite {
 
 		[Obsolete]
 		public static void SaveA1(GraphModel graph, string path) {
-			File.WriteAllLines(path, GraphModelParser.SerializeA1(graph));
+			File.WriteAllLines(path, GraphModelParser.SerializeA1AsLines(graph));
 		}
 
-		public static string[] SerializeA1(GraphModel graph) {
+		public static string[] SerializeA1AsLines(GraphModel graph) {
 			List<string> text = new List<string>();
 
 			// названия вершин должны быть от 0 до n-1
@@ -283,6 +283,10 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			return text.ToArray();
+		}
+
+		public static string SerializeA1(GraphModel graph) {
+			return string.Join(Environment.NewLine, SerializeA1AsLines(graph));
 		}
 
 		public static string SerializeA2(GraphModel graph, bool edgeWeights = true, bool nodeColors = true, bool edgeColors = true, bool includeText = true) {

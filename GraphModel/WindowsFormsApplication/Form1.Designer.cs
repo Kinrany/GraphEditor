@@ -30,6 +30,7 @@
 			this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.открытьГрафА1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.а1ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.а2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.сохранитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.а1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripImportCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +43,7 @@
 			this.colorPickerButton = new System.Windows.Forms.Button();
 			this.colorDialog = new System.Windows.Forms.ColorDialog();
 			this.graphBox = new System.Windows.Forms.PictureBox();
-			this.а2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.а2ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.DataGridMatrix)).BeginInit();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.graphBox)).BeginInit();
@@ -123,10 +124,18 @@
 			this.а1ToolStripMenuItem1.Text = "А1";
 			this.а1ToolStripMenuItem1.Click += new System.EventHandler(this.toolStripOpenA1Graph_Click);
 			// 
+			// а2ToolStripMenuItem
+			// 
+			this.а2ToolStripMenuItem.Name = "а2ToolStripMenuItem";
+			this.а2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.а2ToolStripMenuItem.Text = "А2";
+			this.а2ToolStripMenuItem.Click += new System.EventHandler(this.toolStripOpenA2Graph_Click);
+			// 
 			// сохранитьToolStripMenuItem
 			// 
 			this.сохранитьToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.а1ToolStripMenuItem});
+            this.а1ToolStripMenuItem,
+            this.а2ToolStripMenuItem1});
 			this.сохранитьToolStripMenuItem.Name = "сохранитьToolStripMenuItem";
 			this.сохранитьToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.сохранитьToolStripMenuItem.Text = "Сохранить";
@@ -233,12 +242,12 @@
 			this.graphBox.Paint += new System.Windows.Forms.PaintEventHandler(this.graphBox_Draw);
 			this.graphBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.graphBox_MouseMove);
 			// 
-			// а2ToolStripMenuItem
+			// а2ToolStripMenuItem1
 			// 
-			this.а2ToolStripMenuItem.Name = "а2ToolStripMenuItem";
-			this.а2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.а2ToolStripMenuItem.Text = "А2";
-			this.а2ToolStripMenuItem.Click += new System.EventHandler(this.toolStripOpenA2Graph_Click);
+			this.а2ToolStripMenuItem1.Name = "а2ToolStripMenuItem1";
+			this.а2ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+			this.а2ToolStripMenuItem1.Text = "А2";
+			this.а2ToolStripMenuItem1.Click += new System.EventHandler(this.toolStripSaveA2Graph_Click);
 			// 
 			// Form1
 			// 
@@ -288,6 +297,7 @@
 		private System.Windows.Forms.ToolStripMenuItem а1ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem а1ToolStripMenuItem1;
 		private System.Windows.Forms.ToolStripMenuItem а2ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem а2ToolStripMenuItem1;
 	}
 }
 

@@ -28,21 +28,6 @@ namespace WindowsFormsApplication {
 				NodeRearrangementAlgorithms.Circle(graph);
 			}
 		}
-		private void toolStripSaveA1Graph_Click(object sender, EventArgs e) {
-			if (GraphModel == null) {
-				saveButtonLabel.Text = "Сначала нужно открыть граф";
-			}
-			else {
-				SaveFileDialog saveFileDialog = new SaveFileDialog();
-				saveFileDialog.Filter = _graphFileFilter;
-
-				DialogResult result = saveFileDialog.ShowDialog();
-				if (result == DialogResult.OK) {
-					string path = saveFileDialog.FileName;
-					GraphModelParser.SaveA1(this.GraphModel, path);
-				}
-			}
-		}
 		private void toolStripOpenA2Graph_Click(object sender, EventArgs e) {
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Filter = _graphFileFilter;
@@ -58,6 +43,38 @@ namespace WindowsFormsApplication {
 				SetGraphModel(graph);
 
 				NodeRearrangementAlgorithms.Circle(graph);
+			}
+		}
+		private void toolStripSaveA1Graph_Click(object sender, EventArgs e) {
+			if (GraphModel == null) {
+				saveButtonLabel.Text = "Сначала нужно открыть граф";
+			}
+			else {
+				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				saveFileDialog.Filter = _graphFileFilter;
+
+				DialogResult result = saveFileDialog.ShowDialog();
+				if (result == DialogResult.OK) {
+					string path = saveFileDialog.FileName;
+					string text = GraphModelParser.SerializeA1(GraphModel);
+					File.WriteAllText(path, text);
+				}
+			}
+		}
+		private void toolStripSaveA2Graph_Click(object sender, EventArgs e) {
+			if (GraphModel == null) {
+				saveButtonLabel.Text = "Сначала нужно открыть граф";
+			}
+			else {
+				SaveFileDialog saveFileDialog = new SaveFileDialog();
+				saveFileDialog.Filter = _graphFileFilter;
+
+				DialogResult result = saveFileDialog.ShowDialog();
+				if (result == DialogResult.OK) {
+					string path = saveFileDialog.FileName;
+					string text = GraphModelParser.SerializeA2(GraphModel);
+					File.WriteAllText(path, text);
+				}
 			}
 		}
 		private void toolStripImportCode_Click(object sender, EventArgs e) {
