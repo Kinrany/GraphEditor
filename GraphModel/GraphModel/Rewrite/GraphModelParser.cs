@@ -151,7 +151,7 @@ namespace GraphModelLibrary.Rewrite {
 				// create new nodes
 				for (int i = 0; i < N; ++i) {
 					var node = NodeModel.Create(graph);
-					node.Name = i.ToString();
+					node.Name = n[i].ToString();
 					nodes[n[i]] = node;
 				}
 			}
@@ -210,6 +210,7 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			// read text if present
+			Helper.SkipWhitespace(reader);
 			graph.Text = reader.ReadToEnd();
 
 			return graph;
@@ -401,12 +402,12 @@ namespace GraphModelLibrary.Rewrite {
 		/// <returns>The integer.</returns>
 		public static int ReadInt(TextReader reader) {
 
-			SkipWhitespaceFromConsole(reader);
+			SkipWhitespace(reader);
 
 			StringBuilder sb = new StringBuilder();
 
 			while (!char.IsWhiteSpace((char)reader.Peek())) {
-				sb.Append(reader.Read());
+				sb.Append((char)reader.Read());
 			}
 
 			int result;
@@ -425,12 +426,12 @@ namespace GraphModelLibrary.Rewrite {
 		/// <returns>The word.</returns>
 		public static string ReadWord(TextReader reader) {
 
-			SkipWhitespaceFromConsole(reader);
+			SkipWhitespace(reader);
 
 			StringBuilder sb = new StringBuilder();
 
 			while (!char.IsWhiteSpace((char)reader.Peek())) {
-				sb.Append(reader.Read());
+				sb.Append((char)reader.Read());
 			}
 
 			return sb.ToString();
@@ -443,7 +444,7 @@ namespace GraphModelLibrary.Rewrite {
 		/// <returns>The character.</returns>
 		public static char ReadChar(TextReader reader) {
 
-			SkipWhitespaceFromConsole(reader);
+			SkipWhitespace(reader);
 
 			return (char)reader.Read();
 		}
@@ -452,7 +453,7 @@ namespace GraphModelLibrary.Rewrite {
 		/// Skips all whitespace characters in the given TextReader.
 		/// </summary>
 		/// <param name="reader">TextReader to skip whitespaces in.</param>
-		public static void SkipWhitespaceFromConsole(TextReader reader) {
+		public static void SkipWhitespace(TextReader reader) {
 			while (char.IsWhiteSpace((char)reader.Peek())) {
 				reader.Read();
 			}
