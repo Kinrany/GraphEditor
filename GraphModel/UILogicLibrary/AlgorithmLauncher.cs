@@ -6,7 +6,7 @@ using System.Text;
 using GraphModelLibrary.Rewrite;
 
 namespace UILogicLibrary {
-	static class AlgorithmLauncher {
+	public static class AlgorithmLauncher {
 		public static int EXECUTION_TIME_LIMIT = 1000;
 
 		public static GraphModel RunAlgorithmA1(string algorithmPath, GraphModel inputGraph) {
