@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
+        "OwnerKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -157,11 +157,6 @@
             "AssemblyAsmDisplayName" = "8:GraphModelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_90FAFB85DC7B81621A2A7DDE0D186DD3"
-                    {
-                    "Name" = "8:GraphModelLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:GraphModelLibrary.dll"
             "TargetName" = "8:"
@@ -188,11 +183,6 @@
             "AssemblyAsmDisplayName" = "8:UILogicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E5C631BF9738B73273ECDC33B3DAE453"
-                    {
-                    "Name" = "8:UILogicLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:UILogicLibrary.dll"
             "TargetName" = "8:"
@@ -268,15 +258,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:GraphEditor"
-        "ProductCode" = "8:{4993AD9C-97D6-4BAD-81E8-6357F6DF5258}"
-        "PackageCode" = "8:{F45B87D5-5C07-46E6-A941-846F12F7426A}"
+        "ProductCode" = "8:{8165B21D-3FBA-44F0-BBD1-7DB01FB2EFCD}"
+        "PackageCode" = "8:{311EAB19-E0E0-4794-918D-787938FBDA62}"
         "UpgradeCode" = "8:{44FBDE23-83A5-4B49-936B-19C370A213EC}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.4.3"
+        "ProductVersion" = "8:0.5.0"
         "Manufacturer" = "8:GraphEditorTeam"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
