@@ -21,7 +21,8 @@ namespace WindowsFormsApplication {
 				string path = openFileDialog.FileName;
 
 				PathToFile = path;
-				GraphModel graph = GraphModelParser.Load(path);
+				string text = File.ReadAllText(path);
+				GraphModel graph = GraphModelParser.ParseA1(text);
 
 				SetGraphModel(graph);
 
