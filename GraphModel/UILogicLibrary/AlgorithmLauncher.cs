@@ -17,6 +17,8 @@ namespace UILogicLibrary {
 			try {
 				algorithm = Process.Start(algorithmPath);
 				algorithm.StandardInput.Write(inputText);
+				algorithm.StandardInput.Close();
+
 				bool success = algorithm.WaitForExit(EXECUTION_TIME_LIMIT);
 				if (success) {
 					outputText = algorithm.StandardOutput.ReadToEnd();
@@ -29,7 +31,7 @@ namespace UILogicLibrary {
 				if (algorithm != null) {
 					try { algorithm.Kill(); }
 					catch { }
-					
+
 					algorithm.Dispose();
 				}
 			}
