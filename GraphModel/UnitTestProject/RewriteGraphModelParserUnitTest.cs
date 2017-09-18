@@ -120,24 +120,6 @@ Edge colors:
 
 			Assert.IsTrue(edge.ColorId == 5);
 		}
-
-		[TestMethod]
-		public void Loading1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-1.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading2() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-2.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading3() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
 		
 		[TestMethod]
 		public void Serializing1_EmptyGraph() {
