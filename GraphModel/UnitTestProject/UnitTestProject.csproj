@@ -64,7 +64,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GraphModel\GraphModelLibrary.csproj">
       <Project>{7312221e-bec4-4a71-ad3b-8ae4aefe933e}</Project>
-      <Name>GraphModel</Name>
+      <Name>GraphModelLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
