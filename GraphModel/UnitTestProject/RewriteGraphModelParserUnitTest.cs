@@ -315,19 +315,5 @@ I'm fine too!";
 				Assert.AreEqual(serialized[i], expected[i]);
 			}
 		}
-
-		[TestMethod]
-		public void Saving1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-			string savePath = @"~tempfile.txt";
-			GraphModelParser.SaveA1(model, savePath);
-			try {
-				GraphModel model2 = GraphModelParser.Load(savePath);
-			}
-			finally {
-				File.Delete(savePath);
-			}
-		}
 	}
 }
