@@ -15,14 +15,20 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+        "MsmKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
-        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
+        "MsmKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
+        "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
+        "OwnerKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,12 +39,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
-        "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B058A08A8811424C9F8C257C6C266E92"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,13 +46,13 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E5C631BF9738B73273ECDC33B3DAE453"
+        "OwnerKey" = "8:_47552D82A115E8B3C0ADB994761E9E22"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+        "OwnerKey" = "8:_3F8ABCEE913807EE7B5EC554E91C6468"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -150,20 +150,15 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_90FAFB85DC7B81621A2A7DDE0D186DD3"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3F8ABCEE913807EE7B5EC554E91C6468"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GraphModelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:UILogicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_90FAFB85DC7B81621A2A7DDE0D186DD3"
-                    {
-                    "Name" = "8:GraphModelLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
-            "SourcePath" = "8:GraphModelLibrary.dll"
+            "SourcePath" = "8:UILogicLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
@@ -181,20 +176,15 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E5C631BF9738B73273ECDC33B3DAE453"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47552D82A115E8B3C0ADB994761E9E22"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UILogicLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GraphModelLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E5C631BF9738B73273ECDC33B3DAE453"
-                    {
-                    "Name" = "8:UILogicLibrary.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
-            "SourcePath" = "8:UILogicLibrary.dll"
+            "SourcePath" = "8:GraphModelLibrary.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"
@@ -268,15 +258,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:GraphEditor"
-        "ProductCode" = "8:{5D153A8D-7977-478A-A51B-3CD269BEDA8C}"
-        "PackageCode" = "8:{ABC717B8-0C11-4459-BFA7-2653F960F972}"
+        "ProductCode" = "8:{6E4075B5-4E7C-4ABD-A3B5-2812388E643B}"
+        "PackageCode" = "8:{75938C1A-1D38-4709-9AE1-20B0CFFC4898}"
         "UpgradeCode" = "8:{44FBDE23-83A5-4B49-936B-19C370A213EC}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:0.2.3"
+        "ProductVersion" = "8:0.4.1"
         "Manufacturer" = "8:GraphEditorTeam"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -804,7 +794,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B058A08A8811424C9F8C257C6C266E92"
             {
-            "SourcePath" = "8:..\\WindowsFormsApplication\\obj\\Release\\WindowsFormsApplication.exe"
+            "SourcePath" = "8:..\\WindowsFormsApplication\\obj\\Debug\\WindowsFormsApplication.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_0B776C9C423846DEAD7163B31CA26FA1"

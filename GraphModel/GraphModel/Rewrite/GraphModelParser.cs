@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using ExtensionMethods;
 
 namespace GraphModelLibrary.Rewrite {
@@ -13,6 +15,7 @@ namespace GraphModelLibrary.Rewrite {
 		/// </summary>
 		/// <param name="path">Путь к файлу в файловой системе.</param>
 		/// <returns>Объект графа.</returns>
+		[Obsolete]
 		public static GraphModel Load(string path) {
 			string text = File.ReadAllText(path);
 			return GraphModelParser.ParseA1(text);
@@ -121,11 +124,104 @@ namespace GraphModelLibrary.Rewrite {
 			}
 		}
 
-		public static void Save(GraphModel graph, string path) {
-			File.WriteAllLines(path, GraphModelParser.SerializeA1(graph));
+		public static GraphModel ParseA2(string str) {
+
+			// wrap the input string in a reader
+			StringReader reader = new StringReader(str);
+
+			// create new graph object
+			GraphModel graph = new GraphModel();
+
+			// create dictionaries for mapping node and
+			// edge numbers to nodes and edges in graph
+			var nodes = new Dictionary<int, NodeModel>();
+			var edges = new Dictionary<int, EdgeModel>();
+
+			// read N and M
+			int N = Helper.ReadInt(reader);
+			int M = Helper.ReadInt(reader);
+
+			// read nodes
+			{
+				int[] n = new int[N];
+				for (int i = 0; i < N; ++i) {
+					n[i] = Helper.ReadInt(reader);
+				}
+
+				// create new nodes
+				for (int i = 0; i < N; ++i) {
+					var node = NodeModel.Create(graph);
+					node.Name = n[i].ToString();
+					nodes[n[i]] = node;
+				}
+			}
+
+			// read edges
+			{
+				int[] m = new int[M];
+				int[] f = new int[M];
+				int[] t = new int[M];
+				for (int i = 0; i < M; ++i) {
+					m[i] = Helper.ReadInt(reader);
+					f[i] = Helper.ReadInt(reader);
+					t[i] = Helper.ReadInt(reader);
+				}
+
+				// create new edges
+				for (int i = 0; i < M; ++i) {
+					var nodeFrom = nodes[f[i]];
+					var nodeTo = nodes[t[i]];
+					var edge = EdgeModel.Create(nodeFrom, nodeTo);
+					edges[m[i]] = edge;
+				}
+			}
+
+			// read file description flags
+			bool edgeWeights = Helper.ReadChar(reader) == '+';
+			bool nodeColors = Helper.ReadChar(reader) == '+';
+			bool edgeColors = Helper.ReadChar(reader) == '+';
+			bool includeText = Helper.ReadChar(reader) == '+';
+
+			// read edge weights if present
+			if (edgeWeights) {
+				for (int i = 0; i < M; ++i) {
+					int m = Helper.ReadInt(reader);
+					string w = Helper.ReadWord(reader);
+					edges[m].Value = w;
+				}
+			}
+
+			// read node colors if present
+			if (nodeColors) {
+				for (int i = 0; i < N; ++i) {
+					int n = Helper.ReadInt(reader);
+					int c = Helper.ReadInt(reader);
+					nodes[n].ColorId = new ColorId(c);
+				}
+			}
+
+			// read edge colors if present
+			if (edgeColors) {
+				for (int i = 0; i < M; ++i) {
+					int m = Helper.ReadInt(reader);
+					int c = Helper.ReadInt(reader);
+					edges[m].ColorId = new ColorId(c);
+				}
+			}
+
+			// read text if present
+			Helper.SkipWhitespace(reader);
+			graph.Text = reader.ReadToEnd();
+
+			return graph;
 		}
 
-		public static string[] SerializeA1(GraphModel graph) {
+		[Obsolete]
+		public static void SaveA1(GraphModel graph, string path) {
+			File.WriteAllLines(path, GraphModelParser.SerializeA1AsLines(graph));
+		}
+
+		public static string[] SerializeA1AsLines(GraphModel graph) {
 			List<string> text = new List<string>();
 
 			// названия вершин должны быть от 0 до n-1
@@ -157,25 +253,28 @@ namespace GraphModelLibrary.Rewrite {
 				text.Add(string.Join(" ", edgeValues));
 			}
 
-			// цвета вершин
-			text.Add("Node colors:");
-			string[] colorNumbers = new string[N];
-			for (int i = 0; i < N; ++i) {
-				NodeModel node = graph.GetNodeByName(i.ToString());
-				colorNumbers[i] = node.ColorId.ToString();
-			}
-			text.Add(string.Join(" ", colorNumbers));
+			if (N > 0) {
+				// цвета вершин
+				text.Add("Node colors:");
+				string[] colorNumbers = new string[N];
+				for (int i = 0; i < N; ++i) {
+					NodeModel node = graph.GetNodeByName(i.ToString());
+					colorNumbers[i] = node.ColorId.ToString();
+				}
+				text.Add(string.Join(" ", colorNumbers));
 
-			// цвета рёбер, по одному ребру на строке
-			text.Add("Edge colors:");
-			foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
-				int nodeFromIndex = graph.GetNodeFrom(edgeIndex);
-				int nodeToIndex = graph.GetNodeTo(edgeIndex);
-				ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
-				string str = string.Format("{0} {1} {2}", nodeFromIndex, nodeToIndex, edgeColorId);
-				text.Add(str);
+
+				// цвета рёбер, по одному ребру на строке
+				text.Add("Edge colors:");
+				foreach (EdgeIndex edgeIndex in graph.EdgeEnumerator) {
+					NodeModel nodeFrom = new NodeModel(graph, graph.GetNodeFrom(edgeIndex));
+					NodeModel nodeTo = new NodeModel(graph, graph.GetNodeTo(edgeIndex));
+					ColorId edgeColorId = graph.GetEdgeWeight(edgeIndex).ColorId;
+					string str = string.Format("{0} {1} {2}", nodeFrom.Name, nodeTo.Name, edgeColorId);
+					text.Add(str);
+				}
+				text.Add("-1");
 			}
-			text.Add("-1");
 
 			// текст, если есть
 			if (!string.IsNullOrEmpty(graph.Text)) {
@@ -184,6 +283,88 @@ namespace GraphModelLibrary.Rewrite {
 			}
 
 			return text.ToArray();
+		}
+
+		public static string SerializeA1(GraphModel graph) {
+			return string.Join(Environment.NewLine, SerializeA1AsLines(graph));
+		}
+
+		public static string SerializeA2(GraphModel graph, bool edgeWeights = true, bool nodeColors = true, bool edgeColors = true, bool includeText = true) {
+			StringBuilder output = new StringBuilder();
+
+			// N и M
+			// Число вершин и число рёбер
+			int N = graph.NodeCount;
+			int M = graph.EdgeCount;
+			output.AppendFormat("{0} {1}", N, M);
+			output.AppendLine();
+
+			NodeModel[] nodes = NodeModel.Enumerate(graph).ToArray();
+			Debug.Assert(nodes.Length == N);
+			EdgeModel[] edges = EdgeModel.Enumerate(graph).ToArray();
+			Debug.Assert(edges.Length == M);
+
+			// Строка n1 ... nN
+			// Номера вершин
+			int[] n = nodes.Select(node => node.Index.Value).ToArray();
+			output.Append(string.Join(" ", n));
+			output.AppendLine();
+
+			// M строк с числами m, f, t
+			// m - номер ребра
+			// f - номер начальной вершины
+			// t - номер конечной вершины
+			int[] m = edges.Select(edge => edge.Index.Value).ToArray();
+			int[] f = edges.Select(e => e.NodeFrom)
+				.Select(node => node.Index.Value).ToArray();
+			int[] t = edges.Select(e => e.NodeTo)
+				.Select(node => node.Index.Value).ToArray();
+			for (int i = 0; i < M; ++i) {
+				output.AppendFormat("{0} {1} {2}", m[i], f[i], t[i]);
+				output.AppendLine();
+			}
+
+			// Строка со знаками + или -
+			bool[] flags = new bool[] { edgeWeights, nodeColors, edgeColors, includeText };
+			char[] flagChars = flags.Select(flag => flag ? '+' : '-').ToArray();
+			output.Append(string.Join(" ", flagChars));
+			output.AppendLine();
+
+			// Веса рёбер
+			if (edgeWeights) {
+				string[] w = edges.Select(edge => edge.Value).ToArray();
+				for (int i = 0; i < M; ++i) {
+					Debug.Assert(!Regex.IsMatch(w[i], @"\s"));
+					output.AppendFormat("{0} {1}", m[i], w[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Цвета вершин
+			if (nodeColors) {
+				int[] c = nodes.Select(node => node.ColorId.Value).ToArray();
+				for (int i = 0; i < N; ++i) {
+					output.AppendFormat("{0} {1}", n[i], c[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Цвета рёбер
+			if (edgeColors) {
+				int[] c = edges.Select(edge => edge.ColorId.Value).ToArray();
+				for (int i = 0; i < M; ++i) {
+					output.AppendFormat("{0} {1}", m[i], c[i]);
+					output.AppendLine();
+				}
+			}
+
+			// Текст
+			if (includeText) {
+				string text = graph.Text;
+				output.Append(text);
+			}
+
+			return output.ToString();
 		}
 	}
 
@@ -195,6 +376,10 @@ namespace GraphModelLibrary.Rewrite {
 		/// <param name="str">Строка, содержащая числа, разбитые пробелами.</param>
 		/// <returns>Массив чисел.</returns>
 		public static int[] StringToIntArray(string str) {
+			if (string.IsNullOrWhiteSpace(str)) {
+				return new int[0];
+			}
+
 			return str.Split().Map(x => int.Parse(x));
 		}
 
@@ -212,6 +397,70 @@ namespace GraphModelLibrary.Rewrite {
 			float x = middle.X + (float)Math.Cos(angle) * radius;
 			float y = middle.Y + (float)Math.Sin(angle) * radius;
 			return Point.Round(new PointF(x, y));
+		}
+
+		/// <summary>
+		/// Reads the first integer from a TextReader separated by whitespaces.
+		/// </summary>
+		/// <param name="reader">TextReader to read from.</param>
+		/// <returns>The integer.</returns>
+		public static int ReadInt(TextReader reader) {
+
+			SkipWhitespace(reader);
+
+			StringBuilder sb = new StringBuilder();
+
+			while (!char.IsWhiteSpace((char)reader.Peek())) {
+				sb.Append((char)reader.Read());
+			}
+
+			int result;
+			if (int.TryParse(sb.ToString(), out result)) {
+				return result;
+			}
+			else {
+				throw new InvalidOperationException("Invalid input: not a valid integer");
+			}
+		}
+
+		/// <summary>
+		/// Reads the first string without whitespaces from a TextReader.
+		/// </summary>
+		/// <param name="reader">TextReader to read from.</param>
+		/// <returns>The word.</returns>
+		public static string ReadWord(TextReader reader) {
+
+			SkipWhitespace(reader);
+
+			StringBuilder sb = new StringBuilder();
+
+			while (!char.IsWhiteSpace((char)reader.Peek())) {
+				sb.Append((char)reader.Read());
+			}
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Reads the first non-whitespace character from a TextReader.
+		/// </summary>
+		/// <param name="reader">TextReader to read from.</param>
+		/// <returns>The character.</returns>
+		public static char ReadChar(TextReader reader) {
+
+			SkipWhitespace(reader);
+
+			return (char)reader.Read();
+		}
+
+		/// <summary>
+		/// Skips all whitespace characters in the given TextReader.
+		/// </summary>
+		/// <param name="reader">TextReader to skip whitespaces in.</param>
+		public static void SkipWhitespace(TextReader reader) {
+			while (char.IsWhiteSpace((char)reader.Peek())) {
+				reader.Read();
+			}
 		}
 	}
 }

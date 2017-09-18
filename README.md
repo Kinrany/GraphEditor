@@ -3,4 +3,4 @@
 
 Вся документация и примеры использования - в [вики](https://github.com/Kinrany/GraphEditor/wiki)
 
-Текущий релиз: [GraphEditor v0.2.3](https://github.com/Kinrany/GraphEditor/releases/tag/v0.2.3)
+Текущий релиз: [GraphEditor v0.4.2](https://github.com/Kinrany/GraphEditor/releases/tag/v0.4.2)

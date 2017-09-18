@@ -120,32 +120,21 @@ Edge colors:
 
 			Assert.IsTrue(edge.ColorId == 5);
 		}
-
-		[TestMethod]
-		public void Loading1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-1.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading2() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-2.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading3() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
 		
 		[TestMethod]
 		public void Serializing1_EmptyGraph() {
 			GraphModel graph = new GraphModel();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
-			Assert.IsTrue(serialized[0] == "0");
+			string[] expected = new string[] {
+				"0"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
+			}
 		}
 
 		[TestMethod]
@@ -153,7 +142,7 @@ Edge colors:
 			GraphModel graph = new GraphModel();
 			NodeIndex nodeIndex = graph.CreateNode();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			Assert.IsTrue(serialized[0] == "1");
 		}
@@ -171,7 +160,7 @@ Edge colors:
 			edgeWeight.Value = "1";
 			graph.SetEdgeWeight(edgeIndex, edgeWeight);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 			
 			Assert.IsTrue(serialized[1] == "1");
 		}
@@ -186,7 +175,7 @@ How are you?
 I'm fine too!";
 			graph.Text = text;
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			serialized = serialized
 				.SkipWhile((str) => str != "Text:")
@@ -212,7 +201,7 @@ I'm fine too!";
 			NodeModel node2 = NodeModel.Create(graph);
 			node1.Delete();
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"1",
@@ -235,7 +224,7 @@ I'm fine too!";
 			NodeModel node = NodeModel.Create(graph);
 			node.ColorId = new ColorId(5);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"1",
@@ -261,7 +250,7 @@ I'm fine too!";
 			edge.Value = "1";
 			edge.ColorId = new ColorId(5);
 
-			string[] serialized = GraphModelParser.SerializeA1(graph);
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
 
 			string[] expected = new string[] {
 				"2",
@@ -281,16 +270,31 @@ I'm fine too!";
 		}
 
 		[TestMethod]
-		public void Saving1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-			string savePath = @"~tempfile.txt";
-			GraphModelParser.Save(model, savePath);
-			try {
-				GraphModel model2 = GraphModelParser.Load(savePath);
-			}
-			finally {
-				File.Delete(savePath);
+		public void Serializing8_MissingNodesWithEdges() {
+			GraphModel graph = new GraphModel();
+
+			NodeModel node1 = NodeModel.Create(graph);
+			NodeModel node2 = NodeModel.Create(graph);
+			NodeModel node3 = NodeModel.Create(graph);
+			EdgeModel edge = EdgeModel.Create(node2, node3);
+			node1.Delete();
+
+			string[] serialized = GraphModelParser.SerializeA1AsLines(graph);
+
+			string[] expected = new string[] {
+				"2",
+				"0 0",
+				"0 0",
+				"Node colors:",
+				"0 0",
+				"Edge colors:",
+				"0 1 0",
+				"-1"
+			};
+
+			Assert.AreEqual(serialized.Length, expected.Length);
+			for (int i = 0; i < serialized.Length; ++i) {
+				Assert.AreEqual(serialized[i], expected[i]);
 			}
 		}
 	}
