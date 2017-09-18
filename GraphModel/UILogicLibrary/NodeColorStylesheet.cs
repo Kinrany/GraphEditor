@@ -50,23 +50,22 @@ namespace UILogicLibrary {
 
 
 		private Color[] _colors = {
-				Color.Magenta,
-				Color.Blue,
-				Color.Red,
-				Color.Green,
-				Color.Black,
-				Color.White,
-				Color.Purple,
-				Color.Orange,
-				Color.Yellow,
-				Color.Pink,
-				Color.Turquoise,
-				Color.Gray,
-				Color.Teal,
-				Color.DarkBlue,
-				Color.Violet,
-				Color.Brown,
-				Color.Aquamarine
+				Color.FromArgb(  0,   0,   0),
+				Color.FromArgb(255,   0,   0),
+				Color.FromArgb(  0, 255,   0),
+				Color.FromArgb(  0,   0, 255),
+				Color.FromArgb(128, 128,   0),
+				Color.FromArgb(128,   0, 128),
+				Color.FromArgb(  0, 128, 128),
+				Color.FromArgb(128,  64,  64),
+				Color.FromArgb( 64, 128,  64),
+				Color.FromArgb( 64,  64, 128),
+				Color.FromArgb(192,  64,   0),
+				Color.FromArgb(  0, 192,  64),
+				Color.FromArgb( 64,   0, 192),
+				Color.FromArgb(192,   0,  64),
+				Color.FromArgb( 64, 192,   0),
+				Color.FromArgb(  0,  64, 192)
 			};
 
 		private Dictionary<ColorId, Color> _idToColor;
