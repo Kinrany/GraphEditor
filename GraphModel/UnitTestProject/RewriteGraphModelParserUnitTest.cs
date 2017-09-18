@@ -120,24 +120,6 @@ Edge colors:
 
 			Assert.IsTrue(edge.ColorId == 5);
 		}
-
-		[TestMethod]
-		public void Loading1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-1.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading2() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-2.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
-
-		[TestMethod]
-		public void Loading3() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-		}
 		
 		[TestMethod]
 		public void Serializing1_EmptyGraph() {
@@ -313,20 +295,6 @@ I'm fine too!";
 			Assert.AreEqual(serialized.Length, expected.Length);
 			for (int i = 0; i < serialized.Length; ++i) {
 				Assert.AreEqual(serialized[i], expected[i]);
-			}
-		}
-
-		[TestMethod]
-		public void Saving1() {
-			string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Examples", @"exampleA1-3.txt");
-			GraphModel model = GraphModelParser.Load(path);
-			string savePath = @"~tempfile.txt";
-			GraphModelParser.SaveA1(model, savePath);
-			try {
-				GraphModel model2 = GraphModelParser.Load(savePath);
-			}
-			finally {
-				File.Delete(savePath);
 			}
 		}
 	}
