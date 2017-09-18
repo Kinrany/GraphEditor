@@ -1,9 +1,0 @@
-3
-0 2 3
--1 0 0
-5 42 0
-Node colors:
-1 0 3
-Text:
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-Morbi elementum lorem et libero bibendum, ac egestas urna accumsan.
