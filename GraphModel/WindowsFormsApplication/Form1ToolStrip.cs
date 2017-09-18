@@ -92,7 +92,7 @@ namespace WindowsFormsApplication {
 					solve_t solve = loader.load_function<solve_t>("solve");
 					string path_to_graph_2 = Marshal.PtrToStringAnsi(solve(path_to_graph));
 					MessageBox.Show(path_to_graph_2);
-					SetGraphModel(GraphModelParser.Load(path_to_graph_2));
+					SetGraphModel(GraphModelParser.ParseA1(File.ReadAllText(path_to_graph_2)));
 				}
 				catch (Exception ex) {
 					MessageBox.Show(ex.ToString());
