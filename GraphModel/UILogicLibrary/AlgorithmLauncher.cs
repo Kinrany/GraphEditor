@@ -13,26 +13,32 @@ namespace UILogicLibrary {
 			string inputText = GraphModelParser.SerializeA1(inputGraph);
 			string outputText = null;
 
-			Process algorithm = null;
-			try {
-				algorithm = Process.Start(algorithmPath);
-				algorithm.StandardInput.Write(inputText);
-				algorithm.StandardInput.Close();
+			ProcessStartInfo startInfo = new ProcessStartInfo(algorithmPath);
+			startInfo.UseShellExecute = false;
+			startInfo.RedirectStandardInput = true;
+			startInfo.RedirectStandardOutput = true;
 
-				bool success = algorithm.WaitForExit(EXECUTION_TIME_LIMIT);
-				if (success) {
-					outputText = algorithm.StandardOutput.ReadToEnd();
-				}
-				else {
-					throw new ExternalProcessException("Time limit exceeded");
-				}
-			}
-			finally {
-				if (algorithm != null) {
-					try { algorithm.Kill(); }
-					catch { }
+			using (Process algorithm = new Process()) {
+				algorithm.StartInfo = startInfo;
 
-					algorithm.Dispose();
+				try {
+					algorithm.Start();
+					algorithm.StandardInput.Write(inputText);
+					algorithm.StandardInput.Close();
+
+					bool success = algorithm.WaitForExit(EXECUTION_TIME_LIMIT);
+					if (success) {
+						outputText = algorithm.StandardOutput.ReadToEnd();
+					}
+					else {
+						throw new ExternalProcessException("Time limit exceeded");
+					}
+				}
+				finally {
+					if (algorithm != null) {
+						try { algorithm.Kill(); }
+						catch { }
+					}
 				}
 			}
 
