@@ -123,9 +123,15 @@ namespace WindowsFormsApplication {
 			DialogResult result = openFileDialog.ShowDialog();
 			if (result == DialogResult.OK) {
 				string path = openFileDialog.FileName;
-				GraphModel outputGraph = AlgorithmLauncher.RunAlgorithmA1(path, GraphModel);
-				NodeRearrangementAlgorithms.Circle(outputGraph);
-				_editTool.Graph = outputGraph;
+				try {
+					GraphModel outputGraph = AlgorithmLauncher.RunAlgorithmA1(path, GraphModel);
+					NodeRearrangementAlgorithms.Circle(outputGraph);
+					_editTool.Graph = outputGraph;
+					MessageBox.Show("Успех!");
+				}
+				catch (Exception ex) {
+					MessageBox.Show("Ошибка во время работы алгоритма: " + ex.Message);
+				}
 			}
 		}
 
