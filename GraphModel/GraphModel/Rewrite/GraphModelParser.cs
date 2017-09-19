@@ -380,7 +380,9 @@ namespace GraphModelLibrary.Rewrite {
 				return new int[0];
 			}
 
-			return str.Split().Map(x => int.Parse(x));
+			return str.Trim()
+				.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
+				.Map(x => int.Parse(x));
 		}
 
 		/// <summary>
