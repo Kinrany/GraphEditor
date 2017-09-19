@@ -10,6 +10,7 @@ namespace WindowsFormsApplication {
 	public partial class Form1 {
 
 		private string _graphFileFilter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+		private string _algorithmFilter = "Executable files (*.exe)|*.exe|All files (*.*)|*.*";
 
 		// tool strip buttons
 		private void toolStripOpenA1Graph_Click(object sender, EventArgs e) {
@@ -114,6 +115,24 @@ namespace WindowsFormsApplication {
 		}
 		private void toolStripRearrangeCircle_Click(object sender, EventArgs e) {
 			NodeRearrangementAlgorithms.Circle(this.GraphModel);
+		}
+		private void toolStripRunAlgorithmA1_Click(object sender, EventArgs e) {
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = _algorithmFilter;
+
+			DialogResult result = openFileDialog.ShowDialog();
+			if (result == DialogResult.OK) {
+				string path = openFileDialog.FileName;
+				try {
+					GraphModel outputGraph = AlgorithmLauncher.RunAlgorithmA1(path, GraphModel);
+					NodeRearrangementAlgorithms.Circle(outputGraph);
+					_editTool.Graph = outputGraph;
+					MessageBox.Show("Успех!");
+				}
+				catch (Exception ex) {
+					MessageBox.Show("Ошибка во время работы алгоритма: " + ex.Message);
+				}
+			}
 		}
 
 		// code importing delegate
