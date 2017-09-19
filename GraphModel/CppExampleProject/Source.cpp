@@ -6,7 +6,8 @@ using namespace std;
 
 // skip the rest of the current line in stdin
 void clearEOL() {
-	getline(cin, string());
+	string s;
+	getline(cin, s);
 }
 
 int n;
