@@ -4,6 +4,11 @@
 
 using namespace std;
 
+// skip the rest of the current line in stdin
+void clearEOL() {
+	getline(cin, string());
+}
+
 int n;
 vector<vector<int>> matrix;
 vector<int> nodeColors;
@@ -18,6 +23,17 @@ void readMatrix() {
 			cin >> matrix[row][column];
 		}
 	}
+
+	clearEOL();
+}
+
+void writeMatrix() {
+	for (int row = 0; row < n; ++row) {
+		for (int column = 0; column < n; ++column) {
+			cout << matrix[row][column] << ' ';
+		}
+		cout << endl;
+	}
 }
 
 void readNodeColors() {
@@ -25,13 +41,26 @@ void readNodeColors() {
 	for (int i = 0; i < n; ++i) {
 		cin >> nodeColors[i];
 	}
+
+	clearEOL();
 }
 
-void readEdgeColors() {
+void writeNodeColors() {
+	for (int i = 0; i < n; ++i) {
+		cout << nodeColors[i] << ' ';
+	}
+	cout << endl;
+}
+
+void initializeEdgeColors() {
 	edgeColors = vector<vector<int>>(n);
 	for (int i = 0; i < n; ++i) {
 		edgeColors[i] = vector<int>(n, 0);
 	}
+}
+
+void readEdgeColors() {
+	initializeEdgeColors();
 
 	int node0, node1, color;
 	while (true) {
@@ -41,6 +70,17 @@ void readEdgeColors() {
 
 		edgeColors[node0][node1] = color;
 	}
+
+	clearEOL();
+}
+
+void writeEdgeColors() {
+	for (int row = 0; row < n; ++row) {
+		for (int column = 0; column < n; ++column) {
+			cout << row << ' ' << column << ' ' << edgeColors[row][column] << endl;
+		}
+	}
+	cout << -1 << endl;
 }
 
 void readText() {
@@ -50,6 +90,10 @@ void readText() {
 		text += str;
 		text.push_back('\n');
 	}
+}
+
+void writeText() {
+	cout << text;
 }
 
 void read() {
@@ -76,6 +120,28 @@ void read() {
 	}
 }
 
+void write() {
+	cout << n << endl;
+
+	writeMatrix();
+
+	if (!nodeColors.empty()) {
+		cout << "Node colors:" << endl;
+		writeNodeColors();
+	}
+
+	if (!edgeColors.empty()) {
+		cout << "Edge colors:" << endl;
+		writeEdgeColors();
+	}
+
+	if (!text.empty()) {
+		cout << "Text:" << endl;
+		writeText();
+	}
+}
+
 void main() {
 	read();
+	write();
 }
